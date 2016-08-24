@@ -1,6 +1,6 @@
 {
     "name": "ridibooks/platform-common",
-    "description": "Ridibooks Platfrom's Common PHP Library",
+    "description": "Ridibooks Platform's Common PHP Library",
     "license": "MIT",
     "authors": [
         {"name": "김범준", "email": "bj.kim@ridi.com"},
