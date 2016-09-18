@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ridinfra
- * Date: 2015-12-07
- * Time: 15:55
- */
 
 namespace Ridibooks\Platform\Common;
 
@@ -73,7 +67,7 @@ class HtmlUtils
 				}
 
 				if ($tag_opened) {
-					/**
+					/*
 					 * attr의 끝이 / 인것은 무시한다
 					 *  - <video src='xxxxx'/>
 					 *  - <div />

@@ -6,10 +6,6 @@ use Ridibooks\Exception\MsgException;
 use Ridibooks\Library\Util;
 use Ridibooks\Platform\Common\StringUtils;
 
-/**Json 객체를 위한 Dto class
- * Class JsonDto
- * @package Ridibooks\Platform\Common\Base
- */
 class JsonDto
 {
 	public $success;

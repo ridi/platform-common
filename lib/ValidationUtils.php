@@ -6,10 +6,6 @@ use Ridibooks\Exception\MsgException;
 
 class ValidationUtils
 {
-	final private function __construct()
-	{
-	}
-
 	/**
 	 * 입력된 필드가 null이거나 비어있을(empty) 경우 exception
 	 * @param string $field
@@ -123,7 +119,6 @@ class ValidationUtils
 		}
 	}
 
-
 	/**
 	 * ISBN13 값 유효성 체크한다.
 	 * http://en.wikipedia.org/wiki/International_Standard_Book_Number#ISBN-13_check_digit_calculation
@@ -170,7 +165,7 @@ class ValidationUtils
 	public static function checkEcn($ecn)
 	{
 		$ecn = trim(StringUtils::removeHyphen($ecn));
-		/**
+		/*
 		 * ECN을 더이상 사용하지 않고, 그 대안으로 UCI를 사용하도록 하였다.
 		 * 기존에 ECN을 발급받은 도서들의 경우
 		 * UCI를 발급받지 않고,

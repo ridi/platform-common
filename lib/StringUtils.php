@@ -2,10 +2,6 @@
 
 namespace Ridibooks\Platform\Common;
 
-/**String 관련 Util Class
- * Class StringUtils
- * @package Ridibooks\Platform\Common
- */
 class StringUtils
 {
 	/* DB에서 찾아변경할때
@@ -30,7 +26,8 @@ class StringUtils
 		return $string;
 	}
 
-	/**해당 문자열이 비어있는가 체크.<br/>
+	/**
+	 * 해당 문자열이 비어있는가 체크.
 	 * null과 0, 비어있는 문자(' ')를 체크 하기 위해 사용
 	 * @param $string
 	 * @return bool

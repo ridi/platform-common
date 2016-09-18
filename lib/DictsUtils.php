@@ -1,31 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ridi
- * Date: 2016-04-15
- * Time: 오후 4:16
- */
 
 namespace Ridibooks\Platform\Common;
 
 /**
- * Class DictsUtils
- * @package Ridibooks\Platform\Common
- *
  * sqlDicts 통해서 얻어진 배열에 대해 자주 사용하는 함수들
  */
-
 class DictsUtils
 {
 	/**
-	 * @param $dicts
-	 * @param $key
-	 * @return array
-	 *
 	 * Dicts 에서 특정 key를 가진 값들을 모두 얻기
 	 *
 	 * $dicts = $db->sqlDicts('select * from tb_book');
 	 * $b_ids = DictsUtils::extractValuesByKey($dicts, 'id');
+	 *
+	 * @param $dicts
+	 * @param $key
+	 * @return array
 	 */
 	public static function extractValuesByKey($dicts, $key)
 	{
@@ -37,10 +27,6 @@ class DictsUtils
 	}
 
 	/**
-	 * @param $dicts
-	 * @param $key
-	 * @return array
-	 *
 	 * Dicts 에서 특정 key 를 기준으로 재배치(key 기준으로 하나밖에 없을떄)
 	 *
 	 * $dicts = $db->sqlDicts('select * from cpdp_books');
@@ -48,6 +34,10 @@ class DictsUtils
 	 * $cpdp_books_111011110 = $tb_book_property_by_bid['111011110'];
 	 *
 	 * $cpdp_books_111011110 => ['id' => '123123', 'b_id'=>'111011110', 'title' => '바람과 함께 사라지다']
+	 *
+	 * @param $dicts
+	 * @param $key
+	 * @return array
 	 */
 	public static function alignByKey($dicts, $key)
 	{
@@ -59,10 +49,6 @@ class DictsUtils
 	}
 
 	/**
-	 * @param $dicts
-	 * @param $key
-	 * @return array
-	 *
 	 * Dicts 에서 특정 key 를 기준으로 재배치(key 기준으로 여러개 있을떄)
 	 *
 	 * $dicts = $db->sqlDicts('select * from tb_book_property');
@@ -73,6 +59,10 @@ class DictsUtils
 	 *      ['b_id'=>'111011110', 'key' => 'num_pages', 'vaule' => 123123],
 	 *      ['b_id'=>'111011110', 'key' => 'type', 'vaule' => 'pdf'],
 	 * ]
+	 *
+	 * @param $dicts
+	 * @param $key
+	 * @return array
 	 */
 	public static function alignListByKey($dicts, $key)
 	{
@@ -84,12 +74,6 @@ class DictsUtils
 	}
 
 	/**
-	 * @param $left_dicts
-	 * @param $right_dicts
-	 * @param int $left_dicts_column_index_to_join
-	 * @param int $right_dicts_column_index_to_join
-	 * @return mixed
-	 *
 	 * Dicts 와 Dicts 끼리 join 할때 (SQL 에서 join 하지 않고 PHP에서 join)
 	 *
 	 * $dictA = $db->sqlDicts('select t_id, amount point from tb_point');
@@ -101,6 +85,11 @@ class DictsUtils
 	 *      [t_id => '112', 'point' => 124, 'cash' => 457],
 	 * ]
 	 *
+	 * @param $left_dicts
+	 * @param $right_dicts
+	 * @param int $left_dicts_column_index_to_join
+	 * @param int $right_dicts_column_index_to_join
+	 * @return mixed
 	 */
 	public static function join(
 		$left_dicts,

@@ -4,11 +4,6 @@ namespace Ridibooks\Platform\Common\Base;
 
 use ReflectionClass;
 
-/**
- * Admin에서 사용되는 Base Const 클래스
- * Class AdminBaseConst
- * @package Ridibooks\Platform\Common\Base
- */
 class AdminBaseConst
 {
 	private static $property_cache = [];

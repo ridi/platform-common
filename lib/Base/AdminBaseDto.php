@@ -6,10 +6,8 @@ use ReflectionClass;
 use ReflectionProperty;
 use Symfony\Component\HttpFoundation\Request;
 
-/**Admin에서 사용되는 Base Dto
- * 이 클래스는 "상속받은 클래스가 DTO" 임을 의미하고, 이에 관련한 최소한에 정보만 다룬다
- * Class AdminBaseDto
- * @package Ridibooks\Platform\Common\Base
+/**
+ * 이 클래스는 "상속받은 클래스가 DTO" 임을 의미하고, 이와 관련된 최소한의 정보만 다룬다.
  */
 class AdminBaseDto
 {

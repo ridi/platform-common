@@ -1,4 +1,5 @@
 <?php
+
 namespace Ridibooks\Platform\Common\Base;
 
 use Ridibooks\Library\DB\ConnectionProvider;
@@ -7,8 +8,8 @@ use Ridibooks\Platform\Common\PagingUtil;
 
 class AdminBaseService
 {
-
-	/**트랜잭션 시작
+	/**
+	 * 트랜잭션 시작
 	 * @deprecated AdminBaseModel로 옮길것
 	 */
 	protected function startTransaction()
@@ -17,7 +18,8 @@ class AdminBaseService
 		$db->sqlBegin();
 	}
 
-	/**트랜잭션 종료
+	/**
+	 * 트랜잭션 종료
 	 * @deprecated AdminBaseModel로 옮길것
 	 */
 	protected function endTransaction()
@@ -26,14 +28,16 @@ class AdminBaseService
 		$db->sqlEnd();
 	}
 
-	/**페이징 처리 html 태그를 만들어서 반환한다.</br>
+	/**
+	 * 페이징 처리 html 태그를 만들어서 반환한다.
 	 * javascript는 fn_search로 통일시켰다.
+	 * @deprecated 파일분리, HTML과의 종속성 낮추거나 없애기 => PaginationHelper::getArgs() 사용
+	 *
 	 * @param int $total_count 리스트의 갯수
 	 * @param int $cur_page 현재 페이지
 	 * @param int $list_per_page 한 페이지에 보여질 리스트 갯수
 	 * @param int $line_per_page 한 리스트에 보여질 라인 수
 	 * @return string htmlTag
-	 * @deprecated 파일분리, HTML과의 종속성 낮추거나 없애기 => PaginationHelper::getArgs() 사용
 	 */
 	public static function getPagingTag($total_count, $cur_page, $list_per_page = null, $line_per_page = null)
 	{
@@ -42,10 +46,12 @@ class AdminBaseService
 
 	}
 
-	/**페이징 처리 html 태그를 만들어서 반환한다.</br>
+	/**
+	 * 페이징 처리 html 태그를 만들어서 반환한다.
+	 * @deprecated 파일분리, HTML과의 종속성 낮추거나 없애기 => PaginationHelper::getArgs() 사용
+	 *
 	 * @param \Ridibooks\Platform\Common\PagingUtil $pagingUtil
 	 * @return string htmlTag
-	 * @deprecated 파일분리, HTML과의 종속성 낮추거나 없애기 => PaginationHelper::getArgs() 사용
 	 */
 	public static function getPagingTagByPagingDto($pagingUtil)
 	{
@@ -75,11 +81,13 @@ class AdminBaseService
 		return $html;
 	}
 
-	/**페이징 처리 html 태그를 만들어서 반환한다. (bootstrap 3에 맞추어 수정) by Sunghoon</br>
+	/**
+	 * 페이징 처리 html 태그를 만들어서 반환한다. (bootstrap 3에 맞추어 수정) by Sunghoon
+	 * @deprecated 파일분리, HTML과의 종속성 낮추거나 없애기 => PaginationHelper::getArgs() 사용
+	 *
 	 * @param \Ridibooks\Platform\Common\PagingUtil $pagingUtil
 	 * @param string $js_fn_name paging을 할 때 호출할 javascript함수명
 	 * @return string htmlTag
-	 * @deprecated 파일분리, HTML과의 종속성 낮추거나 없애기 => PaginationHelper::getArgs() 사용
 	 */
 	public static function getPagingTagByPagingDtoNew($pagingUtil, $js_fn_name = "fn_search")
 	{

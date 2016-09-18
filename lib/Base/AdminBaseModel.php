@@ -5,10 +5,6 @@ namespace Ridibooks\Platform\Common\Base;
 use Ridibooks\Library\DB\ConnectionProvider;
 use Ridibooks\Library\DB\GnfConnectionProvider;
 
-/**Admin 에서 사용되는 Base Model
- * Class AdminBaseModel
- * @package Ridibooks\Platform\Common\Base
- */
 class AdminBaseModel
 {
 	protected $db;

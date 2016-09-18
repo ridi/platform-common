@@ -4,7 +4,6 @@ namespace Ridibooks\Platform\Common;
 
 class PagingUtil
 {
-
 	private $default_list_per_page = 10;
 	private $default_line_per_page = 10;
 
@@ -24,7 +23,8 @@ class PagingUtil
 	public $start;
 	public $limit;
 
-	/**paging bean 생성자
+	/**
+	 * paging bean 생성자
 	 * @param int $total
 	 * @param int $cur_page
 	 * @param int $listPerPage
@@ -46,7 +46,6 @@ class PagingUtil
 		$this->total_page = ceil((double)$this->total / (double)$this->line_per_page);
 		$this->total_page = $this->total_page < 1 ? 1 : $this->total_page;
 		$this->cpage = $this->cpage > $this->total_page ? $this->total_page : $this->cpage;
-
 
 		$this->num_page_group = (int)ceil((double)$this->cpage / $this->list_per_page);
 		$this->last_page_group = (int)ceil((double)$this->total_page / $this->list_per_page);
