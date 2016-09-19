@@ -26,6 +26,21 @@ class AdminBaseModel
 		return GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_READ);
 	}
 
+	protected static function getPlatformOnlyWritableDb()
+	{
+		return GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_ONLY_DB_WRITE);
+	}
+
+	protected static function getPlatformOnlyReadDb()
+	{
+		return GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_ONLY_DB_READ);
+	}
+
+	protected static function getCpWritableDb()
+	{
+		return GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_CP_STATISTICS);
+	}
+
 	protected static function getCpReadDb()
 	{
 		return GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_CP_STATISTICS_READ);
