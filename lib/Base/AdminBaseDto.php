@@ -138,6 +138,7 @@ class AdminBaseDto
 	 * 단, Null값을 가진 column은 제외한다.
 	 * @return array
 	 * @internal public 이 아닌 protected 로 변경필요
+	 * @deprecated use exportAsArray
 	 */
 	public function exportAsArrayExceptNull()
 	{
