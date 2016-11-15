@@ -2,32 +2,10 @@
 
 namespace Ridibooks\Platform\Common\Base;
 
-use Ridibooks\Library\DB\ConnectionProvider;
-use Ridibooks\Library\DB\GnfConnectionProvider;
 use Ridibooks\Platform\Common\PagingUtil;
 
 class AdminBaseService
 {
-	/**
-	 * 트랜잭션 시작
-	 * @deprecated AdminBaseModel로 옮길것
-	 */
-	protected function startTransaction()
-	{
-		$db = GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_WRITE);
-		$db->sqlBegin();
-	}
-
-	/**
-	 * 트랜잭션 종료
-	 * @deprecated AdminBaseModel로 옮길것
-	 */
-	protected function endTransaction()
-	{
-		$db = GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_WRITE);
-		$db->sqlEnd();
-	}
-
 	/**
 	 * 페이징 처리 html 태그를 만들어서 반환한다.
 	 * javascript는 fn_search로 통일시켰다.
