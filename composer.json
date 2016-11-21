@@ -1,11 +1,21 @@
 {
     "name": "ridibooks/platform-common",
+    "type": "library",
     "description": "Ridibooks Platform's Common PHP Library",
     "license": "MIT",
     "authors": [
-        {"name": "김범준", "email": "bj.kim@ridi.com"},
-        {"name": "박주현", "email": "blu@ridi.com"},
-        {"name": "송준호", "email": "jun9358@ridi.com"}
+        {
+            "name": "김범준",
+            "email": "bj.kim@ridi.com"
+        },
+        {
+            "name": "박주현",
+            "email": "blu@ridi.com"
+        },
+        {
+            "name": "송준호",
+            "email": "jun9358@ridi.com"
+        }
     ],
     "autoload": {
         "psr-4": {
@@ -13,6 +23,7 @@
         }
     },
     "suggest": {
+        "ridibooks/core": "dev-master",
         "symfony/http-foundation": "^2.8.0"
     }
 }
