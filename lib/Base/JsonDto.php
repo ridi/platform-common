@@ -3,7 +3,7 @@
 namespace Ridibooks\Platform\Common\Base;
 
 use Ridibooks\Exception\MsgException;
-use Ridibooks\Library\Util;
+use Ridibooks\Library\SentryHelper;
 use Ridibooks\Platform\Common\StringUtils;
 
 class JsonDto
@@ -37,7 +37,7 @@ class JsonDto
 		if ($exception instanceof MsgException) {
 			$this->setMsgException($exception);
 		} else {
-			Util::triggerSentryException($exception);
+			SentryHelper::triggerSentryException($exception);
 
 			if (StringUtils::isEmpty($msg)) {
 				$msg = "오류가 발생하였습니다. 다시 시도하여 주세요. 문제가 다시 발생할 경우 개발그룹에 문의하여주세요.";
