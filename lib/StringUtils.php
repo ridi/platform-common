@@ -66,7 +66,7 @@ class StringUtils
 	 * @param string $jumin
 	 * @return string
 	 */
-	public static function convertJuminForDisplay($jumin)
+	public static function maskJuminForDisplay($jumin)
 	{
 		return substr($jumin, 0, 6) . "-" . substr($jumin, 6, 1) . "******";
 	}
