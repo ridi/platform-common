@@ -41,12 +41,32 @@ class StringUtils
 		}
 	}
 
+	/**
+	 * 해당 문자열이 주민등록번호인지 체크.
+	 * 년도는 00 ~ 99 [0-9]{2}
+	 * 월은 01 ~ 12 0[1-9] || 1[012]
+	 * 일은 01 ~ 31 0[1-9] || 1[0-9] || 2[0-9] || 3[01]
+	 * 숫자6자리와 숫자7자리 사이의 - 는 없을수도 있음 -?
+	 * 뒷7자리 숫자의 첫자리는 성별 [012349]
+	 * 성별 뒤의 5자리 숫자는 주소지 등 [0-9]{5}
+	 * 마지막의 숫자는 앞의 숫자가 유효한지를 나타내는 check digit 를 나타내지만 정규식에서 체크하는 것은 한계
+	 * [0-9]
+	 *
+	 * @param string $jumin
+	 *
+	 * @return bool
+	 */
+	public static function isJumin(string $jumin)
+	{
+		return preg_match("/[0-9]{2}(0[1-9]|1[012])(0[1-9]|1[0-9]|2[0-9]|3[01])-?[012349][0-9]{5}[0-9]/i", $jumin) > 0;
+	}
+
 	/**주민등록번호를 출력형식으로 변환한다.
 	 * @deprecated
 	 * @param string $jumin
 	 * @return string
 	 */
-	public static function convertJuminForDisplay($jumin)
+	public static function maskJuminForDisplay($jumin)
 	{
 		return substr($jumin, 0, 6) . "-" . substr($jumin, 6, 1) . "******";
 	}
