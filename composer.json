@@ -5,16 +5,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "김범준",
-            "email": "bj.kim@ridi.com"
-        },
-        {
             "name": "박주현",
             "email": "blu@ridi.com"
-        },
-        {
-            "name": "송준호",
-            "email": "jun9358@ridi.com"
         }
     ],
     "autoload": {
