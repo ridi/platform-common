@@ -176,11 +176,14 @@ class ArrayUtils
 	/**
 	 * 순차적인 array item 을 생략해주는 메서드입니다.
 	 * @example [1, 2, 3, 5, 6, 8] -> ['1~3', '5~6', '8']
+	 *
 	 * @param array  $values
 	 *
-	 * @return string[]
+	 * @param string $glue
+	 *
+	 * @return \string[]
 	 */
-	public static function shortenSequential(array $values)
+	public static function shortenSequential(array $values, $glue = '~')
 	{
 		$result = [];
 		$sequential_values = [];
@@ -191,7 +194,7 @@ class ArrayUtils
 
 			if (!in_array(($value - 1), $values)) {
 				if (count($sequential_values) > 0) {
-					$result[] = self::implodeSequential('~', $sequential_values);
+					$result[] = self::implodeSequential($glue, $sequential_values);
 				}
 				$sequential_values = [$value];
 			} else {
@@ -201,7 +204,7 @@ class ArrayUtils
 			}
 
 			if ($value === end($values)) {
-				$result[] = self::implodeSequential('~', $sequential_values);
+				$result[] = self::implodeSequential($glue, $sequential_values);
 			}
 		}
 
