@@ -172,4 +172,59 @@ class ArrayUtils
 		}
 		return $object;
 	}
+
+	/**
+	 * 순차적인 array item 을 생략해주는 메서드입니다.
+	 * @example [1, 2, 3, 5, 6, 8] -> ['1~3', '5~6', '8']
+	 *
+	 * @param array  $values
+	 *
+	 * @param string $glue
+	 *
+	 * @return \string[]
+	 */
+	public static function shortenSequential(array $values, $glue = '~')
+	{
+		$result = [];
+		$sequential_values = [];
+
+		sort($values);
+		foreach ($values as $index => $value) {
+			$previous_value = $values[$index - 1];
+
+			if (!in_array(($value - 1), $values)) {
+				if (count($sequential_values) > 0) {
+					$result[] = self::implodeSequential($glue, $sequential_values);
+				}
+				$sequential_values = [$value];
+			} else {
+				if ($previous_value + 1 === $value) {
+					$sequential_values[] = $value;
+				}
+			}
+
+			if ($value === end($values)) {
+				$result[] = self::implodeSequential($glue, $sequential_values);
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @param string $glue
+	 * @param array  $values
+	 *
+	 * @return string
+	 */
+	private static function implodeSequential(string $glue, array $values)
+	{
+		$first_value = reset($values);
+		$last_value = end($values);
+		if ($first_value !== $last_value) {
+			return $first_value . $glue . $last_value;
+		}
+
+		return $first_value;
+	}
 }
