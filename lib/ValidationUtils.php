@@ -215,4 +215,20 @@ class ValidationUtils
 			throw new MsgException($msg);
 		}
 	}
+
+	public static function checkPhoneNumber(string $phone, string $msg)
+	{
+		$expression = '/(0[0-9]{1,2}-?)([0-9]{3,4}-?)([0-9]{4})$/';
+		if (!preg_match($expression, $phone)) {
+			throw new MsgException($msg);
+		}
+	}
+
+	public static function checkMailAddress(string $mail, string $msg)
+	{
+		$expression = '/([_A-Za-z0-9]+)@((?:[A-Za-z0-9]+\.){1,3}+)([A-Za-z]{2,5})$/';
+		if (!preg_match($expression, $mail)) {
+			throw new MsgException($msg);
+		}
+	}
 }
