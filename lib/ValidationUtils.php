@@ -226,7 +226,7 @@ class ValidationUtils
 
 	public static function checkMailAddress(string $mail, string $msg)
 	{
-		$expression = '/(^[\w-\.\+\-]+)@([A-Za-z0-9]+\.){1,2}([A-Za-z]{2,4})$/';
+		$expression = '/(^[\w\.\+\-]+)@([A-Za-z0-9]+\.){1,4}([A-Za-z]{2,4})$/';
 		if (!preg_match($expression, $mail)) {
 			throw new MsgException($msg);
 		}
