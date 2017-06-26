@@ -134,25 +134,6 @@ class StringUtils
 		return trim(str_replace('-', '', $string));
 	}
 
-	/**TODO CommonUtil 혹은 Dto class로 이동할 것
-	 * 저자 목록 문자열이 , 혹은 ; 로 연결되어 입력되면 author, author2 로 분리한다. -_-
-	 * @param $authors_str
-	 * @return array
-	 */
-	public static function parseAuthors($authors_str)
-	{
-		$authors = array_map('trim', preg_split('/[;,]/', $authors_str));
-		$author = $authors[0];
-		$author2 = implode(',', array_slice($authors, 1));
-
-		// 두 명 이상의 저자가 있는 경우는 무조건 앞에 , 가 붙어야 하고 그렇지 않으면 없어야 함. -_-
-		if ($author2 != '') {
-			$author2 = ',' . $author2;
-		}
-
-		return [$author, $author2];
-	}
-
 	/**TODO ArrayUtil 만들어서 이동 && method 설명 추가할 것
 	 * @see http://php.net/manual/en/class.simplexmlelement.php
 	 * @param $xmlstring string
