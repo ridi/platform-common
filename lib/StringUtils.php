@@ -28,7 +28,7 @@ class StringUtils
 
 	/**
 	 * 해당 문자열이 비어있는가 체크.
-	 * null과 0, 비어있는 문자(' ')를 체크 하기 위해 사용
+	 * null과 비어있는 문자(' ')를 체크 하기 위해 사용
 	 * @param $string
 	 * @return bool
 	 */
