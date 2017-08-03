@@ -58,6 +58,22 @@ abstract class PlatformBaseModel
 	/**
 	 * @return static
 	 */
+	public static function createPlatformBookWrite()
+	{
+		return self::create(GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_BOOK_DB_WRITE));
+	}
+
+	/**
+	 * @return static
+	 */
+	public static function createPlatformBookRead()
+	{
+		return self::create(GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_BOOK_DB_READ));
+	}
+
+	/**
+	 * @return static
+	 */
 	public static function createCpstatWrite()
 	{
 		return self::create(GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_CP_STATISTICS));
