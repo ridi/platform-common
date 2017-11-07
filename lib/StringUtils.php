@@ -334,6 +334,11 @@ class StringUtils
 		return str_replace($removes, "", $string);
 	}
 
+	public static function convertNonBreakingSpaceToSpace(string $string): string
+	{
+		return str_replace(self::$unicode_non_breaking_space, ' ', $string);
+	}
+
 	public static function removeNonPrintableAscii($string)
 	{
 		self::initializeNonPrintableAscii();
