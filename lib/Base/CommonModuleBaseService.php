@@ -10,12 +10,16 @@ abstract class CommonModuleBaseService
 
 	public static function getMasterInstance()
 	{
-		return new static(PlatformConnectionGroup::COMMON_MODULE_WRITE);
+		$class_name = get_called_class();
+
+		return new $class_name(PlatformConnectionGroup::COMMON_MODULE_WRITE);
 	}
 
 	public static function getDefaultInstance()
 	{
-		return new static(PlatformConnectionGroup::COMMON_MODULE_READ);
+		$class_name = get_called_class();
+
+		return new $class_name(PlatformConnectionGroup::COMMON_MODULE_READ);
 	}
 
 	protected function __constuct(string $connection_group_name)
