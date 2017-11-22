@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [1.1.0] - 2017-10-13
+## [0.1.8] - 2017-11-21
 ### Added
 - Added cron master util
+- Added PlatformConnectionGroup, CommonModuleBaseService class
+- Added method - replace non-breaking space to space
