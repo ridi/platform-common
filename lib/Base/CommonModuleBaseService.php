@@ -12,7 +12,7 @@ abstract class CommonModuleBaseService
 	{
 		$class_name = get_called_class();
 
-		return new $class_name(PlatformConnectionGroup::COMMON_MODULE_WRITE);
+		return new $class_name(PlatformConnectionGroup::COMMON_MODULE_READ_MASTER);
 	}
 
 	public static function getDefaultInstance()
