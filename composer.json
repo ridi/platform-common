@@ -9,6 +9,9 @@
             "email": "blu@ridi.com"
         }
     ],
+    "require": {
+        "ridibooks/platform-gnfdb": "^0.1.11"
+    },
     "autoload": {
         "psr-4": {
             "Ridibooks\\Platform\\Common\\": "lib"

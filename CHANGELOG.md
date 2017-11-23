@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.1.10] - 2017-11-22
+### Changed
+- Change connection group name to `\Gnf\Db\Base`
+- Add composer dependency - `ridibooks/platform-gnfdb`
+
+### Fixed
+- Missing return type in `CommonModuleBaseService` class
+
 ## [0.1.9] - 2017-11-22
 ### Changed
 - Change `CommonModuleBaseService` construct visibility - protected -> public
