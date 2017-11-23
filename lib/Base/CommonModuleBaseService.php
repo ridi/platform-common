@@ -8,6 +8,8 @@ abstract class CommonModuleBaseService
 {
 	/** @var \Gnf\db\base */
 	protected $db;
+	/** @var string */
+	protected $connection_group_name;
 
 	/** @return static */
 	public static function getMasterInstance()
@@ -27,6 +29,8 @@ abstract class CommonModuleBaseService
 
 	public function __construct(string $connection_group_name)
 	{
+		$this->connection_group_name = $connection_group_name;
+
 		$this->db = GnfConnectionProvider::getConnection($connection_group_name);
 	}
 }
