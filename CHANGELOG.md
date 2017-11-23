@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.1.9] - 2017-11-22
+### Changed
+- Change `CommonModuleBaseService` construct visibility - protected -> public
+
+### Fixed
+- Fix `CommonModuleBaseService` construct method typo
+
 ## [0.1.8] - 2017-11-21
 ### Added
 - Added cron master util

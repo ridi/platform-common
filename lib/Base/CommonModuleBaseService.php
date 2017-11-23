@@ -22,7 +22,7 @@ abstract class CommonModuleBaseService
 		return new $class_name(PlatformConnectionGroup::COMMON_MODULE_READ);
 	}
 
-	protected function __constuct(string $connection_group_name)
+	public function __construct(string $connection_group_name)
 	{
 		$this->connection_group_name = $connection_group_name;
 	}
