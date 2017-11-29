@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+
+## [1.1.12] - 2017-11-29
+### Fixed
+- Fix checkMailAddress in ValidationUtils
+  ex) xxxx@aa-aaa.co.kr
+  
 ## [0.1.11] - 2017-11-22
 ### Added
 - Added `connection_group_name` property in `CommonModuleBaseService`
