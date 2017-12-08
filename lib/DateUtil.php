@@ -4,8 +4,8 @@ namespace Ridibooks\Platform\Common;
 
 class DateUtil
 {
-	public static function isWeekend($date)
-	{
-		return date('N', strtotime($date)) >= 6;
-	}
+    public static function isWeekend($date)
+    {
+        return date('N', strtotime($date)) >= 6;
+    }
 }
