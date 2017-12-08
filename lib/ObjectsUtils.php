@@ -19,7 +19,7 @@ class ObjectsUtils
      */
     public static function extractValuesByKey($objects, $key)
     {
-		$return = [];
+        $return = [];
         foreach ($objects as $object) {
             $return[] = $object->$key;
         }
