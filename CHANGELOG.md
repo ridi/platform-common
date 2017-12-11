@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Change tab to space
 
+### Added
+- Added `closeConnection` to `CommonModuleBaseService`
 
 ## [1.1.12] - 2017-11-29
 ### Fixed

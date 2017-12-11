@@ -33,4 +33,9 @@ abstract class CommonModuleBaseService
 
         $this->db = GnfConnectionProvider::getConnection($connection_group_name);
     }
+
+    public function closeConnection()
+    {
+        GnfConnectionProvider::closeConnection($this->connection_group_name);
+    }
 }
