@@ -6,14 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [1.1.13] - 2017-12-14
+## [0.1.13] - 2017-12-14
 ### Changed
 - Change tab to space
 
 ### Added
 - Added `closeConnection` to `CommonModuleBaseService`
 
-## [1.1.12] - 2017-11-29
+## [0.1.12] - 2017-11-29
 ### Fixed
 - Fix checkMailAddress in ValidationUtils
   ex) xxxx@aa-aaa.co.kr
