@@ -2,8 +2,8 @@
 
 namespace Ridibooks\Platform\Common\Base;
 
-use Ridibooks\Library\DB\ConnectionProvider;
 use Ridibooks\Library\DB\GnfConnectionProvider;
+use Ridibooks\Platform\Common\Constant\PlatformConnectionGroup;
 
 class AdminBaseModel
 {
@@ -18,32 +18,32 @@ class AdminBaseModel
 
     protected static function getDb()
     {
-        return GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_WRITE);
+        return GnfConnectionProvider::getConnection(PlatformConnectionGroup::PLATFORM_WRITE);
     }
 
     protected static function getReadDb()
     {
-        return GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_READ);
+        return GnfConnectionProvider::getConnection(PlatformConnectionGroup::PLATFORM_READ);
     }
 
     protected static function getPlatformOnlyWritableDb()
     {
-        return GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_ONLY_DB_WRITE);
+        return GnfConnectionProvider::getConnection(PlatformConnectionGroup::PLATFORM_ONLY_DB_WRITE);
     }
 
     protected static function getPlatformOnlyReadDb()
     {
-        return GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_ONLY_DB_READ);
+        return GnfConnectionProvider::getConnection(PlatformConnectionGroup::PLATFORM_ONLY_DB_READ);
     }
 
     protected static function getCpWritableDb()
     {
-        return GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_CP_STATISTICS);
+        return GnfConnectionProvider::getConnection(PlatformConnectionGroup::CP_STATISTICS);
     }
 
     protected static function getCpReadDb()
     {
-        return GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_CP_STATISTICS_READ);
+        return GnfConnectionProvider::getConnection(PlatformConnectionGroup::CP_STATISTICS_READ);
     }
 
     /**
@@ -55,6 +55,7 @@ class AdminBaseModel
     public static function transactional($func)
     {
         $db = self::getDb();
+
         return $db->transactional($func);
     }
 }
