@@ -2,8 +2,8 @@
 namespace Ridibooks\Platform\Common;
 
 use Gnf\db\base;
-use Ridibooks\Library\DB\ConnectionProvider;
 use Ridibooks\Library\DB\GnfConnectionProvider;
+use Ridibooks\Platform\Common\Constant\PlatformConnectionGroup;
 
 abstract class PlatformBaseModel
 {
@@ -25,7 +25,7 @@ abstract class PlatformBaseModel
     public static function create(base $db = null)
     {
         if ($db === null) {
-            $db = GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_WRITE);
+            $db = GnfConnectionProvider::getConnection(PlatformConnectionGroup::PLATFORM_WRITE);
         }
 
         return new static($db);
@@ -36,7 +36,7 @@ abstract class PlatformBaseModel
      */
     public static function createRead()
     {
-        return self::create(GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_READ));
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::PLATFORM_READ));
     }
 
     /**
@@ -44,7 +44,7 @@ abstract class PlatformBaseModel
      */
     public static function createPlatformOnlyWrite()
     {
-        return self::create(GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_ONLY_DB_WRITE));
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::PLATFORM_ONLY_DB_WRITE));
     }
 
     /**
@@ -52,7 +52,7 @@ abstract class PlatformBaseModel
      */
     public static function createPlatformOnlyRead()
     {
-        return self::create(GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_ONLY_DB_READ));
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::PLATFORM_ONLY_DB_READ));
     }
 
     /**
@@ -60,7 +60,7 @@ abstract class PlatformBaseModel
      */
     public static function createPlatformBookWrite()
     {
-        return self::create(GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_BOOK_DB_WRITE));
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::PLATFORM_BOOK_DB_WRITE));
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class PlatformBaseModel
      */
     public static function createPlatformBookRead()
     {
-        return self::create(GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_PLATFORM_BOOK_DB_READ));
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::PLATFORM_BOOK_DB_READ));
     }
 
     /**
@@ -76,7 +76,7 @@ abstract class PlatformBaseModel
      */
     public static function createCpstatWrite()
     {
-        return self::create(GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_CP_STATISTICS));
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::CP_STATISTICS));
     }
 
     /**
@@ -84,7 +84,7 @@ abstract class PlatformBaseModel
      */
     public static function createCpstatRead()
     {
-        return self::create(GnfConnectionProvider::getConnection(ConnectionProvider::CONNECTION_GROUP_CP_STATISTICS_READ));
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::CP_STATISTICS_READ));
     }
 
     public function transactional(callable $callable)
