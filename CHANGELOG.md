@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.1.14] - 2018-01-18
+### Changed
+- Change connection group class reference: ConnectionProvider -> PlatformConnectionGroup
+
 ## [0.1.13] - 2017-12-14
 ### Changed
 - Change tab to space
