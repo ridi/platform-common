@@ -1,24 +1,18 @@
 {
-    "name": "ridibooks/platform-common",
-    "type": "library",
-    "description": "Ridibooks Platform's Common PHP Library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "박주현",
-            "email": "blu@ridi.com"
-        }
-    ],
-    "require": {
-        "ridibooks/platform-gnfdb": "^0.1.11"
-    },
-    "autoload": {
-        "psr-4": {
-            "Ridibooks\\Platform\\Common\\": "lib"
-        }
-    },
-    "suggest": {
-        "ridibooks/core": "dev-master",
-        "symfony/http-foundation": "^2.8.0"
+  "name": "ridibooks/platform-common",
+  "type": "library",
+  "description": "Ridibooks Platform's Common PHP Library",
+  "license": "MIT",
+  "require": {
+    "ridibooks/platform-gnfdb": "^0.1.11"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ridibooks\\Platform\\Common\\": "lib"
     }
+  },
+  "suggest": {
+    "ridibooks/core": "dev-master",
+    "symfony/http-foundation": "^2.8.0"
+  }
 }
