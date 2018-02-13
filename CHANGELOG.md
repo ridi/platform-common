@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.2.0] - 2018-02-13
+### Added
+- Move `MsgException` from `ridibooks/php-core`.
+### Removed
+- Remove deprecated paging methods from `AdminBaseService`.
+
 ## [0.1.15] - 2018-01-22
 ### Fixed
 - Fixed function removeTag : Add `replace` double quotation marks to html escaping `&quot;`
