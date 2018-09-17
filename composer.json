@@ -4,7 +4,7 @@
   "description": "Ridibooks Platform's Common PHP Library",
   "license": "MIT",
   "require": {
-    "ridibooks/platform-gnfdb": "^0.1.11"
+    "ridibooks/platform-gnfdb": "^0.1.12"
   },
   "autoload": {
     "psr-4": {
