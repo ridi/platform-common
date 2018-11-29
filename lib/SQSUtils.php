@@ -8,6 +8,7 @@ use Aws\Sqs\SqsClient;
 use Ridibooks\Platform\Common\Dto\AwsConfigDto;
 use Ridibooks\Platform\Common\Exception\MsgException;
 
+/** @property SqsClient $client */
 class SQSUtils extends AbstractAwsUtils
 {
     /** @var string */
@@ -25,12 +26,7 @@ class SQSUtils extends AbstractAwsUtils
         $this->queue_url = $queue_url;
     }
 
-    protected function getClient(): SqsClient
-    {
-        return $this->client;
-    }
-
-    protected function getClientType(): string
+    protected function getAwsClass(): string
     {
         return SqsClient::class;
     }
@@ -51,7 +47,7 @@ class SQSUtils extends AbstractAwsUtils
         ];
 
         try {
-            $this->getClient()->sendMessage($params);
+            $this->client->sendMessage($params);
         } catch (AwsException $e) {
             throw new MsgException($e->getMessage());
         }

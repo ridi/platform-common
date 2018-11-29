@@ -21,13 +21,7 @@ abstract class AbstractAwsUtils
         $this->connect($aws_config);
     }
 
-    abstract protected function getClientType();
-
-    /**
-     * $this->client->method() 접근시 method not found 에러가 뜨게 되므로 $this->getClient()->method() 로 접근하도록
-     * @return mixed
-     */
-    abstract protected function getClient();
+    abstract protected function getAwsClass();
 
     /**
      * @param AwsConfigDto $aws_config
@@ -35,7 +29,7 @@ abstract class AbstractAwsUtils
      */
     protected function connect(AwsConfigDto $aws_config)
     {
-        $client_type = $this->getClientType();
+        $client_type = $this->getAwsClass();
 
         try {
             $this->client = new $client_type($aws_config->exportToConnect());
