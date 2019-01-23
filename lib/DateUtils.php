@@ -209,4 +209,48 @@ class DateUtils
     {
         return strtotime($day . " days ago");
     }
+
+    /**
+     * @param string $check_date
+     * @param string $start_date
+     * @param string $end_date
+     * @return bool
+     * @throws \Exception
+     */
+    public static function checkInPeriod(string $check_date, string $start_date, string $end_date): bool
+    {
+        // FIXME : start_date만 있을때는 start_date보다 큰지, end_date만 있을때는 end_date보다 작은지의 부분적 비교도 가능하도록
+
+        $start_ts = strtotime($start_date);
+        $end_ts = strtotime($end_date);
+        $check_ts = strtotime($check_date);
+
+        if (!$start_ts) {
+            throw new \Exception('start_date is not valid datetime string');
+        }
+
+        if (!$end_ts) {
+            throw new \Exception('end_date is not valid datetime string');
+        }
+
+        if (!$check_ts) {
+            throw new \Exception('check_date is not valid datetime string');
+        }
+
+        return (($check_ts >= $start_ts) && ($check_ts <= $end_ts));
+    }
+
+    public static function normalizeDateTimeString(string $datetime)
+    {
+        // 0000.00.00 => 0000-00-00
+        $datetime = str_replace('.', '-', $datetime);
+
+        // 0000-00.00  00:00:00 => 0000-00-00 00:00:00
+        $datetime = str_replace('  ', ' ', $datetime);
+
+        // 0000-00-00 00:00:00 AM => 0000-00-00 00:00:00
+        $datetime = implode(' ', array_slice(explode(' ', $datetime), 0, 2));
+
+        return $datetime;
+    }
 }
