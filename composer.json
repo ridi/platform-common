@@ -5,7 +5,8 @@
   "license": "MIT",
   "require": {
     "ridibooks/platform-gnfdb": "^0.1.12",
-    "aws/aws-sdk-php": "^3.79"
+    "aws/aws-sdk-php": "^3.79",
+    "guzzlehttp/guzzle": "^6.3"
   },
   "autoload": {
     "psr-4": {
