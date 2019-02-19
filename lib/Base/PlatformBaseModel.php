@@ -1,5 +1,5 @@
 <?php
-namespace Ridibooks\Platform\Common;
+namespace Ridibooks\Platform\Common\Base;
 
 use Gnf\db\base;
 use Ridibooks\Library\DB\GnfConnectionProvider;
