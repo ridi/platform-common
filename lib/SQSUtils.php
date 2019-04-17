@@ -6,7 +6,7 @@ namespace Ridibooks\Platform\Common;
 use Aws\Exception\AwsException;
 use Aws\Sqs\SqsClient;
 use Ridibooks\Platform\Common\Dto\AwsConfigDto;
-use Ridibooks\Exception\MsgException;
+use Ridibooks\Platform\Common\Exception\MsgException;
 
 /** @property SqsClient $client */
 class SQSUtils extends AbstractAwsUtils

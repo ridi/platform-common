@@ -2,7 +2,7 @@
 
 namespace Ridibooks\Platform\Common\Util;
 
-use Ridibooks\Exception\MsgException;
+use Ridibooks\Platform\Common\Exception\MsgException;
 
 class ValidationUtils
 {
