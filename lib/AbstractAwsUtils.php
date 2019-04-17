@@ -5,7 +5,7 @@ namespace Ridibooks\Platform\Common;
 
 use Aws\Exception\AwsException;
 use Ridibooks\Platform\Common\Dto\AwsConfigDto;
-use Ridibooks\Platform\Common\Exception\MsgException;
+use Ridibooks\Exception\MsgException;
 
 abstract class AbstractAwsUtils
 {
