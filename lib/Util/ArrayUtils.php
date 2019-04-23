@@ -227,4 +227,15 @@ class ArrayUtils
 
         return $first_value;
     }
+
+    public static function excludeNull(array $array): array
+    {
+        foreach ($array as $idx => $value) {
+            if ($value === null) {
+                unset($array[$idx]);
+            }
+        }
+
+        return $array;
+    }
 }

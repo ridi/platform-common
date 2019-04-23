@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.6.3] - 2019-04-23
+### Added
+- Added function `excludeNull` to exclude only null values in param array in Util/ArrayUtils  
+
+## [0.6.2] - 2019-04-23
+### Added
+- Added function `excludeNull` to exclude only null values in param array  
+
 ## [0.6.1] - 2019-04-17
 ### Changed
 - Changed `Ridibooks\Exception\MsgException` to `Ridibooks\Platform\Common\Exception\MsgException`
