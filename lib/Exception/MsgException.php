@@ -1,7 +1,7 @@
 <?php
 namespace Ridibooks\Platform\Common\Exception;
 
-use Ridibooks\Library\SentryHelper;
+use Ridibooks\Platform\Common\Util\SentryHelper;
 
 class MsgException extends \Exception
 {

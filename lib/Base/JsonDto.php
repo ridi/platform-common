@@ -3,7 +3,7 @@
 namespace Ridibooks\Platform\Common\Base;
 
 use Ridibooks\Platform\Common\Exception\MsgException;
-use Ridibooks\Library\SentryHelper;
+use Ridibooks\Platform\Common\Util\SentryHelper;
 use Ridibooks\Platform\Common\Util\StringUtils;
 
 class JsonDto

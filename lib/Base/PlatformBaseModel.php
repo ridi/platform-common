@@ -2,8 +2,8 @@
 namespace Ridibooks\Platform\Common\Base;
 
 use Gnf\db\base;
-use Ridibooks\Library\DB\GnfConnectionProvider;
 use Ridibooks\Platform\Common\Constant\PlatformConnectionGroup;
+use Ridibooks\Platform\Common\DB\GnfConnectionProvider;
 
 abstract class PlatformBaseModel
 {
@@ -18,9 +18,10 @@ abstract class PlatformBaseModel
     }
 
     /**
-     * @param base $db
+     * @param base|null $db
      *
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function create(base $db = null)
     {
@@ -33,6 +34,7 @@ abstract class PlatformBaseModel
 
     /**
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function createRead()
     {
@@ -41,6 +43,7 @@ abstract class PlatformBaseModel
 
     /**
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function createSlave()
     {
@@ -49,6 +52,7 @@ abstract class PlatformBaseModel
 
     /**
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function createPlatformOnlyWrite()
     {
@@ -57,6 +61,7 @@ abstract class PlatformBaseModel
 
     /**
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function createPlatformOnlyRead()
     {
@@ -65,6 +70,7 @@ abstract class PlatformBaseModel
 
     /**
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function createPlatformOnlySlave()
     {
@@ -73,6 +79,7 @@ abstract class PlatformBaseModel
 
     /**
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function createPlatformBookWrite()
     {
@@ -81,6 +88,7 @@ abstract class PlatformBaseModel
 
     /**
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function createPlatformBookRead()
     {
@@ -89,6 +97,7 @@ abstract class PlatformBaseModel
 
     /**
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function createPlatformBookSlave()
     {
@@ -97,6 +106,7 @@ abstract class PlatformBaseModel
 
     /**
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function createCpstatWrite()
     {
@@ -105,6 +115,7 @@ abstract class PlatformBaseModel
 
     /**
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function createCpstatRead()
     {
@@ -113,12 +124,19 @@ abstract class PlatformBaseModel
 
     /**
      * @return static
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function createCpstatSlave()
     {
         return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::CP_STATISTICS_SLAVE));
     }
 
+    /**
+     * @param callable $callable
+     *
+     * @return bool
+     * @throws \Exception
+     */
     public function transactional(callable $callable)
     {
         return $this->db->transactional($callable);
