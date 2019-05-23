@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.7.1] - 2019-05-23
+### Changed
+- Changed `Ridibooks\Platform\Library\SentryHelper` to `Ridibooks\Platform\Common\Util\SentryHelper`
+- Changed `Ridibooks\Platform\Library\DB\GnfConnectionProvider` to `Ridibooks\Platform\Common\DB\GnfConnectionProvider`
+
 ## [0.7.0] - 2019-05-22
 ### Added
 - Added Classes `GnfConnectionProvider`, `AdaptableCache` and `SentryHelper` to remove dependency of `Php-Core`
