@@ -6,7 +6,9 @@
   "require": {
     "ridibooks/platform-gnfdb": "^0.1.12",
     "aws/aws-sdk-php": "^3.79",
-    "guzzlehttp/guzzle": "^6.3"
+    "guzzlehttp/guzzle": "^6.3",
+    "monolog/monolog": "^1.18.0",
+    "sentry/sentry": "^1.10"
   },
   "autoload": {
     "psr-4": {
@@ -15,6 +17,7 @@
   },
   "suggest": {
     "ridibooks/core": "dev-master",
-    "symfony/http-foundation": "^2.8.0"
+    "symfony/http-foundation": "^2.8.0",
+    "sentry/sentry": "Needed to use SentryHelper"
   }
 }
