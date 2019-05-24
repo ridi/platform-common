@@ -57,4 +57,32 @@ class AdaptableCache extends CacheProvider
     {
         return $this->impl->doGetStats();
     }
+
+    /**
+     * @param string $key
+     * @param int $threshold
+     * @param int $ttl
+     * @return bool
+     */
+    public static function isOverThresholdWithInc($key, $threshold, $ttl)
+    {
+        $cache = new self();
+
+        // FIXME: LOCK
+        $count = $cache->fetch($key);
+        if ($count) {
+            $count += 1;
+        } else {
+            $count = 1;
+        }
+
+        $cache->save($key, $count, $ttl);
+        // FIXME: UNLOCK
+
+        if ($count >= $threshold) {
+            return true;
+        }
+
+        return false;
+    }
 }
