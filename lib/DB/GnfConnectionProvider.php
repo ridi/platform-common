@@ -12,23 +12,47 @@ use Ridibooks\Platform\Common\Cache\AdaptableCache;
 class GnfConnectionProvider
 {
     /**
-     * @var base[]
+     * @var \Doctrine\DBAL\Connection[]
      */
     private static $connection_pool = [];
 
     /**
      * @param $group_name
      *
-     * @return base
+     * @return PDO
      * @throws \Doctrine\DBAL\DBALException
      */
     public static function getConnection($group_name)
     {
         if (!isset(self::$connection_pool[$group_name])) {
-            self::$connection_pool[$group_name] = new PDO(self::createConnection($group_name));
+            self::$connection_pool[$group_name] = self::createConnection($group_name);
         }
 
-        return self::$connection_pool[$group_name];
+        return new PDO(self::$connection_pool[$group_name]);
+    }
+
+    /**
+     * @param      $group_name
+     * @param bool $is_auto_reconnect
+     *
+     * @return Connection
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public static function getConnectionWithAutoReconnection($group_name, $is_auto_reconnect = false)
+    {
+        if (!isset(self::$connection_pool[$group_name])) {
+            self::$connection_pool[$group_name] = self::createConnection($group_name);
+        }
+
+        $connection = self::$connection_pool[$group_name];
+
+        // 접속 보장을 해야하는 경우 핑을 확인
+        if ($is_auto_reconnect && $connection->ping() === false) {
+            $connection->close();
+            $connection->connect();
+        }
+
+        return $connection;
     }
 
     /**
