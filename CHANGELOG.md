@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.7.2] - 2019-05-27
+### Changed
+- Revert usage of `GnfConnectionProvider` in PlatformBaseModel & CommonModuleBaseService
+ 
 ## [0.7.1] - 2019-05-23
 ### Changed
 - Changed `Ridibooks\Platform\Library\SentryHelper` to `Ridibooks\Platform\Common\Util\SentryHelper`

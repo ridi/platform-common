@@ -1,8 +1,8 @@
 <?php
 namespace Ridibooks\Platform\Common\Base;
 
+use Ridibooks\Library\DB\GnfConnectionProvider;
 use Ridibooks\Platform\Common\Constant\PlatformConnectionGroup;
-use Ridibooks\Platform\Common\DB\GnfConnectionProvider;
 
 abstract class CommonModuleBaseService
 {
