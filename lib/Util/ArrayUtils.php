@@ -14,20 +14,27 @@ class ArrayUtils
     {
         $diff_array = [];
 
+        // value 비교
+        if (!is_array($array1)) {
+            if ($array1 != $array2) {
+                return $array1;
+            } else {
+                return [];
+            }
+        }
+
         // array 비교
         foreach ($array1 as $key => $value) {
-            if (array_key_exists($key, $array2)) {
-                if (is_array($value)) {
-                    $recursive_diff = self::getArrayDiffRecursively($value, $array2[$key]);
-                    if (count($recursive_diff)) {
-                        $diff_array[$key] = $recursive_diff;
-                    }
+            if (is_array($value)) {
+                if (!is_array($array2[$key])) {
+                    $diff_array[$key] = $value;
                 } else {
-                    if ($value != $array2[$key]) {
-                        $diff_array[$key] = $value;
+                    $sub_diff_array = ArrayUtils::getArrayDiffRecursively($value, $array2[$key]);
+                    if (count($sub_diff_array)) {
+                        $diff_array[$key] = $sub_diff_array;
                     }
                 }
-            } else {
+            } elseif ($array2[$key] != $value) {
                 $diff_array[$key] = $value;
             }
         }
