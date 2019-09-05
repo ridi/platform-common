@@ -9,6 +9,10 @@ class DateUtils
     const DEFAULT_INFINITY_DATETIME = '9999-12-31 23:59:59';
     const DAYS_KR_SET = ['월', '화', '수', '목', '금', '토', '일'];
 
+    public static function getNow(): string
+    {
+        return date(self::DEFAULT_DATETIME_FORMAT);
+    }
     /**
      * @param \DateTime $datetime
      *

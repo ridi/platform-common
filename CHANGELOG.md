@@ -4,6 +4,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.7.6] - 2019-09-05
+### Added
+- Added function `rmdirRecursively` in `FileUtils` 
+
+## [0.7.5] - 2019-08-14
+### Changed
+- Modified function `getArrayDiffRecursively` in `ArrayUtils` 
+
+## [0.7.4] - 2019-08-05
+### Changed
+- Modified function `getArrayDiffRecursively` in `ArrayUtils` 
+
+## [0.7.3] - 2019-05-28
+### Added
+- Added `CountryUtils` in Util 
+
+### Changed
+- Changed Namespace of `MonologHelper`
+
+## [0.7.2] - 2019-05-27
+### Added
+- Added `CustomEmailValidator`, `PhoneNumberValidator`, `RfcEmailValidator`, and `ValidationHelper` in Validation 
+
+### Changed
+- Revert usage of `GnfConnectionProvider` in PlatformBaseModel & CommonModuleBaseService
+ 
 ## [0.7.1] - 2019-05-23
 ### Changed
 - Changed `Ridibooks\Platform\Library\SentryHelper` to `Ridibooks\Platform\Common\Util\SentryHelper`

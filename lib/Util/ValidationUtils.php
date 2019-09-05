@@ -7,6 +7,20 @@ use Ridibooks\Platform\Common\Exception\MsgException;
 class ValidationUtils
 {
     /**
+     * @param string $pattern
+     * @param string $subject
+     * @return bool
+     */
+    public static function match($pattern, $subject)
+    {
+        if (preg_match($pattern, $subject) === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 입력된 필드가 null이거나 비어있을(empty) 경우 exception
      * @param string $field
      * @param string $msg

@@ -1,5 +1,5 @@
 <?php
-namespace Ridibooks\Library;
+namespace Ridibooks\Platform\Common\Util;
 
 use Monolog\Handler\RavenHandler;
 use Monolog\Handler\RotatingFileHandler;

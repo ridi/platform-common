@@ -17,4 +17,22 @@ class FileUtils
         // '/' 와 '\' 가 포함될 수 없다.
         return preg_replace('/[\/\\\\]/', '_', $string);
     }
+
+    public static function rmdirRecursively($dir): void
+    {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    $target = $dir . "/" . $object;
+                    if (is_dir($target)) {
+                        self::rmdirRecursively($target);
+                    } else {
+                        unlink($target);
+                    }
+                }
+            }
+            rmdir($dir);
+        }
+    }
 }

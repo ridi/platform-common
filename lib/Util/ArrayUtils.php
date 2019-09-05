@@ -31,14 +31,14 @@ class ArrayUtils
                 } else {
                     $sub_diff_array = ArrayUtils::getArrayDiffRecursively($value, $array2[$key]);
                     if (count($sub_diff_array)) {
-//                        $diff_array[$key] = $sub_diff_array;
-                        $diff_array[$key] = $value;
+                        $diff_array[$key] = $sub_diff_array;
                     }
                 }
             } elseif ($array2[$key] != $value) {
                 $diff_array[$key] = $value;
             }
         }
+
         return $diff_array;
     }
 
