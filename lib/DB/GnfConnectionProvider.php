@@ -19,7 +19,7 @@ class GnfConnectionProvider
     /**
      * @param $group_name
      *
-     * @return PDO
+     * @return base
      * @throws \Doctrine\DBAL\DBALException
      */
     public static function getConnection($group_name)
