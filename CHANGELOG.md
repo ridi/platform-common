@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2019-09-05
+### Added
+- Added Classes `CustomPdoConnection`, `ReplicationStatusWatcher`, `SlaveServer`, `SlaveStatus`, `SlaveStatusConstant`
+for DB connections and monitoring
+- Added Classes `FileLock`, `MonologHelper`, `UrlHelper`, `AdaptableCache` and `CountryUtil`
+- Added Classes `ValidationHelper`, `CustomEmailValidator`, `RfcEmailValidator` and `PhoneNumberValidator` for validation
+- Added Function `getNow` in `DateUtils`
+
 ## [0.7.6] - 2019-09-05
 ### Added
 - Added function `rmdirRecursively` in `FileUtils` 

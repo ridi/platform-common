@@ -1,7 +1,6 @@
 <?php
-namespace Ridibooks\Platform\Common\Validation;
 
-use Ridibooks\Library\ExternalApi\MailgunHelper;
+namespace Ridibooks\Platform\Common\Validation;
 
 class ValidationHelper
 {
@@ -31,23 +30,5 @@ class ValidationHelper
     public static function isValidPhoneNumber($phone_number)
     {
         return PhoneNumberValidator::isValid($phone_number);
-    }
-
-    /**
-     * @param string $string
-     * @return bool
-     */
-    public static function isValidAbusiveWord($string)
-    {
-        return AbusiveWordValidator::isValid($string);
-    }
-
-    /**
-     * @param $email
-     * @return bool
-     */
-    public static function isValidEmailByMailgunApi($email)
-    {
-        return MailgunHelper::isVaildEmail($email);
     }
 }

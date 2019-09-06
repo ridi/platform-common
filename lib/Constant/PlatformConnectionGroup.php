@@ -3,6 +3,7 @@ namespace Ridibooks\Platform\Common\Constant;
 
 abstract class PlatformConnectionGroup
 {
+    const WRITE = 'write';
     const PLATFORM_WRITE = 'bom_platform_write';
     const PLATFORM_READ = 'bom_platform_read';
     const PLATFORM_SLAVE = 'bom_platform_slave';
