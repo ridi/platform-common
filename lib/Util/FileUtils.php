@@ -35,4 +35,23 @@ class FileUtils
             rmdir($dir);
         }
     }
+
+    public static function renameFile(string $src_path, string $dest_path): bool
+    {
+        $src_parsed_url = parse_url($src_path);
+        $dest_parsed_url = parse_url($dest_path);
+
+        if ($src_parsed_url['scheme'] !== $dest_parsed_url['scheme']) {
+            // 프로토콜이 다르면 dest로 file copy 후 원본 삭제
+            $copy_result = copy($src_path, $dest_path);
+
+            if (!$copy_result) {
+                return false;
+            }
+
+            return unlink($src_path);
+        }
+
+        return rename($src_path, $dest_path);
+    }
 }
