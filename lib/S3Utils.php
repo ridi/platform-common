@@ -14,12 +14,12 @@ class S3Utils
         string $region = 'ap-northeast-2',
         string $version = 'latest'
     ): void {
-        $credential = [
+        $credentials = [
             'key' => $access_key,
             'secret' => $secret_access_key,
         ];
 
-        self::registerStreamWrapper($credential, $region, $version);
+        self::registerStreamWrapper($credentials, $region, $version);
     }
 
     public static function registerStreamWrapperUsingDefaultCredential(
@@ -30,12 +30,12 @@ class S3Utils
         self::registerStreamWrapper($credential, $region, $version);
     }
 
-    private static function registerStreamWrapper($credential, string $region, string $version): void
+    private static function registerStreamWrapper($credentials, string $region, string $version): void
     {
         $config = [
             'region' => $region,
             'version' => $version,
-            'credential' => $credential,
+            'credentials' => $credentials,
         ];
 
         $client = new S3Client($config);
