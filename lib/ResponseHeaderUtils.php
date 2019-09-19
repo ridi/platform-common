@@ -2,9 +2,7 @@
 
 namespace Ridibooks\Platform\Common;
 
-/**
- * @deprecated
- */
+/** @deprecated */
 class ResponseHeaderUtils
 {
     /**

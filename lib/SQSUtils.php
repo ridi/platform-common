@@ -8,7 +8,10 @@ use Aws\Sqs\SqsClient;
 use Ridibooks\Platform\Common\Dto\AwsConfigDto;
 use Ridibooks\Platform\Common\Exception\MsgException;
 
-/** @property SqsClient $client */
+/**
+ * @property SqsClient $client
+ * @deprecated
+ */
 class SQSUtils extends AbstractAwsUtils
 {
     /** @var string */

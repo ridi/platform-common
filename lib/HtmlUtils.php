@@ -4,6 +4,7 @@ namespace Ridibooks\Platform\Common;
 
 use Ridibooks\Platform\Common\Exception\MsgException;
 
+/** @deprecated  */
 class HtmlUtils
 {
     public static $cms_allowable_tags = [

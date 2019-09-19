@@ -4,6 +4,7 @@ namespace Ridibooks\Platform\Common;
 
 use Symfony\Component\HttpFoundation\Response;
 
+/** @deprecated  */
 class CsvResponse extends Response
 {
     const UTF8_BOM = "\xEF\xBB\xBF";

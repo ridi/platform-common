@@ -2,6 +2,7 @@
 
 namespace Ridibooks\Platform\Common;
 
+/** @deprecated  */
 class PagingUtil
 {
     private $default_list_per_page = 10;

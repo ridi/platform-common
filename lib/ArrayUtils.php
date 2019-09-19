@@ -2,6 +2,7 @@
 
 namespace Ridibooks\Platform\Common;
 
+/** @deprecated  */
 class ArrayUtils
 {
     /**

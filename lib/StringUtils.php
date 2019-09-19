@@ -2,6 +2,7 @@
 
 namespace Ridibooks\Platform\Common;
 
+/** @deprecated  */
 class StringUtils
 {
     /* DB에서 찾아변경할때

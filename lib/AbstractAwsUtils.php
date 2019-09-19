@@ -7,6 +7,7 @@ use Aws\Exception\AwsException;
 use Ridibooks\Platform\Common\Dto\AwsConfigDto;
 use Ridibooks\Platform\Common\Exception\MsgException;
 
+/** @deprecated */
 abstract class AbstractAwsUtils
 {
     protected $client;

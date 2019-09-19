@@ -6,6 +6,7 @@ namespace Ridibooks\Platform\Common;
 use Aws\Credentials\CredentialProvider;
 use Aws\S3\S3Client;
 
+/** @deprecated */
 class S3Utils
 {
     public static function registerStreamWrapperUsingAccessKey(

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common;
 
+/** @deprecated  */
 class FileLockUtils
 {
     private const READ_TIMEOUT_RESOLUTION_MS = 250;
