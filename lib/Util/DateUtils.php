@@ -5,6 +5,8 @@ namespace Ridibooks\Platform\Common\Util;
 class DateUtils
 {
     const DEFAULT_DATETIME_FORMAT = 'Y-m-d H:i:s';
+    const DEFAULT_DATETIME_WITHOUT_FORMAT = 'YmdHis';
+
     const DEFAULT_EMPTY_DATETIME = '0000-00-00 00:00:00';
     const DEFAULT_INFINITY_DATETIME = '9999-12-31 23:59:59';
     const DAYS_KR_SET = ['월', '화', '수', '목', '금', '토', '일'];
