@@ -4,6 +4,22 @@ namespace Ridibooks\Platform\Common\Util;
 
 class DateUtils
 {
+    const YEAR = 'Y';
+    const MONTH = 'm';
+    const DAY = 'd';
+    const HOUR = 'H';
+    const MINUTE = 'i';
+    const SECOND = 's';
+
+    const TIME_TO_KR_NAME_MAP = [
+        self::YEAR => '년',
+        self::MONTH => '월',
+        self::DAY => '일',
+        self::HOUR => '시',
+        self::MINUTE => '분',
+        self::SECOND => '초',
+    ];
+    
     const DEFAULT_DATETIME_FORMAT = 'Y-m-d H:i:s';
     const DEFAULT_DATETIME_WITHOUT_FORMAT = 'YmdHis';
 
