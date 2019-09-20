@@ -16,7 +16,7 @@ class AwsConfigDto
     /* @var string */
     public $version;
 
-    public static function importFromKeys(
+    public static function importFromAccessKeys(
         string $key,
         string $secret,
         string $region = 'ap-northeast-2',

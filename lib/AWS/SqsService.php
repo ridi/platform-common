@@ -11,7 +11,7 @@ use Ridibooks\Platform\Common\Exception\MsgException;
 /**
  * @property SqsClient $client
  */
-class SQSUtils extends AbstractAwsService
+class SqsService extends AbstractAwsService
 {
     /** @var string */
     private $queue_url;

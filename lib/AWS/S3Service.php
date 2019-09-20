@@ -20,7 +20,7 @@ class S3Service extends AbstractAwsService
         string $region = 'ap-northeast-2',
         string $version = 'latest'
     ): void {
-        $aws_config_dto = AwsConfigDto::importFromKeys($access_key, $secret_access_key, $region, $version);
+        $aws_config_dto = AwsConfigDto::importFromAccessKeys($access_key, $secret_access_key, $region, $version);
 
         self::registerStreamWrapper($aws_config_dto);
     }
