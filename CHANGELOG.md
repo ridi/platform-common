@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.10.6] - 2019-09-23
+## Added
+- Add classes for `S3Service` and `SqsService` in `AWS`
+- Add constant `DEFAULT_DATETIME_WITHOUT_FORMAT` in DateUtils
+- Add constants for date format in DateUtils
+- Deprecated Classes that don't have classified namespace
+
 ## [0.10.5] - 2019-09-19
 ## Added
 - Add classes `DbUtils`, `ExceptionUtils`, `PingService`
