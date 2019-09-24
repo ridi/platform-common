@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\AWS;
 
+use Aws\AwsClient;
 use Aws\Exception\AwsException;
 use Ridibooks\Platform\Common\AWS\Dto\AwsConfigDto;
 use Ridibooks\Platform\Common\Exception\MsgException;
@@ -18,23 +19,23 @@ abstract class AbstractAwsService
      */
     public function __construct(AwsConfigDto $aws_config)
     {
-        $this->connect($aws_config);
+        $aws_class = $this->getAwsClass();
+
+        $this->client = new $aws_class($aws_config->exportToConnect());
     }
 
     abstract protected function getAwsClass();
 
     /**
      * @param AwsConfigDto $aws_config
+     *
+     * @return static
      * @throws MsgException
      */
-    protected function connect(AwsConfigDto $aws_config)
+    public static function connect(AwsConfigDto $aws_config)
     {
-        $aws_class = $this->getAwsClass();
-
         try {
-            if ($this->client === null) {
-                $this->client = new $aws_class($aws_config->exportToConnect());
-            }
+            return new static($aws_config);
         } catch (AwsException $e) {
             throw new MsgException($e->getMessage());
         }

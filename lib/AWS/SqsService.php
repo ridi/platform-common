@@ -22,10 +22,10 @@ class SqsService extends AbstractAwsService
      * @param AwsConfigDto $aws_config
      * @throws MsgException
      */
-    public function __construct(string $queue_url, AwsConfigDto $aws_config)
+    public function __construct(AwsConfigDto $aws_config)
     {
         parent::__construct($aws_config);
-        $this->queue_url = $queue_url;
+        $this->queue_url = $aws_config->params['queue_url'];
     }
 
     protected function getAwsClass(): string

@@ -15,12 +15,15 @@ class AwsConfigDto
     public $region;
     /* @var string */
     public $version;
+    /** @var array */
+    public $params = [];
 
     public static function importFromAccessKeys(
         string $key,
         string $secret,
         string $region = 'ap-northeast-2',
-        string $version = 'latest'
+        string $version = 'latest',
+        array $params = []
     ): self {
         $dto = new self;
         $dto->key = $key;
@@ -32,6 +35,7 @@ class AwsConfigDto
 
         $dto->region = $region;
         $dto->version = $version;
+        $dto->params = $params;
 
         return $dto;
     }
@@ -39,12 +43,14 @@ class AwsConfigDto
     public static function importFromCredentials(
         $credentials,
         string $region = 'ap-northeast-2',
-        string $version = 'latest'
+        string $version = 'latest',
+        array $params = []
     ): self {
         $dto = new self;
         $dto->credentials = $credentials;
         $dto->region = $region;
         $dto->version = $version;
+        $dto->params = $params;
 
         return $dto;
     }
