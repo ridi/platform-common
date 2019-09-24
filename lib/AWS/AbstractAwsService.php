@@ -32,7 +32,9 @@ abstract class AbstractAwsService
         $aws_class = $this->getAwsClass();
 
         try {
-            $this->client = new $aws_class($aws_config->exportToConnect());
+            if ($this->client === null) {
+                $this->client = new $aws_class($aws_config->exportToConnect());
+            }
         } catch (AwsException $e) {
             throw new MsgException($e->getMessage());
         }
