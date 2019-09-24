@@ -12,7 +12,7 @@ use Aws\S3\Transfer;
 */
 class S3Service extends AbstractAwsService
 {
-    protected function getAwsClass()
+    protected static function getAwsClass()
     {
         return S3Client::class;
     }
