@@ -28,38 +28,41 @@ abstract class AbstractAwsService
     abstract protected static function getAwsClass();
 
     /**
+     * @param string $client_name
      * @param AwsConfigDto|null $aws_config_dto
      *
      * @return AbstractAwsService
      * @throws MsgException
      */
-    public static function connect(?AwsConfigDto $aws_config_dto)
+    public static function connect(string $client_name, ?AwsConfigDto $aws_config_dto = null)
     {
-        $client = self::getClient($aws_config_dto);
         try {
-            return new static($client);
+            $client = self::getClient($client_name, $aws_config_dto);
+            $called_class = get_called_class();
+
+            return new $called_class($client);
         } catch (AwsException $e) {
             throw new MsgException($e->getMessage());
         }
     }
 
     /**
+     * @param string $client_name
      * @param AwsConfigDto|null $aws_config_dto
      *
      * @return AwsClient|null
      */
-    private static function getClient(?AwsConfigDto $aws_config_dto): ?AwsClient
+    private static function getClient(string $client_name, ?AwsConfigDto $aws_config_dto): ?AwsClient
     {
-        $client_class = self::getAwsClass();
-
-        if (!isset(self::$client_pool[$client_class])) {
+        if (!isset(self::$client_pool[$client_name])) {
             if ($aws_config_dto === null) {
                 return null;
             }
 
-            self::$client_pool[$client_class] = new $client_class($aws_config_dto->exportToConnect());
+            $client_class = self::getAwsClass();
+            self::$client_pool[$client_name] = new $client_class($aws_config_dto->exportToConnect());
         }
 
-        return self::$client_pool[$client_class];
+        return self::$client_pool[$client_name];
     }
 }
