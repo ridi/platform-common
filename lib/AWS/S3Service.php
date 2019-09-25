@@ -16,7 +16,7 @@ class S3Service extends AbstractAwsService
 {
     private $s3_uri_parser;
 
-    private function __construct()
+    protected function __construct()
     {
         $this->s3_uri_parser = new S3UriParser();
     }
