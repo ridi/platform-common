@@ -12,36 +12,29 @@ use Ridibooks\Platform\Common\Exception\MsgException;
  */
 class SqsService extends AbstractAwsService
 {
-    /** @var string */
-    public $queue_url = '';
-
     protected function getAwsClass(): string
     {
         return SqsClient::class;
     }
 
-    public function setQueueUrl(string $queue_url): void
-    {
-        $this->queue_url = $queue_url;
-    }
-
     /**
+     * @param string $queue_url
      * @param array  $attributes
      * @param string $message
      * @param int    $delay_seconds
      *
      * @throws MsgException
      */
-    public function addMessage(array $attributes, string $message, int $delay_seconds = 10): void
+    public function sendMessage(string $queue_url, array $attributes, string $message, int $delay_seconds = 10): void
     {
-        if (empty($this->queue_url)) {
+        if (empty($queue_url)) {
             throw new MsgException('empty queue url');
         }
 
         $params = [
             'DelaySeconds' => $delay_seconds,
             'MessageAttributes' => $attributes,
-            'QueueUrl' => $this->queue_url,
+            'QueueUrl' => $queue_url,
             'MessageBody' => $message,
         ];
 

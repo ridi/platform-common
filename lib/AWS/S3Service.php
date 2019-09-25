@@ -5,6 +5,7 @@ namespace Ridibooks\Platform\Common\AWS;
 
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
+use Aws\S3\S3UriParser;
 use Aws\S3\Transfer;
 use Ridibooks\Platform\Common\Util\FileUtils;
 
@@ -13,6 +14,13 @@ use Ridibooks\Platform\Common\Util\FileUtils;
 */
 class S3Service extends AbstractAwsService
 {
+    private $s3_uri_parser;
+
+    private function __construct()
+    {
+        $this->s3_uri_parser = new S3UriParser();
+    }
+
     protected function getAwsClass(): string
     {
         return S3Client::class;
@@ -49,5 +57,32 @@ class S3Service extends AbstractAwsService
         }
 
         return true;
+    }
+
+    /**
+     * bucket: The Amazon S3 bucket (null if none)
+     * key: The Amazon S3 key (null if none)
+     * path_style: Set to true if using path style, or false if not
+     * region: Set to a string if a non-class endpoint is used or null.
+     *
+     * @param string $src
+     *
+     * @return array
+     */
+    public function parseUri(string $src): array
+    {
+        return $this->s3_uri_parser->parse($src);
+    }
+
+    public function headObject(string $src)
+    {
+        $uri = $this->parseUri($src);
+
+        $params = [
+            'Bucket' => $uri['bucket'],
+            'Key' => $uri['key'],
+        ];
+
+        return $this->client->headObject($params);
     }
 }
