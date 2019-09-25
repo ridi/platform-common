@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.11.2] - 2019-09-25
+## Added
+- Add Functions in `FileUtils`
+## Fixed
+- Fix Function `transferFile` in `S3Service`
+
 ## [0.11.1] - 2019-09-25
 ## Fixed
 - Fix calling abstract method of `AbstractAwsService`

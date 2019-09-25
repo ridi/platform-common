@@ -6,6 +6,7 @@ namespace Ridibooks\Platform\Common\AWS;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\S3\Transfer;
+use Ridibooks\Platform\Common\Util\FileUtils;
 
 /**
 * @property S3Client $client
@@ -32,14 +33,14 @@ class S3Service extends AbstractAwsService
         stream_context_set_default($default);
     }
 
-    public function transferFile(string $s3_path, string $dest_path): bool
+    public function transferFile(string $src_path, string $dest_path): bool
     {
-        if (!is_dir($dest_path)) {
+        if (!FileUtils::isS3Scheme($dest_path) && !is_dir($dest_path)) {
             @mkdir($dest_path, 0777, true);
         }
 
         try {
-            $manager = new Transfer($this->client, $s3_path, $dest_path);
+            $manager = new Transfer($this->client, $src_path, $dest_path);
             $manager->transfer();
         } catch (S3Exception $se) {
             return false;
