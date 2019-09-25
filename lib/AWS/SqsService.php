@@ -5,7 +5,6 @@ namespace Ridibooks\Platform\Common\AWS;
 
 use Aws\Exception\AwsException;
 use Aws\Sqs\SqsClient;
-use Ridibooks\Platform\Common\AWS\Dto\AwsConfigDto;
 use Ridibooks\Platform\Common\Exception\MsgException;
 
 /**
@@ -14,33 +13,31 @@ use Ridibooks\Platform\Common\Exception\MsgException;
 class SqsService extends AbstractAwsService
 {
     /** @var string */
-    private $queue_url;
+    public $queue_url = '';
 
-    /**
-     * SQSUtils constructor.
-     * @param string $queue_url
-     * @param AwsConfigDto $aws_config
-     * @throws MsgException
-     */
-    public function __construct(string $queue_url, AwsConfigDto $aws_config)
-    {
-        parent::__construct($aws_config);
-        $this->queue_url = $queue_url;
-    }
-
-    protected function getAwsClass(): string
+    protected static function getAwsClass(): string
     {
         return SqsClient::class;
     }
 
+    public function setQueueUrl(string $queue_url): void
+    {
+        $this->queue_url = $queue_url;
+    }
+
     /**
-     * @param array $attributes
+     * @param array  $attributes
      * @param string $message
-     * @param int $delay_seconds
+     * @param int    $delay_seconds
+     *
      * @throws MsgException
      */
     public function addMessage(array $attributes, string $message, int $delay_seconds = 10): void
     {
+        if (empty($this->queue_url)) {
+            throw new MsgException('empty queue url');
+        }
+
         $params = [
             'DelaySeconds' => $delay_seconds,
             'MessageAttributes' => $attributes,
