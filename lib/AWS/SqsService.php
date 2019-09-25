@@ -15,7 +15,7 @@ class SqsService extends AbstractAwsService
     /** @var string */
     public $queue_url = '';
 
-    protected static function getAwsClass(): string
+    protected function getAwsClass(): string
     {
         return SqsClient::class;
     }
