@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\AWS;
 
-use Aws\S3\Exception\S3Exception;
+use Aws\Exception\AwsException;
 use Aws\S3\S3Client;
 use Aws\S3\S3UriParser;
 use Aws\S3\Transfer;
+use Ridibooks\Platform\Common\Exception\MsgException;
 use Ridibooks\Platform\Common\Util\FileUtils;
 
 /**
@@ -50,7 +51,7 @@ class S3Service extends AbstractAwsService
         try {
             $manager = new Transfer($this->client, $src_path, $dest_path);
             $manager->transfer();
-        } catch (S3Exception $se) {
+        } catch (AwsException $se) {
             return false;
         } catch (\Exception $e) {
             return false;
@@ -74,15 +75,27 @@ class S3Service extends AbstractAwsService
         return $this->s3_uri_parser->parse($src);
     }
 
+    /**
+     * @param string $src
+     *
+     * @return \Aws\Result
+     * @throws MsgException
+     */
     public function headObject(string $src)
     {
-        $uri = $this->parseUri($src);
+        try {
+            $uri = $this->parseUri($src);
 
-        $params = [
-            'Bucket' => $uri['bucket'],
-            'Key' => $uri['key'],
-        ];
+            $params = [
+                'Bucket' => $uri['bucket'],
+                'Key' => $uri['key'],
+            ];
 
-        return $this->client->headObject($params);
+            return $this->client->headObject($params);
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        }
     }
 }
