@@ -98,4 +98,26 @@ class S3Service extends AbstractAwsService
             throw new MsgException($e->getMessage());
         }
     }
+
+    /**
+     * @param string               $src
+     * @param int|string|\DateTime $expires The time at which the URL should
+     *                                      expire. This can be a Unix timestamp, a PHP DateTime object, or a
+     *                                      string that can be evaluated by strtotime.
+     *
+     * @return string
+     */
+    public function createPresignedUrl(string $src, $expires): string
+    {
+        $uri = $this->parseUri($src);
+
+        $params = [
+            'Bucket' => $uri['bucket'],
+            'Key' => $uri['key'],
+        ];
+        $cmd = $this->client->getCommand('GetObject', $params);
+        $request = $this->client->createPresignedRequest($cmd, $expires);
+
+        return (string)$request->getUri();
+    }
 }
