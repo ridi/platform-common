@@ -11,8 +11,8 @@ use Ridibooks\Platform\Common\Exception\MsgException;
 use Ridibooks\Platform\Common\Util\FileUtils;
 
 /**
-* @property S3Client $client
-*/
+ * @property S3Client $client
+ */
 class S3Service extends AbstractAwsService
 {
     private $s3_uri_parser;
@@ -105,19 +105,49 @@ class S3Service extends AbstractAwsService
      *                                      expire. This can be a Unix timestamp, a PHP DateTime object, or a
      *                                      string that can be evaluated by strtotime.
      *
-     * @return string
+     * @return string|null
+     * @throws MsgException
      */
-    public function createPresignedUrl(string $src, $expires): string
+    public function createPresignedUrl(string $src, $expires): ?string
     {
+        if (!$this->doesObjectExist($src)) {
+            return null;
+        }
         $uri = $this->parseUri($src);
 
         $params = [
             'Bucket' => $uri['bucket'],
             'Key' => $uri['key'],
         ];
-        $cmd = $this->client->getCommand('GetObject', $params);
-        $request = $this->client->createPresignedRequest($cmd, $expires);
+
+        try {
+            $cmd = $this->client->getCommand('GetObject', $params);
+            $request = $this->client->createPresignedRequest($cmd, $expires);
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        }
 
         return (string)$request->getUri();
+    }
+
+    /**
+     * @param string $src
+     *
+     * @return bool
+     * @throws MsgException
+     */
+    public function doesObjectExist(string $src): bool
+    {
+        try {
+            $uri = $this->parseUri($src);
+
+            return $this->client->doesObjectExist($uri['bucket'], $uri['key']);
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        }
     }
 }
