@@ -54,16 +54,16 @@ class FileUtils
 
     public static function isSameScheme(string $src_path, string $dest_path): bool
     {
-        $src_parsed_url = parse_url($src_path);
-        $dest_parsed_url = parse_url($dest_path);
+        $src_parsed_scheme = parse_url($src_path)['scheme'] ?? '';
+        $dest_parsed_scheme = parse_url($dest_path)['scheme'] ?? '';
 
-        return $src_parsed_url['scheme'] === $dest_parsed_url['scheme'];
+        return $src_parsed_scheme === $dest_parsed_scheme;
     }
 
     public static function isS3Scheme(string $path): bool
     {
         $parsed_url = parse_url($path);
 
-        return preg_match_all('/(s3|S3)/', $parsed_url['scheme']) !== false;
+        return strtolower($parsed_url['scheme'] ?? '') === 's3';
     }
 }
