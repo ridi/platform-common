@@ -9,7 +9,8 @@
     "guzzlehttp/guzzle": "^6.3",
     "monolog/monolog": "^1.18.0",
     "sentry/sentry": "^1.10",
-    "ext-json": "*"
+    "ext-json": "*",
+    "mailgun/mailgun-php": "^2.8.1"
   },
   "autoload": {
     "psr-4": {
@@ -18,7 +19,6 @@
   },
   "suggest": {
     "ridibooks/core": "dev-master",
-    "symfony/http-foundation": "^2.8.0",
-    "sentry/sentry": "Needed to use SentryHelper"
+    "symfony/http-foundation": "^2.8.0"
   }
 }
