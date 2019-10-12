@@ -21,7 +21,7 @@ class HtmlTableDto
         return $dto;
     }
 
-    public static function importFromTitleAndDicts(string $title, array $dicts = []): self
+    public static function importFromTitleAndDicts(string $title, $dicts = []): self
     {
         $dto = new self;
         $dto->title = $title;
