@@ -57,8 +57,7 @@ class SqsService extends AbstractAwsService
         string $group_id,
         string $deduplication_id,
         array $attributes,
-        string $message,
-        int $delay_seconds = 10
+        string $message
     ): void {
         if (empty($queue_url)) {
             throw new MsgException('empty queue url');
@@ -67,7 +66,6 @@ class SqsService extends AbstractAwsService
         $params = [
             'MessageGroupId' => $group_id,
             'MessageDeduplicationId' => $deduplication_id,
-            'DelaySeconds' => $delay_seconds,
             'MessageAttributes' => $attributes,
             'QueueUrl' => $queue_url,
             'MessageBody' => $message,
