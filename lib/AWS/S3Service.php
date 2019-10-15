@@ -123,10 +123,10 @@ class S3Service extends AbstractAwsService
         try {
             $cmd = $this->client->getCommand('GetObject', $params);
             $request = $this->client->createPresignedRequest($cmd, $expires);
-        } catch (AwsException $se) {
-            throw new MsgException($se->getMessage());
-        } catch (\Exception $e) {
-            throw new MsgException($e->getMessage());
+        } catch (\Throwable $e) {
+            trigger_error($e->getMessage());
+
+            return null;
         }
 
         return (string)$request->getUri();
@@ -144,10 +144,10 @@ class S3Service extends AbstractAwsService
             $uri = $this->parseUri($src);
 
             return $this->client->doesObjectExist($uri['bucket'], $uri['key']);
-        } catch (AwsException $se) {
-            throw new MsgException($se->getMessage());
-        } catch (\Exception $e) {
-            throw new MsgException($e->getMessage());
+        } catch (\Throwable $e) {
+            trigger_error($e->getMessage());
+
+            return false;
         }
     }
 }
