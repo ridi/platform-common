@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.11.12] - 2019-10-15
+## Fixed
+- Change `MsgExpcetion` to `AwsException` in `SqsService`
+- Fix fail message description in `SqsService::sendMessage`
+## Added
+- Add `SqsService::sendMessageToFifoQueue` method
+
 ## [0.11.11] - 2019-10-15
 ## Fixed
 - Use trigger_error `createPresignedUrl`, `doesObjectExist`  in `S3Service`
@@ -14,8 +21,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.11.9] - 2019-10-10
 ## Added
-- Add Email Services
-- Add mailgun/mailgun-php in composer.json
+- Add `Email` Services
+- Add `mailgun/mailgun-php` in composer.json
 
 ## [0.11.8] - 2019-10-10
 ## Added
@@ -23,7 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.11.7] - 2019-10-07
 ## Fixed
-- Fix support null schema in `FileUtils::isS3Scheme`, `isSameScheme` 
+- Fix support `null` schema in `FileUtils::isS3Scheme`, `isSameScheme` 
 
 ## [0.11.6] - 2019-10-07
 ## Added

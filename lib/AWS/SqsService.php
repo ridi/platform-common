@@ -44,11 +44,44 @@ class SqsService extends AbstractAwsService
             $this->client->sendMessage($params);
         } catch (AwsException $e) {
             SentryHelper::triggerSentryMessage(
-                'Fail To Receive Message From :' . $queue_url . PHP_EOL
+                'Fail To Send Message From :' . $queue_url . PHP_EOL
                 . 'Reason : ' . PHP_EOL
                 . $e->getMessage()
             );
-            throw new MsgException($e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function sendMessageToFifoQueue(
+        string $queue_url,
+        string $group_id,
+        string $deduplication_id,
+        array $attributes,
+        string $message,
+        int $delay_seconds = 10
+    ): void {
+        if (empty($queue_url)) {
+            throw new MsgException('empty queue url');
+        }
+
+        $params = [
+            'MessageGroupId' => $group_id,
+            'MessageDeduplicationId' => $deduplication_id,
+            'DelaySeconds' => $delay_seconds,
+            'MessageAttributes' => $attributes,
+            'QueueUrl' => $queue_url,
+            'MessageBody' => $message,
+        ];
+
+        try {
+            $this->client->sendMessage($params);
+        } catch (AwsException $e) {
+            SentryHelper::triggerSentryMessage(
+                'Fail To Send Message From :' . $queue_url . PHP_EOL
+                . 'Reason : ' . PHP_EOL
+                . $e->getMessage()
+            );
+            throw $e;
         }
     }
 
@@ -80,7 +113,7 @@ class SqsService extends AbstractAwsService
                 . 'Reason : ' . PHP_EOL
                 . $e->getMessage()
             );
-            throw new MsgException($e->getMessage());
+            throw $e;
         }
 
         $items = $receive_result->get('Messages');
@@ -111,7 +144,7 @@ class SqsService extends AbstractAwsService
                 . 'Reason : ' . PHP_EOL
                 . $e->getMessage()
             );
-            throw new MsgException($e->getMessage());
+            throw $e;
         }
     }
 }
