@@ -120,11 +120,12 @@ class SqsService extends AbstractAwsService
         }
         unset($receive_result);
 
-        return collect($items)
-            ->map(function ($item) {
-                return SqsReceivedMessageDto::importFromReceivedItem($item);
-            })
-            ->all();
+        $message_dtos = [];
+        foreach ($items as $item) {
+            $message_dtos[] = SqsReceivedMessageDto::importFromReceivedItem($item);
+        }
+
+        return $message_dtos;
     }
 
     public function deleteMessage(string $queue_url, string $receipt_handle): void
