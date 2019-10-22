@@ -1,0 +1,27 @@
+<?php
+declare(strict_types=1);
+
+namespace Ridibooks\Platform\Common\Auth;
+
+use Firebase\JWT\JWT;
+
+class JwtUtils
+{
+    public const ALG_RS256 = 'RS256';
+
+    /** @var string */
+    private $public_key;
+    /** @var string - using TestJewUtils */
+    protected $algorithm;
+
+    public function __construct(string $public_key, string $algorithm)
+    {
+        $this->public_key = $public_key;
+        $this->algorithm = $algorithm;
+    }
+
+    public function decode(string $jwt): array
+    {
+        return (array)JWT::decode($jwt, $this->public_key, [$this->algorithm]);
+    }
+}
