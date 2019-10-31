@@ -1,11 +1,11 @@
 <?php
 
-namespace  Ridibooks\Platform\Common\Batch;
+namespace  Ridibooks\Platform\Common\System;
 
 class SignalManager
 {
     /** @var string pcntl_signal의 handler */
-    public const PCNTL_SIGNAL_HANDLER = 'Ridibooks\Platform\Common\Batch\SignalManager::signalHandler';
+    public const PCNTL_SIGNAL_HANDLER = 'Ridibooks\Platform\Common\System\SignalManager::signalHandler';
 
     /** @var bool */
     private static $CONTINUE = true;
