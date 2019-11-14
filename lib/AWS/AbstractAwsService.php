@@ -44,7 +44,7 @@ abstract class AbstractAwsService
      *
      * @return AwsClient|null
      */
-    private function getClient(string $client_name, ?AwsConfigDto $aws_config_dto): ?AwsClient
+    protected function getClient(string $client_name, ?AwsConfigDto $aws_config_dto): ?AwsClient
     {
         if (!isset(self::$client_pool[$client_name])) {
             if ($aws_config_dto === null) {
