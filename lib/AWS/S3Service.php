@@ -122,7 +122,8 @@ class S3Service extends AbstractAwsService
         ];
 
         if ($original_filename !== null) {
-            $params['ResponseContentDisposition'] = 'attachment; filename ="' . $original_filename . '"';
+            // https://stackoverflow.com/questions/3856362/php-rfc-2231-how-to-encode-utf-8-string-as-content-disposition-filename
+            $params['ResponseContentDisposition'] = 'attachment; filename*=UTF-8\'\'' . rawurlencode($original_filename);
         }
 
         try {
