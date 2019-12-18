@@ -145,4 +145,24 @@ class SqsService extends AbstractAwsService
             throw $e;
         }
     }
+
+    public function changeMessageVisibility(string $queue_url, string $receipt_handle, int $visibility_timeout): void
+    {
+        $params = [
+            'QueueUrl' => $queue_url,
+            'ReceiptHandle' => $receipt_handle,
+            'VisibilityTimeout' => $visibility_timeout,
+        ];
+
+        try {
+            $this->client->changeMessageVisibility($params);
+        } catch (AwsException $e) {
+            SentryHelper::triggerSentryMessage(
+                'Fail To Change Visibility: ' . $receipt_handle . ' From :' . $queue_url . PHP_EOL
+                . 'Reason : ' . PHP_EOL
+                . $e->getMessage()
+            );
+            throw $e;
+        }
+    }
 }

@@ -104,11 +104,12 @@ class S3Service extends AbstractAwsService
      * @param int|string|\DateTime $expires The time at which the URL should
      *                                      expire. This can be a Unix timestamp, a PHP DateTime object, or a
      *                                      string that can be evaluated by strtotime.
+     * @param string|null          $original_filename
      *
      * @return string|null
      * @throws MsgException
      */
-    public function createPresignedUrl(string $src, $expires): ?string
+    public function createPresignedUrl(string $src, $expires, string $original_filename = null): ?string
     {
         if (!$this->doesObjectExist($src)) {
             return null;
@@ -119,6 +120,10 @@ class S3Service extends AbstractAwsService
             'Bucket' => $uri['bucket'],
             'Key' => $uri['key'],
         ];
+
+        if ($original_filename !== null) {
+            $params['ResponseContentDisposition'] = 'attachment; filename ="' . $original_filename . '"';
+        }
 
         try {
             $cmd = $this->client->getCommand('GetObject', $params);
