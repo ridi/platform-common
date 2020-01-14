@@ -19,6 +19,13 @@ class TempFileService
         }
     }
 
+    public static function clean(): void
+    {
+        if (self::$instance !== null) {
+            self::$instance = null;
+        }
+    }
+
     public static function getInstance(): self
     {
         if (self::$instance === null) {
