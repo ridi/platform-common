@@ -99,7 +99,6 @@ class SqsService extends AbstractAwsService
             'AttributeNames' => ['SentTimestamp'],
             'MessageAttributeNames' => ['All'],
             'QueueUrl' => $queue_url,
-            'WaitTimeSeconds' => 0,
             'MaxNumberOfMessages' => $max_number_of_messages
         ];
 

@@ -4,161 +4,165 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.16.8] - 2020-02-10
+### Changed
+- Remove `WaitTimeSeconds` property in `SqsService::receiveMessages`
+
 ## [0.16.7] - 2020-02-04
-## Added
+### Added
 - Add static function `clean` in `TempFileService`
 - Add `php-http/guzzle6-adapter` ^1.1 version
 
 ## [0.16.6] - 2020-01-06
-## Added
+### Added
 - Add `RequestUtils`
 - Add Functions `getContent` and `getAllParams` in `RequestUtils`
 
 ## [0.16.5] - 2019-12-18
-## Fixed
+### Fixed
 - Fix hangul `original_filename` of function `createPresignedUrl` in `S3Service`
 
 ## [0.16.4] - 2019-12-18
-## Added
+### Added
 - Add `changeMessageVisibility` in `S3Service`
-## Changed
+### Changed
 - Support `original_filename` of function `createPresignedUrl` in `S3Service`
 
 ## [0.16.3] - 2019-12-03
-## Changed
+### Changed
 - Change `symfony/http-foundation` package minor version
 
 ## [0.16.2] - 2019-11-25
-## Fixed
+### Fixed
 - Fix `JwtAuthorizationFactory::$auth_dtos` usage
 
 ## [0.16.1] - 2019-11-14
-## Added
+### Added
 - Add static function `encode` in `JwtUtils`
-## Changed
+### Changed
 - Change visibility to protected of function `getClient` in `AbstractAwsService`
 
 ## [0.16.0] - 2019-11-07
-## Changed
+### Changed
 - Allow `symfony/http-foundation` ^4.3 version
 
 ## [0.15.0] - 2019-11-06
-## Changed
+### Changed
 - Change required version of `firebase/php-jwt`
 
 ## [0.14.0] - 2019-10-31
-## Changed
+### Changed
 - Change `Batch::SignalManager` to `System::SignalManager`
 
 ## [0.13.1] - 2019-10-31
-## Added
+### Added
 - Add `SignalManager` in `Batch` namespace
 
 ## [0.13.0] - 2019-10-22
-## Changed
+### Changed
 - Allow `symfony/http-foundation` ^3.4 version
 
 ## [0.12.0] - 2019-10-22
-## Added
+### Added
 - Add `TempFileService` in `File` namespace
 - Add Jwt Authorization classes
 - Add composer packages
   - `symfony/http-foundation`
   - `firebase/php-jwt`
-## Fixed
+### Fixed
 - Fix using `illuminate/support` functions in `SqsService`
 
 ## [0.11.14] - 2019-10-21
-## Added
+### Added
 - Add `ElapsedTime`
 
 ## [0.11.13] - 2019-10-15
-## Fixed
+### Fixed
 - Remove `DelaySeconds` in `SqsService::sendMessageToFifoQueue`
 
 ## [0.11.12] - 2019-10-15
-## Fixed
+### Fixed
 - Change `MsgExpcetion` to `AwsException` in `SqsService`
 - Fix fail message description in `SqsService::sendMessage`
-## Added
+### Added
 - Add `SqsService::sendMessageToFifoQueue` method
 
 ## [0.11.11] - 2019-10-15
-## Fixed
+### Fixed
 - Use trigger_error `createPresignedUrl`, `doesObjectExist`  in `S3Service`
 
 ## [0.11.10] - 2019-10-12
-## Fixed
+### Fixed
 - Fix support collections in `HtmlTableDto::importFromTitleAndDicts` 
 
 ## [0.11.9] - 2019-10-10
-## Added
+### Added
 - Add `Email` Services
 - Add `mailgun/mailgun-php` in composer.json
 
 ## [0.11.8] - 2019-10-10
-## Added
+### Added
 - Add Functions `receiveMessages`, `deleteMessage` in `SqsService`
 
 ## [0.11.7] - 2019-10-07
-## Fixed
+### Fixed
 - Fix support `null` schema in `FileUtils::isS3Scheme`, `isSameScheme` 
 
 ## [0.11.6] - 2019-10-07
-## Added
+### Added
 - Add Functions `doesObjectExist` in `S3Service`
 - Add Exception in s3Service
 
 ## [0.11.5] - 2019-10-01
-## Added
+### Added
 - Add Functions `createPresignedUrl` in `S3Service`
 - Add Exception in s3Service
 
 ## [0.11.4] - 2019-09-25
-## Fixed
+### Fixed
 - Fix `S3Service::__construct` visibility
 
 ## [0.11.3] - 2019-09-25
-## Added
+### Added
 - Add Functions `headObject` and `parseUri` in `S3Service`
-## Changed
+### Changed
 - Changed Function `addMessage` to `sendMessage` in `SqsService`
 
 ## [0.11.2] - 2019-09-25
-## Added
+### Added
 - Add Functions in `FileUtils`
-## Fixed
+### Fixed
 - Fix Function `transferFile` in `S3Service`
 
 ## [0.11.1] - 2019-09-25
-## Fixed
+### Fixed
 - Fix calling abstract method of `AbstractAwsService`
 
 ## [0.11.0] - 2019-09-25
-## Changed
+### Changed
 - Changed all functions to be reusable in `S3Service`
 
 ## [0.10.6] - 2019-09-23
-## Added
+### Added
 - Add classes for `S3Service` and `SqsService` in `AWS`
 - Add constant `DEFAULT_DATETIME_WITHOUT_FORMAT` in DateUtils
 - Add constants for date format in DateUtils
 - Deprecated Classes that don't have classified namespace
 
 ## [0.10.5] - 2019-09-19
-## Added
+### Added
 - Add classes `DbUtils`, `ExceptionUtils`, `PingService`
 
 ## [0.10.4] - 2019-09-19
-## Fixed
+### Fixed
 - Fix `S3Utils` credentials typo
 
 ## [0.10.3] - 2019-09-19
-## Added
+### Added
 - Add classes `ReplicationUtils` for check replication status between master and slave
 
 ## [0.10.2] - 2019-09-19
-## Added
+### Added
 - Add classes `S3Utils` for S3 stream wrapper
 
 ## [0.10.1] - 2019-09-18
