@@ -16,7 +16,6 @@ class SsmService extends AbstractAwsService
     public const TYPE_STRING_LIST = 'StringList';
     public const TYPE_SECURE_STRING = 'SecureString';
 
-
     protected function getAwsClass(): string
     {
         return SsmClient::class;
@@ -70,14 +69,14 @@ class SsmService extends AbstractAwsService
         }
     }
 
-    public function setParameter(string $name, array $params, string $type = self::TYPE_STRING): void
+    public function setParameter(string $name, array $params, bool $is_overwrite = true, array $options = []): void
     {
         $value = implode(PHP_EOL, $params);
 
-        $this->putParameter($name, $value, $type);
+        $this->putParameter($name, $value, $is_overwrite, $options);
     }
 
-    public function setParameterFromMap(string $name, array $params, string $type = self::TYPE_STRING): void
+    public function setParameterFromMap(string $name, array $params, bool $is_overwrite = true, array $options = []): void
     {
         $value_string = '';
         foreach ($params as $key => $value) {
@@ -87,16 +86,19 @@ class SsmService extends AbstractAwsService
             $value_string .= $key . '=' . $value . PHP_EOL;
         }
 
-        $this->putParameter($name, $value_string, $type);
+        $this->putParameter($name, $value_string, $is_overwrite, $options);
     }
 
-    private function putParameter(string $name, string $value, string $type): void
+    private function putParameter(string $name, string $value, bool $is_overwrite, array $options): void
     {
         $params = [
-            'Type' => $type,
+            'Type' => self::TYPE_STRING,
             'Name' => $name,
             'Value' => $value,
+            'Overwrite' => $is_overwrite,
         ];
+
+        $params = array_merge($params, $options);
 
         try {
             $result = $this->client->putParameter($params);
