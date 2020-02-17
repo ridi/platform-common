@@ -14,7 +14,7 @@ trait PlatformDtoTrait
      *
      * @throws \ReflectionException
      */
-    public function importFromRequest(Request $request): void
+    protected function importFromRequest(Request $request): void
     {
         $reflect = new ReflectionClass(get_called_class());
         $properties = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
@@ -29,7 +29,7 @@ trait PlatformDtoTrait
      *
      * @throws \Exception
      */
-    public function importFromArray(array $array): void
+    protected function importFromArray(array $array): void
     {
         $reflect = new ReflectionClass(get_called_class());
         $properties = $reflect->getDefaultProperties();
