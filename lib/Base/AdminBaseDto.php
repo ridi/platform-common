@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * 이 클래스는 "상속받은 클래스가 DTO" 임을 의미하고, 이와 관련된 최소한의 정보만 다룬다.
+ * @deprecated AdminBaseDto
  */
 class AdminBaseDto
 {
