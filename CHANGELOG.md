@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.17.6] - 2020-02-20
+### Add
+- Add Function `getQueueAttributes` and Dto `SqsQueueAttributeDto` in `SqsService`
+
+### Fixed
+- Fix Function `sendMessage` that When Sending message to queue, the delivery delay time follows what queue applies
+
+### Removed
+- Removed fourth param `delay_seconds` from function `sendMessage`: ref #Fixed-01
+
 ## [0.17.5] - 2020-02-17
 ### Removed
 - Removed `PlatformDtoTrait`

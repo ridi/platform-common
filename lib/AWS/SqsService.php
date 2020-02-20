@@ -5,36 +5,60 @@ namespace Ridibooks\Platform\Common\AWS;
 
 use Aws\Exception\AwsException;
 use Aws\Sqs\SqsClient;
+use Ridibooks\Platform\Common\AWS\Dto\SqsQueueAttributeDto;
 use Ridibooks\Platform\Common\AWS\Dto\SqsReceivedMessageDto;
 use Ridibooks\Platform\Common\Exception\MsgException;
 use Ridibooks\Platform\Common\Util\SentryHelper;
+use Ridibooks\Platform\Common\Util\StringUtils;
 
 /**
  * @property SqsClient $client
  */
 class SqsService extends AbstractAwsService
 {
+    /** @var SqsQueueAttributeDto[] */
+    private static $queue_attributes = [];
+
     protected function getAwsClass(): string
     {
         return SqsClient::class;
     }
 
+    public function getQueueAttributes(string $queue_url): ?SqsQueueAttributeDto
+    {
+        $parsed_queue_url = parse_url($queue_url);
+
+        try {
+            $queue_name = array_pop(explode('/', $parsed_queue_url['path']));
+            if (!isset(self::$queue_attributes[$queue_name])) {
+                $params = ['AttributeNames' => ['All'], 'QueueUrl' => $queue_url];
+                $result = $this->client->getQueueAttributes($params);
+                $result = $result->get('Attributes');
+                self::$queue_attributes[$queue_name] = SqsQueueAttributeDto::import($queue_url, $result);
+            }
+
+            return self::$queue_attributes[$queue_name];
+        } catch (AwsException $e) {
+            return null;
+        }
+    }
     /**
      * @param string $queue_url
      * @param array  $attributes
      * @param string $message
-     * @param int    $delay_seconds
      *
      * @throws MsgException
      */
-    public function sendMessage(string $queue_url, array $attributes, string $message, int $delay_seconds = 10): void
+    public function sendMessage(string $queue_url, array $attributes, string $message): void
     {
-        if (empty($queue_url)) {
-            throw new MsgException('empty queue url');
+        $queue_attribute_dto = $this->getQueueAttributes($queue_url);
+
+        if (StringUtils::isEmpty($queue_url) || $queue_attribute_dto === null) {
+            throw new MsgException('invalid queue url');
         }
 
         $params = [
-            'DelaySeconds' => $delay_seconds,
+            'DelaySeconds' => $queue_attribute_dto->delay_seconds,
             'MessageAttributes' => $attributes,
             'QueueUrl' => $queue_url,
             'MessageBody' => $message,
