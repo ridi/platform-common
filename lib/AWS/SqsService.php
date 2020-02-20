@@ -51,14 +51,11 @@ class SqsService extends AbstractAwsService
      */
     public function sendMessage(string $queue_url, array $attributes, string $message): void
     {
-        $queue_attribute_dto = $this->getQueueAttributes($queue_url);
-
-        if (StringUtils::isEmpty($queue_url) || $queue_attribute_dto === null) {
+        if (StringUtils::isEmpty($queue_url)) {
             throw new MsgException('invalid queue url');
         }
 
         $params = [
-            'DelaySeconds' => $queue_attribute_dto->delay_seconds,
             'MessageAttributes' => $attributes,
             'QueueUrl' => $queue_url,
             'MessageBody' => $message,

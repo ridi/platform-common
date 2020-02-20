@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add Function `getQueueAttributes` and Dto `SqsQueueAttributeDto` in `SqsService`
 
 ### Fixed
-- Fix Function `sendMessage` that When Sending message to queue, the delivery delay time follows what queue applies
+- Fix Function `sendMessage` that doesn't contain delay time in param to send message to use default value
+: `If you don't specify a value, the default value for the queue applies.`
+: https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-sqs-2012-11-05.html#sendmessage
 
 ### Removed
 - Removed fourth param `delay_seconds` from function `sendMessage`: ref #Fixed-01
