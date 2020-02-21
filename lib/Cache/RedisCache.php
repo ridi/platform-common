@@ -8,7 +8,7 @@ use Predis\Client;
 class RedisCache
 {
     /** @var Client|null */
-    private $client;
+    protected $client;
 
     public function __construct(string $host, int $port = 6379)
     {
