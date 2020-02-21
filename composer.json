@@ -13,7 +13,8 @@
     "ext-json": "*",
     "mailgun/mailgun-php": "^2.8.1",
     "symfony/http-foundation": "^2.8.50|^3.4.26|^4.3",
-    "firebase/php-jwt": "^4.0|^5.0"
+    "firebase/php-jwt": "^4.0|^5.0",
+    "predis/predis": "^1.1"
   },
   "autoload": {
     "psr-4": {
