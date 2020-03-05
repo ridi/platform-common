@@ -108,6 +108,18 @@ class StringUtils
         return $str;
     }
 
+    /**
+     * 두개 이상의 띄어쓰기(0x20)를 한개로 치환합니다.
+     *
+     * @param string $str 정규화된 문자열
+     *
+     * @see StringUtils::normalizeString()
+     */
+    public static function removeDoubleSpace(string $str): string
+    {
+        return preg_replace('/ {2,}/', ' ', $str) ?? $str;
+    }
+
     /**UTF-8 non-breaking-space 제거
      * @param string $string
      * @return string
