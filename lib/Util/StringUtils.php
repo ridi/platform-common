@@ -112,6 +112,7 @@ class StringUtils
      * 두개 이상의 띄어쓰기(0x20)를 한개로 치환합니다.
      *
      * @param string $str 정규화된 문자열
+     * @return string
      *
      * @see StringUtils::normalizeString()
      */
