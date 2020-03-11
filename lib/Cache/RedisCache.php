@@ -23,7 +23,7 @@ class RedisCache
     public function get(string $key): ?string
     {
         try {
-            if ($this->client !== null) {
+            if ($this->client !== null && $this->client->isConnected()) {
                 return $this->client->get($key);
             }
         } catch (\Exception $e) {
@@ -44,7 +44,7 @@ class RedisCache
     public function set(string $key, string $value, int $ttl): void
     {
         try {
-            if ($this->client !== null) {
+            if ($this->client !== null && $this->client->isConnected()) {
                 // setnx()은 호출 시점에서 해당하는 key-value가 존재하지 않는 경우에만 set이 성공한다.
                 // set 성공 시 return 1, 실패 시 return 0
                 $result = $this->client->setnx($key, $value);
