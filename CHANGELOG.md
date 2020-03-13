@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.18.4] - 2020-03-13
+### Fixed
+- Fixed `RedisCache` to check if the connection is alive and, or not retry to connect
+
 ## [0.18.3] - 2020-03-11
 ### Fixed
 - Fixed `RedisCache` as checking condition whether the connection is alive when getting/setting value 

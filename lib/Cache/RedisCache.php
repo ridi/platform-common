@@ -10,10 +10,16 @@ class RedisCache
     /** @var Client|null */
     protected $client;
 
-    public function __construct(string $host, int $port = 6379)
+    public function __construct(string $host, int $port = 6379, int $timeout = 5)
     {
         try {
-            $this->client = new Client(['scheme' => 'tcp', 'host' => $host, 'port' => $port,]);
+            $config = [
+                'scheme' => 'tcp',
+                'host' => $host,
+                'port' => $port,
+                'timeout' => $timeout,
+            ];
+            $this->client = new Client($config);
         } catch (\Exception $e) {
             $this->client = null;
             trigger_error($e->getMessage());
@@ -23,14 +29,15 @@ class RedisCache
     public function get(string $key): ?string
     {
         try {
-            if ($this->client !== null && $this->client->isConnected()) {
-                return $this->client->get($key);
+            if ($this->client !== null) {
+                if ($this->client->isConnected()) {
+                    return $this->client->get($key);
+                } else {
+                    $this->client->connect();
+                }
             }
         } catch (\Exception $e) {
             trigger_error($e->getMessage());
-            if ($this->client !== null && !$this->client->isConnected()) {
-                $this->client->connect();
-            }
         }
 
         return null;
@@ -44,19 +51,20 @@ class RedisCache
     public function set(string $key, string $value, int $ttl): void
     {
         try {
-            if ($this->client !== null && $this->client->isConnected()) {
-                // setnx()은 호출 시점에서 해당하는 key-value가 존재하지 않는 경우에만 set이 성공한다.
-                // set 성공 시 return 1, 실패 시 return 0
-                $result = $this->client->setnx($key, $value);
-                if ($result === 1) {
-                    $this->client->expire($key, $ttl);
+            if ($this->client !== null) {
+                if ($this->client->isConnected()) {
+                    // setnx()은 호출 시점에서 해당하는 key-value가 존재하지 않는 경우에만 set이 성공한다.
+                    // set 성공 시 return 1, 실패 시 return 0
+                    $result = $this->client->setnx($key, $value);
+                    if ($result === 1) {
+                        $this->client->expire($key, $ttl);
+                    }
+                } else {
+                    $this->client->connect();
                 }
             }
         } catch (\Exception $e) {
             trigger_error($e->getMessage());
-            if ($this->client !== null && !$this->client->isConnected()) {
-                $this->client->connect();
-            }
         }
     }
 }
