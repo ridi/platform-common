@@ -30,11 +30,11 @@ class RedisCache
     {
         try {
             if ($this->client !== null) {
-                if ($this->client->isConnected()) {
-                    return $this->client->get($key);
-                } else {
+                if (!$this->client->isConnected()) {
                     $this->client->connect();
                 }
+
+                return $this->client->get($key);
             }
         } catch (\Exception $e) {
             trigger_error($e->getMessage());
@@ -52,15 +52,15 @@ class RedisCache
     {
         try {
             if ($this->client !== null) {
-                if ($this->client->isConnected()) {
-                    // setnx()은 호출 시점에서 해당하는 key-value가 존재하지 않는 경우에만 set이 성공한다.
-                    // set 성공 시 return 1, 실패 시 return 0
-                    $result = $this->client->setnx($key, $value);
-                    if ($result === 1) {
-                        $this->client->expire($key, $ttl);
-                    }
-                } else {
+                if (!$this->client->isConnected()) {
                     $this->client->connect();
+                }
+
+                // setnx()은 호출 시점에서 해당하는 key-value가 존재하지 않는 경우에만 set이 성공한다.
+                // set 성공 시 return 1, 실패 시 return 0
+                $result = $this->client->setnx($key, $value);
+                if ($result === 1) {
+                    $this->client->expire($key, $ttl);
                 }
             }
         } catch (\Exception $e) {
