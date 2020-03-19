@@ -10,7 +10,7 @@ class RedisCache
     /** @var Client|null */
     protected $client;
 
-    public function __construct(string $host, int $port = 6379, int $timeout = 5)
+    public function __construct(string $host, int $port = 6379, float $timeout = 5)
     {
         try {
             $config = [
@@ -22,7 +22,7 @@ class RedisCache
             $this->client = new Client($config);
         } catch (\Exception $e) {
             $this->client = null;
-            trigger_error($e->getMessage());
+            error_log($e->getMessage());
         }
     }
 
@@ -37,7 +37,7 @@ class RedisCache
                 return $this->client->get($key);
             }
         } catch (\Exception $e) {
-            trigger_error($e->getMessage());
+            error_log($e->getMessage());
         }
 
         return null;
@@ -64,7 +64,7 @@ class RedisCache
                 }
             }
         } catch (\Exception $e) {
-            trigger_error($e->getMessage());
+            error_log($e->getMessage());
         }
     }
 }

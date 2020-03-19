@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.18.6] - 2020-03-19
+### Fixed
+- Fixed logging error instead of triggering error when happened exception to connect in `RedisCache`
+
 ## [0.18.5] - 2020-03-16
 ### Fixed
-- Fixed logics in `RedisCache`
+- Fixed logic in `RedisCache`
 - Check if the connection is alive first and, or not retry to connect, and then try to get/set value
 
 ## [0.18.4] - 2020-03-13
