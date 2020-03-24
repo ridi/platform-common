@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.19.0] - 2020-03-24
+- Add composer packages
+  - `illuminate/http`
+- Add `Authenticate` in `Middleware`
+
 ## [0.18.6] - 2020-03-19
 ### Fixed
 - Fixed logging error instead of triggering error when happened exception to connect in `RedisCache`

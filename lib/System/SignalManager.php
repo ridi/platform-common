@@ -1,6 +1,6 @@
 <?php
 
-namespace  Ridibooks\Platform\Common\System;
+namespace Ridibooks\Platform\Common\System;
 
 class SignalManager
 {
