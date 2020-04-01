@@ -8,11 +8,11 @@
     "aws/aws-sdk-php": "^3.79",
     "guzzlehttp/guzzle": "^6.3",
     "php-http/guzzle6-adapter": "^1.1",
-    "monolog/monolog": "^1.18.0",
-    "sentry/sentry": "^1.10",
+    "monolog/monolog": "^2.0",
+    "sentry/sentry": "^2.0",
     "ext-json": "*",
     "mailgun/mailgun-php": "^2.8.1",
-    "symfony/http-foundation": "^2.8.50|^3.4.26|^4.3|^5.0",
+    "symfony/http-foundation": "^2.8.50|^3.4.26|^4.3|^5.0.7",
     "firebase/php-jwt": "^4.0|^5.0",
     "predis/predis": "^1.1",
     "illuminate/http": "^6.0|^7.0"
@@ -23,6 +23,8 @@
     }
   },
   "suggest": {
-    "ridibooks/core": "dev-master"
+    "laravel/lumen-framework": "Needed to use LumenApplication",
+    "rcrowe/twigbridge": "Needed to use Lumen with Twig",
+    "sentry/sentry-laravel": "Needed to use Lumen with Sentry"
   }
 }
