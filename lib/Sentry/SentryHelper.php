@@ -13,21 +13,6 @@ class SentryHelper
     }
 
     /**
-     * 기존에 enableSentry가 불린 경우 이를 무시하거나 추가로 등록하기 위해 사용한다.
-     *
-     * @param string $sentry_key
-     * @param bool $call_existing 기존에 등록된 핸들러를 무시하려면 false, 오버로딩하려면 true
-     * @param int|null $error_types
-     */
-    public static function overrideSentry(
-        $sentry_key,
-        $call_existing = false,
-        $error_types = E_ALL & ~E_NOTICE & ~E_STRICT
-    ) {
-        // TODO: Implement overrideSentry() method.
-    }
-
-    /**
      * @param \Exception $e
      * @param string $raven_client_name
      * @return bool
