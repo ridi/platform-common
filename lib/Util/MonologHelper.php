@@ -1,11 +1,11 @@
 <?php
 namespace Ridibooks\Platform\Common\Util;
 
-use Monolog\Handler\RavenHandler;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Raven_Client;
+use Sentry\Monolog\Handler;
+use Sentry\SentrySdk;
 
 class MonologHelper
 {
@@ -59,10 +59,8 @@ class MonologHelper
         $log->pushHandler(new StreamHandler($file_name));
 
         if ($is_enabled_sentry_alert_when_error_occurred) {
-            $raven_client = SentryHelper::getRavenClient();
-            if ($raven_client instanceof Raven_Client) {
-                $log->pushHandler(new RavenHandler($raven_client, Logger::ERROR));
-            }
+            $handler = new Handler(SentrySdk::getCurrentHub(), Logger::ERROR);
+            $log->pushHandler($handler);
         }
 
         return $log;
@@ -84,10 +82,9 @@ class MonologHelper
         $log = new Logger($name);
         $log->pushHandler(new StreamHandler("php://stdout"));
         $log->pushHandler(new StreamHandler(self::LOG_FILE_BASE_PATH . $file_name . self::LOG_FILE_NAME_EXTENSION));
-        $raven_client = SentryHelper::getRavenClient();
-        if ($raven_client instanceof Raven_Client) {
-            $log->pushHandler(new RavenHandler($raven_client, Logger::ERROR));
-        }
+
+        $handler = new Handler(SentrySdk::getCurrentHub(), Logger::ERROR);
+        $log->pushHandler($handler);
 
         return $log;
     }
