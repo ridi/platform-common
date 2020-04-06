@@ -3,80 +3,101 @@ declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\Sentry;
 
+use Ridibooks\Platform\Common\Sentry\Clients\SentryClient;
+use Sentry\ClientInterface;
+use Sentry\SentrySdk;
+use Sentry\Severity;
+
 class SentryHelper
 {
     public const DEFAULT_RAVEN_CLIENT_NAME = '__RAVEN_CLIENT';
 
-    public static function enableSentry(SentryClientInterface $client)
-    {
-        // TODO: Implement enableSentry() method.
-    }
-
-    /**
-     * @param \Exception $e
-     * @param string $raven_client_name
-     * @return bool
-     */
-    public static function triggerSentryException(\Exception $e, $raven_client_name = self::DEFAULT_RAVEN_CLIENT_NAME)
-    {
-        // TODO: Implement triggerSentryException() method.
-    }
-
-    /**
-     * @param string $string
-     * @param array $params
-     * @param array $level_or_options
-     * @param string $raven_client_name
-     * @return bool
-     */
-    public static function triggerSentryMessage(
-        $string,
-        $params = [],
-        $level_or_options = [],
-        $raven_client_name = self::DEFAULT_RAVEN_CLIENT_NAME
-    ) {
-        // TODO: Implement triggerSentryMessage() method.
-    }
-
     /**
      * @param string $sentry_key
-     * @param string $raven_client_name
      * @param array $options
-     * @return Raven_Client
-     */
-    public static function registerRavenClient(
-        $sentry_key,
-        $raven_client_name = self::DEFAULT_RAVEN_CLIENT_NAME,
-        $options = []
-    ) {
-        // TODO: Implement registerRavenClient() method.
-    }
-
-    /**
-     * @param Raven_Client $raven_client
-     * @param bool $call_existing
      * @param int|null $error_types
      */
-    public static function registerHandlers($raven_client, $call_existing = true, $error_types = null)
+    public static function enableSentry($sentry_key, $options = [], $error_types = SentryClientInterface::DEFAULT_ERROR_TYPES)
     {
-        // TODO: Implement registerHandlers() method.
+        if (self::isRavenClientInitialized()) {
+            trigger_error('Raven client is already installed.');
+        }
+
+        SentryClient::init($sentry_key, $options, $error_types);
     }
 
     /**
-     * @param string $raven_client_name
-     * @return bool
+     * 기존에 enableSentry가 불린 경우 이를 무시하거나 추가로 등록하기 위해 사용한다.
+     *
+     * @param string $sentry_key
+     * @param bool $call_existing 기존에 등록된 핸들러를 무시하려면 false, 오버로딩하려면 true
+     * @param int|null $error_types
      */
-    public static function isRavenClientInitialized($raven_client_name = self::DEFAULT_RAVEN_CLIENT_NAME)
+    public static function overrideSentry($sentry_key, $call_existing = false, $error_types = SentryClientInterface::DEFAULT_ERROR_TYPES)
     {
-        // TODO: Implement isRavenClientInitialized() method.
+        if ($call_existing) {
+            trigger_error('Not support call_existing');
+        }
+
+        SentryClient::init($sentry_key, [], $error_types);
     }
 
-    /**
-     * @param string $raven_client_name
-     * @return Raven_Client|null
-     */
-    public static function getRavenClient($raven_client_name = self::DEFAULT_RAVEN_CLIENT_NAME)
+    public static function triggerSentryException(
+        \Throwable $e,
+        $raven_client_name = self::DEFAULT_RAVEN_CLIENT_NAME
+    ): bool {
+        $response = \Sentry\captureException($e);
+
+        return $response !== null;
+    }
+
+    public static function triggerSentryMessage(
+        string $message,
+        array $params = [],
+        $level_or_options = [],
+        string $raven_client_name = self::DEFAULT_RAVEN_CLIENT_NAME
+    ): bool {
+        if (!empty($params)) {
+            $formatted_message = vsprintf($message, $params);
+        } else {
+            $formatted_message = $message;
+        }
+
+        \Sentry\withScope(function (\Sentry\State\Scope $scope) use ($formatted_message, $level_or_options, &$response) {
+            $level = Severity::info();
+            if ($level_or_options instanceof Severity) {
+                $level = $level_or_options;
+            } elseif (is_array($level_or_options)) {
+                if (
+                    isset($level_or_options['level'])
+                    && in_array($level_or_options['level'], Severity::ALLOWED_SEVERITIES)
+                ) {
+                    $level = new Severity($level_or_options['level']);
+                }
+            } elseif (is_string($level_or_options) && in_array($level_or_options, Severity::ALLOWED_SEVERITIES)) {
+                $level = new Severity($level_or_options);
+            }
+
+            if (isset($level_or_options['user']) && is_array($level_or_options['user'])) {
+                $scope->setUser($level_or_options['user']);
+            }
+            if (isset($level_or_options['extra']) && is_array($level_or_options['extra'])) {
+                $scope->setExtras($level_or_options['extra']);
+            }
+
+            $response = \Sentry\captureMessage($formatted_message, $level);
+        });
+
+        return $response !== null;
+    }
+
+    public static function isRavenClientInitialized($raven_client_name = self::DEFAULT_RAVEN_CLIENT_NAME): bool
     {
-        // TODO: Implement getRavenClient() method.
+        return self::getRavenClient() !== null;
+    }
+
+    public static function getRavenClient($raven_client_name = self::DEFAULT_RAVEN_CLIENT_NAME): ?ClientInterface
+    {
+        return SentrySdk::getCurrentHub()->getClient();
     }
 }
