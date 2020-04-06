@@ -26,6 +26,8 @@ class SQSUtils extends AbstractAwsUtils
     public function __construct(string $queue_url, AwsConfigDto $aws_config)
     {
         parent::__construct($aws_config);
+        trigger_error('Deprecated SQSUtils - Use AWS\SqsService');
+
         $this->queue_url = $queue_url;
     }
 

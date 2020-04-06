@@ -15,6 +15,8 @@ class FileUtils
      */
     public static function escapeStringForAttachment(string $string): string
     {
+        trigger_error('Deprecated FileUtils::escapeStringForAttachment - Use Util\FileUtils');
+
         // '/' 와 '\' 가 포함될 수 없다.
         return preg_replace('/[\/\\\\]/', '_', $string);
     }

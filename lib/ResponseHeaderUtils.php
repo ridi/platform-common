@@ -2,18 +2,13 @@
 
 namespace Ridibooks\Platform\Common;
 
-/** @deprecated */
-class ResponseHeaderUtils
-{
-    /**
-     * 윈도우환경에서 html table 전송하되, 엑셀에서 열릴 수 있게할떄 설정하는 헤더
-     *
-     * @param $file_name
-     */
-    public static function setXlsHeader($file_name)
+trigger_error('Deprecated ResponseHeaderUtils - Use Util\ResponseHeaderUtils');
+class_alias(\Ridibooks\Platform\Common\Util\ResponseHeaderUtils::class, 'Ridibooks\Platform\Common\ResponseHeaderUtils');
+
+// code for IDE
+if (\false) {
+    /** @deprecated Change to \Ridibooks\Platform\Common\Util\ResponseHeaderUtils */
+    class ResponseHeaderUtils extends \Ridibooks\Platform\Common\Util\ResponseHeaderUtils
     {
-        header("Content-Type: application/vnd.ms-excel;charset=utf-8");
-        header("Content-Disposition: attachment; filename=\"$file_name.xls\"");
-        header('Cache-Control: max-age=0');
     }
 }
