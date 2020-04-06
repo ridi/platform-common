@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Ridibooks\Platform\Common\Sentry\Clients;
 
 use Ridibooks\Platform\Common\Sentry\SentryClientInterface;
+use Sentry\Laravel\ServiceProvider;
 
 class LumenSentryClient implements SentryClientInterface
 {
@@ -15,7 +16,7 @@ class LumenSentryClient implements SentryClientInterface
 
     private static function updateConfig(string $sentry_key, array $options, int $error_types): void
     {
-        $option_namespace = \Sentry\Laravel\ServiceProvider::$abstract;
+        $option_namespace = ServiceProvider::$abstract;
         $default_options = ['dsn' => $sentry_key, 'error_types' => $error_types];
 
         $configs = [];

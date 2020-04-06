@@ -7,6 +7,9 @@ use Ridibooks\Platform\Common\Sentry\Clients\SentryClient;
 use Sentry\ClientInterface;
 use Sentry\SentrySdk;
 use Sentry\Severity;
+use Sentry\State\Scope;
+use function Sentry\captureException;
+use function Sentry\withScope;
 
 class SentryHelper
 {
@@ -46,7 +49,7 @@ class SentryHelper
         \Throwable $e,
         $raven_client_name = self::DEFAULT_RAVEN_CLIENT_NAME
     ): bool {
-        $response = \Sentry\captureException($e);
+        $response = captureException($e);
 
         return $response !== null;
     }
@@ -63,7 +66,7 @@ class SentryHelper
             $formatted_message = $message;
         }
 
-        \Sentry\withScope(function (\Sentry\State\Scope $scope) use ($formatted_message, $level_or_options, &$response) {
+        withScope(function (Scope $scope) use ($formatted_message, $level_or_options, &$response) {
             $level = Severity::info();
             if ($level_or_options instanceof Severity) {
                 $level = $level_or_options;

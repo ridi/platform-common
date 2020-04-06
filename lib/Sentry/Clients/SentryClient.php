@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Ridibooks\Platform\Common\Sentry\Clients;
 
 use Ridibooks\Platform\Common\Sentry\SentryClientInterface;
+use function Sentry\init;
 
 class SentryClient implements SentryClientInterface
 {
@@ -15,6 +16,6 @@ class SentryClient implements SentryClientInterface
     private static function registerRavenClient(string $sentry_key, array $options, int $error_types): void
     {
         $default_options = ['dsn' => $sentry_key, 'error_types' => $error_types];
-        \Sentry\init(array_merge($default_options, $options));
+        init(array_merge($default_options, $options));
     }
 }
