@@ -24,7 +24,7 @@ class ValidationUtils
      * 입력된 필드가 null이거나 비어있을(empty) 경우 exception
      * @param string $field
      * @param string $msg
-     * @throws \Ridibooks\Exception\MsgException
+     * @throws \Ridibooks\Platform\Common\Exception\MsgException
      */
     public static function checkNullField($field, $msg)
     {
@@ -37,7 +37,7 @@ class ValidationUtils
      * 입력된 필드가 숫자가 아닐 경우 exception
      * @param $field
      * @param string $msg
-     * @throws \Ridibooks\Exception\MsgException
+     * @throws \Ridibooks\Platform\Common\Exception\MsgException
      */
     public static function checkNumberField($field, $msg)
     {
@@ -51,7 +51,7 @@ class ValidationUtils
      * @param object $field
      * @param int $minLength
      * @param string $msg
-     * @throws \Ridibooks\Exception\MsgException
+     * @throws \Ridibooks\Platform\Common\Exception\MsgException
      */
     public static function checkMinLength($field, $minLength, $msg)
     {
@@ -65,7 +65,7 @@ class ValidationUtils
      * @param object $field
      * @param int $length
      * @param string $msg
-     * @throws \Ridibooks\Exception\MsgException
+     * @throws \Ridibooks\Platform\Common\Exception\MsgException
      */
     public static function checkLength($field, $length, $msg)
     {

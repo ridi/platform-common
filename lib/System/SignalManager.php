@@ -8,17 +8,17 @@ class SignalManager
     public const PCNTL_SIGNAL_HANDLER = 'Ridibooks\Platform\Common\System\SignalManager::signalHandler';
 
     /** @var bool */
-    private static $CONTINUE = true;
+    private static $is_continue = true;
 
     public static function signalHandler(int $signo): void
     {
         if ($signo === SIGTERM) {
-            self::$CONTINUE = false;
+            self::$is_continue = false;
         }
     }
 
     public static function isContinued(): bool
     {
-        return self::$CONTINUE;
+        return self::$is_continue;
     }
 }

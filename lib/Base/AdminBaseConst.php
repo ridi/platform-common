@@ -19,6 +19,7 @@ class AdminBaseConst
             $reflect = new ReflectionClass($class);
             self::$property_cache[$class] = $reflect->getProperty($reflect->getShortName());
         }
+
         return self::$property_cache[$class];
     }
 
@@ -29,8 +30,7 @@ class AdminBaseConst
      */
     public static function getArray()
     {
-        $values = self::getProperty()->getValue();
-        return $values;
+        return self::getProperty()->getValue();
     }
 
     /**
@@ -40,8 +40,7 @@ class AdminBaseConst
      */
     public static function getName($key)
     {
-        $values = self::getArray();
-        return $values[$key];
+        return self::getArray()[$key];
     }
 
     /**
@@ -51,8 +50,7 @@ class AdminBaseConst
      */
     public static function getKey($value)
     {
-        $array = self::getArray();
-        return array_search($value, $array);
+        return array_search($value, self::getArray());
     }
 
     /**
@@ -62,6 +60,7 @@ class AdminBaseConst
     public static function getConstants()
     {
         $ref = new ReflectionClass(get_called_class());
+
         return $ref->getConstants();
     }
 

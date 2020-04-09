@@ -263,11 +263,9 @@ class MailgunHelper
 
     private static function generateMailgunAttachmentFormat(string $name, string $attachment): array
     {
-        $format = [
+        return [
             'filePath' => $attachment,
             'remoteName' => $name,
         ];
-
-        return $format;
     }
 }

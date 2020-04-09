@@ -8,7 +8,7 @@ use Aws\Sqs\SqsClient;
 use Ridibooks\Platform\Common\AWS\Dto\SqsQueueAttributeDto;
 use Ridibooks\Platform\Common\AWS\Dto\SqsReceivedMessageDto;
 use Ridibooks\Platform\Common\Exception\MsgException;
-use Ridibooks\Platform\Common\Util\SentryHelper;
+use Ridibooks\Platform\Common\Sentry\SentryHelper;
 use Ridibooks\Platform\Common\Util\StringUtils;
 
 /**

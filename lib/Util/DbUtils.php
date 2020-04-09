@@ -225,7 +225,7 @@ class DbUtils
             $result_set[] = $callable(array_slice($items, $offset, $split_size));
         }
 
-        return array_flatten($result_set);
+        return array_flatten($result_set); // FIXME not use laravel/helper
     }
 
     /**

@@ -363,7 +363,7 @@ class StringUtils
     private static function initializeNonPrintableAscii()
     {
         if (self::$non_printable_ascii === null) {
-            $__non_printable_ascii = [
+            $non_printable_ascii_intval = [
                 0,
                 1,
                 2,
@@ -396,10 +396,10 @@ class StringUtils
                 31,
                 127,
             ];
-            foreach ($__non_printable_ascii as $k => $v) {
-                $__non_printable_ascii[$k] = chr($v);
+            foreach ($non_printable_ascii_intval as $k => $v) {
+                $non_printable_ascii_intval[$k] = chr($v);
             }
-            self::$non_printable_ascii = $__non_printable_ascii;
+            self::$non_printable_ascii = $non_printable_ascii_intval;
         }
     }
 }

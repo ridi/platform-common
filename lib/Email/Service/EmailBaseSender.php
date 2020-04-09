@@ -4,7 +4,7 @@ namespace Ridibooks\Platform\Common\Email\Service;
 
 use Ridibooks\Platform\Common\Cache\AdaptableCache;
 use Ridibooks\Platform\Common\Email\Constant\EmailContentTypeConst;
-use Ridibooks\Platform\Common\Util\SentryHelper;
+use Ridibooks\Platform\Common\Sentry\SentryHelper;
 use Ridibooks\Platform\Common\Validation\ValidationHelper;
 
 class EmailBaseSender implements \JsonSerializable
@@ -72,8 +72,8 @@ class EmailBaseSender implements \JsonSerializable
 
         $email = trim($email);
 
-        if (preg_match("/<(.+@.+)>$/", $email, $emailMatch)) {
-            $email = $emailMatch[1];
+        if (preg_match("/<(.+@.+)>$/", $email, $email_match)) {
+            $email = $email_match[1];
         }
 
         return ValidationHelper::isValidEmailAddress($email);

@@ -9,6 +9,7 @@ use Sentry\SentrySdk;
 use Sentry\Severity;
 use Sentry\State\Scope;
 use function Sentry\captureException;
+use function Sentry\captureMessage;
 use function Sentry\withScope;
 
 class SentryHelper
@@ -88,7 +89,7 @@ class SentryHelper
                 $scope->setExtras($level_or_options['extra']);
             }
 
-            $response = \Sentry\captureMessage($formatted_message, $level);
+            $response = captureMessage($formatted_message, $level);
         });
 
         return $response !== null;

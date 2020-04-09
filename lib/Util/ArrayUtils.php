@@ -42,43 +42,43 @@ class ArrayUtils
         return $diff_array;
     }
 
-    public static function joinDicts($leftDicts, $rightDicts, $leftDictsColumnIndex = 0, $rightDictsColumnIndex = 0)
+    public static function joinDicts($left_dicts, $right_dicts, $left_dicts_column_index = 0, $right_dicts_column_index = 0)
     {
-        if (count($leftDicts) == 0) {
-            return $rightDicts;
+        if (count($left_dicts) == 0) {
+            return $right_dicts;
         }
-        if (count($rightDicts) == 0) {
-            return $leftDicts;
+        if (count($right_dicts) == 0) {
+            return $left_dicts;
         }
 
-        $leftKeys = array_keys($leftDicts[0]);
-        $leftKey = $leftKeys[$leftDictsColumnIndex];
-        $rightKeys = array_keys($rightDicts[0]);
-        $rightKey = $rightKeys[$rightDictsColumnIndex];
+        $left_keys = array_keys($left_dicts[0]);
+        $left_key = $left_keys[$left_dicts_column_index];
+        $right_keys = array_keys($right_dicts[0]);
+        $right_key = $right_keys[$right_dicts_column_index];
 
-        foreach ($leftDicts as $lk => $lv) {
-            foreach ($rightDicts as $rk => $rv) {
-                if ($lv[$leftKey] != $rv[$rightKey]) {
+        foreach ($left_dicts as $lk => $lv) {
+            foreach ($right_dicts as $rk => $rv) {
+                if ($lv[$left_key] != $rv[$right_key]) {
                     continue;
                 }
-                $leftDicts[$lk] = array_merge($lv, $rv);
+                $left_dicts[$lk] = array_merge($lv, $rv);
             }
         }
 
         $keys = [];
-        foreach ($leftDicts as $dict) {
+        foreach ($left_dicts as $dict) {
             $keys = array_unique(array_merge($keys, array_keys($dict)));
         }
 
-        foreach ($leftDicts as $dictKey => $dict) {
+        foreach ($left_dicts as $dict_key => $dict) {
             foreach ($keys as $key) {
-                if (!isset($leftDicts[$dictKey][$key])) {
-                    $leftDicts[$dictKey][$key] = null;
+                if (!isset($left_dicts[$dict_key][$key])) {
+                    $left_dicts[$dict_key][$key] = null;
                 }
             }
         }
 
-        return $leftDicts;
+        return $left_dicts;
     }
 
     /**

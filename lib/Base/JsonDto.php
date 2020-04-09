@@ -3,7 +3,7 @@
 namespace Ridibooks\Platform\Common\Base;
 
 use Ridibooks\Platform\Common\Exception\MsgException;
-use Ridibooks\Platform\Common\Util\SentryHelper;
+use Ridibooks\Platform\Common\Sentry\SentryHelper;
 use Ridibooks\Platform\Common\Util\StringUtils;
 
 class JsonDto
@@ -48,11 +48,12 @@ class JsonDto
     }
 
     /**MsgException 발생 시 exception 정보 set 한다.
-     * @param \Ridibooks\Exception\MsgException $msgException
+     *
+     * @param MsgException $msg_exception
      */
-    public function setMsgException($msgException)
+    public function setMsgException($msg_exception)
     {
         $this->success = false;
-        $this->setMsg($msgException->getMessage());
+        $this->setMsg($msg_exception->getMessage());
     }
 }

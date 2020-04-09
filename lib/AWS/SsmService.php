@@ -5,7 +5,7 @@ namespace Ridibooks\Platform\Common\AWS;
 
 use Aws\Exception\AwsException;
 use Aws\Ssm\SsmClient;
-use Ridibooks\Platform\Common\Util\SentryHelper;
+use Ridibooks\Platform\Common\Sentry\SentryHelper;
 
 /**
  * @property SsmClient $client
@@ -32,9 +32,8 @@ class SsmService extends AbstractAwsService
             $result = $result->get('Parameter');
 
             $param_string = $result['Value'];
-            $raw_params = array_filter(explode(PHP_EOL, $param_string));
 
-            return $raw_params;
+            return array_filter(explode(PHP_EOL, $param_string));
         } catch (AwsException $e) {
             SentryHelper::triggerSentryMessage(
                 'Fail To get parameters from SSM :' . $name . PHP_EOL
@@ -101,7 +100,7 @@ class SsmService extends AbstractAwsService
         $params = array_merge($params, $options);
 
         try {
-            $result = $this->client->putParameter($params);
+            $this->client->putParameter($params);
         } catch (AwsException $e) {
             SentryHelper::triggerSentryMessage(
                 'Fail To put parameters to SSM :' . $name . PHP_EOL
