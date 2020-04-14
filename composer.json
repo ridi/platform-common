@@ -8,7 +8,7 @@
     "aws/aws-sdk-php": "^3.79",
     "guzzlehttp/guzzle": "^6.3",
     "php-http/guzzle6-adapter": "^1.1",
-    "monolog/monolog": "^1.18.0",
+    "monolog/monolog": "^1.18.0|^2.0",
     "sentry/sentry": "^1.10",
     "ext-json": "*",
     "mailgun/mailgun-php": "^2.8.1",
