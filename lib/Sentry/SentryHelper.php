@@ -71,9 +71,10 @@ class SentryHelper
             $level = Severity::info();
             if ($level_or_options instanceof Severity) {
                 $level = $level_or_options;
-            } elseif (is_array($level_or_options)) {
-                if (
-                    isset($level_or_options['level'])
+            } elseif (is_array($level_or_options) && isset($level_or_options['level'])) {
+                if ($level_or_options['level'] instanceof Severity) {
+                    $level = $level_or_options['level'];
+                } elseif (is_string($level_or_options['level'])
                     && in_array($level_or_options['level'], Severity::ALLOWED_SEVERITIES)
                 ) {
                     $level = new Severity($level_or_options['level']);
@@ -82,11 +83,16 @@ class SentryHelper
                 $level = new Severity($level_or_options);
             }
 
-            if (isset($level_or_options['user']) && is_array($level_or_options['user'])) {
-                $scope->setUser($level_or_options['user']);
-            }
-            if (isset($level_or_options['extra']) && is_array($level_or_options['extra'])) {
-                $scope->setExtras($level_or_options['extra']);
+            if (is_array($level_or_options)) {
+                if (isset($level_or_options['user']) && is_array($level_or_options['user'])) {
+                    $scope->setUser($level_or_options['user']);
+                }
+                if (isset($level_or_options['extra']) && is_array($level_or_options['extra'])) {
+                    $scope->setExtras($level_or_options['extra']);
+                }
+                if (isset($level_or_options['tags']) && is_array($level_or_options['tags'])) {
+                    $scope->setTags($level_or_options['tags']);
+                }
             }
 
             $response = captureMessage($formatted_message, $level);
