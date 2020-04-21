@@ -17,6 +17,7 @@ class SentryHelper
     public const DEFAULT_RAVEN_CLIENT_NAME = '__RAVEN_CLIENT';
 
     /**
+     * @deprecated Use SentryClient::init
      * @param string $sentry_key
      * @param array $options
      * @param int|null $error_types
@@ -33,6 +34,7 @@ class SentryHelper
     /**
      * 기존에 enableSentry가 불린 경우 이를 무시하거나 추가로 등록하기 위해 사용한다.
      *
+     * @deprecated Use SentryClient::init
      * @param string $sentry_key
      * @param bool $call_existing 기존에 등록된 핸들러를 무시하려면 false, 오버로딩하려면 true
      * @param int|null $error_types
@@ -74,7 +76,8 @@ class SentryHelper
             } elseif (is_array($level_or_options) && isset($level_or_options['level'])) {
                 if ($level_or_options['level'] instanceof Severity) {
                     $level = $level_or_options['level'];
-                } elseif (is_string($level_or_options['level'])
+                } elseif (
+                    is_string($level_or_options['level'])
                     && in_array($level_or_options['level'], Severity::ALLOWED_SEVERITIES)
                 ) {
                     $level = new Severity($level_or_options['level']);
