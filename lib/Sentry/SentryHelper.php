@@ -69,7 +69,7 @@ class SentryHelper
             $formatted_message = $message;
         }
 
-        withScope(function (Scope $scope) use ($formatted_message, $level_or_options, &$response) {
+        withScope(function (Scope $scope) use ($formatted_message, $params, $level_or_options, &$response) {
             $level = Severity::info();
             if ($level_or_options instanceof Severity) {
                 $level = $level_or_options;
@@ -86,16 +86,24 @@ class SentryHelper
                 $level = new Severity($level_or_options);
             }
 
+            $params_key = 'params';
             if (is_array($level_or_options)) {
                 if (isset($level_or_options['user']) && is_array($level_or_options['user'])) {
                     $scope->setUser($level_or_options['user']);
                 }
                 if (isset($level_or_options['extra']) && is_array($level_or_options['extra'])) {
                     $scope->setExtras($level_or_options['extra']);
+                    if (isset($level_or_options['extra']['params'])) {
+                        $params_key .= mt_rand();
+                    }
                 }
                 if (isset($level_or_options['tags']) && is_array($level_or_options['tags'])) {
                     $scope->setTags($level_or_options['tags']);
                 }
+            }
+
+            if (!empty($params)) {
+                $scope->setExtra($params_key, $params);
             }
 
             $response = captureMessage($formatted_message, $level);
