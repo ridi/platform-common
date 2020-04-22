@@ -19,6 +19,7 @@ abstract class AbstractAwsUtils
      */
     public function __construct(AwsConfigDto $aws_config)
     {
+        trigger_error('Deprecated AbstractAwsUtils - Use AWS\AWSService');
         $this->connect($aws_config);
     }
 

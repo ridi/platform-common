@@ -37,7 +37,7 @@ class UrlHelper
         $script .= 'document.getElementById("post_redirect_form").submit()';
 
         // form 생성
-        $form = '<form id="post_redirect_form" action="' + $url + '" method="post">';
+        $form = '<form id="post_redirect_form" action="' . $url . '" method="post">';
         foreach ($parameters as $key => $value) {
             if (!is_array($value)) {
                 $form .= '<input type="hidden" name="' . $key . '" value="' . $value . '""/>';
@@ -49,10 +49,8 @@ class UrlHelper
         }
         $form .= '</form>';
 
-        $html = '<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"></head><body>'
+        return '<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"></head><body>'
             . "<script>{$script}</script>{$form}</body></html>\n";
-
-        return $html;
     }
 
     /**

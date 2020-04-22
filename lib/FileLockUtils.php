@@ -16,6 +16,7 @@ class FileLockUtils
 
     public function __construct(string $lock_file_name, string $lock_dir)
     {
+        trigger_error('Deprecated FileLockUtils');
         $this->lock_file_name = $lock_file_name;
         $this->lock_dir = $lock_dir;
     }

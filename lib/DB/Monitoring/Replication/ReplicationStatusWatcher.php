@@ -152,7 +152,7 @@ class ReplicationStatusWatcher
      */
     private function getSlaveStatus($connection_group_name)
     {
-        $db = GnfConnectionProvider::getConnection($connection_group_name, true);
+        $db = GnfConnectionProvider::getConnection($connection_group_name);
         $result = $db->sqlDicts('SHOW SLAVE STATUS');
 
         return empty($result) ? [] : $result[0];

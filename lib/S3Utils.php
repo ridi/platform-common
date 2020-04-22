@@ -33,6 +33,8 @@ class S3Utils
 
     private static function registerStreamWrapper($credentials, string $region, string $version): void
     {
+        trigger_error('Deprecated S3Utils - Use AWS\S3Service');
+
         $config = [
             'region' => $region,
             'version' => $version,

@@ -3,6 +3,7 @@
 namespace Ridibooks\Platform\Common\Util;
 
 use Ridibooks\Platform\Common\Exception\MsgException;
+use Ridibooks\Platform\Common\Sentry\SentryHelper;
 
 class ExceptionUtils
 {

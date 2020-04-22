@@ -123,10 +123,10 @@ class DictsUtils
             $keys = array_unique(array_merge($keys, array_keys($dict)));
         }
 
-        foreach ($left_dicts as $dictKey => $dict) {
+        foreach ($left_dicts as $dict_key => $dict) {
             foreach ($keys as $key) {
-                if (!isset($left_dicts[$dictKey][$key])) {
-                    $left_dicts[$dictKey][$key] = null;
+                if (!isset($left_dicts[$dict_key][$key])) {
+                    $left_dicts[$dict_key][$key] = null;
                 }
             }
         }
@@ -149,11 +149,9 @@ class DictsUtils
             $tr = $tr . "<tr>" . $td . "</tr>\n";
         }
 
-        $html_table = "
+        return "
         <table cellspacing='0' cellpadding='0' style='width: 100%; border-collapse: collapse; color: #333; font-size: 13px; line-height: 1.7em; border-top:1px solid #848484;'>"
             . "<thead>" . "<tr>" . $th . "</tr>" . "</thead>"
             . "<tbody>" . $tr . "</tbody>" . "</table>";
-
-        return $html_table;
     }
 }
