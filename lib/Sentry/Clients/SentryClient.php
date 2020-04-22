@@ -15,7 +15,11 @@ class SentryClient implements SentryClientInterface
 
     private static function registerRavenClient(string $sentry_key, array $options, int $error_types): void
     {
-        $default_options = ['dsn' => $sentry_key, 'error_types' => $error_types];
-        init(array_merge($default_options, $options));
+        $options = array_merge(
+            self::DEFAULT_OPTIONS,
+            ['dsn' => $sentry_key, 'error_types' => $error_types],
+            $options
+        );
+        init($options);
     }
 }
