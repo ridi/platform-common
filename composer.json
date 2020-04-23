@@ -35,5 +35,8 @@
     "laravel/lumen-framework": "Needed to use LumenApplication",
     "rcrowe/twigbridge": "Needed to use Lumen with Twig",
     "sentry/sentry-laravel": "Needed to use Lumen with Sentry"
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
   }
 }
