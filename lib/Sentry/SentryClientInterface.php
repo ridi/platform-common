@@ -5,7 +5,6 @@ namespace Ridibooks\Platform\Common\Sentry;
 
 interface SentryClientInterface
 {
-    // TODO: enableSentry, overrideSentry 제거 완료 후 protected로 변경
     public const DEFAULT_ERROR_TYPES = E_ALL & ~E_NOTICE & ~E_STRICT;
     public const DEFAULT_OPTIONS = ['attach_stacktrace' => true];
 
