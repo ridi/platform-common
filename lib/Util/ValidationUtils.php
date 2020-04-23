@@ -13,11 +13,7 @@ class ValidationUtils
      */
     public static function match($pattern, $subject)
     {
-        if (preg_match($pattern, $subject) === 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return preg_match($pattern, $subject) === 1;
     }
 
     /**
@@ -48,7 +44,7 @@ class ValidationUtils
 
     /**
      * 입력된 필드의 최소 길이보다 작을 경우 exception
-     * @param object $field
+     * @param mixed $field
      * @param int $minLength
      * @param string $msg
      * @throws \Ridibooks\Platform\Common\Exception\MsgException
@@ -119,7 +115,7 @@ class ValidationUtils
 
         $total = 0;
         for ($i = 0; $i < 9; $i++) {
-            $digit = intval(substr($isbn, $i, 1));
+            $digit = (int)substr($isbn, $i, 1);
             $total += ((10 - $i) * $digit);
         }
 
@@ -153,7 +149,7 @@ class ValidationUtils
         $total = 0;
 
         for ($i = 0; $i < 12; $i++) {
-            $digit = intval(substr($isbn, $i, 1));
+            $digit = (int)substr($isbn, $i, 1);
             $total += ($i % 2 === 0) ? $digit : $digit * 3;
         }
 
@@ -162,7 +158,7 @@ class ValidationUtils
             $check_sum = 0;
         }
 
-        if ($check_sum !== intval(substr($isbn, -1))) {
+        if ($check_sum !== (int)substr($isbn, -1)) {
             throw new MsgException("ISBN13 형식에 맞지 않습니다.");
         }
     }
@@ -209,7 +205,7 @@ class ValidationUtils
         $total = 0;
 
         for ($i = 0; $i < 7; $i++) {
-            $digit = intval(substr($issn, $i, 1));
+            $digit = (int)substr($issn, $i, 1);
             $total += ((8 - $i) * $digit);
         }
 

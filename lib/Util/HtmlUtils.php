@@ -73,7 +73,7 @@ class HtmlUtils
                      *  - <div />
                      *  - <input />
                      */
-                    if ($attr[strlen($attr) - 1] == '/') {
+                    if (strlen($attr) > 0 && $attr[strlen($attr) - 1] == '/') {
                         return;
                     }
                     array_push($stack, array($tag, $full_tag));
