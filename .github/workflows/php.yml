@@ -7,29 +7,35 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-      
-    - name: Cache PHP dependencies
-      uses: actions/cache@v1
-      with:
-        path: vendor
-        key: ${{ runner.OS }}-build
-          
-    - uses: php-actions/composer@master
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
+      - name: Install PHP with extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: pcov
+          extensions: dom, json, libxml, mbstring, soap, xml, xmlwriter, intl
+          ini-values: assert.exception=1, zend.assertions=1
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Determine composer cache directory on Linux
+        run: echo "::set-env name=COMPOSER_CACHE_DIR::$(./tools/composer config cache-dir)"
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: php-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            php-composer-
 
-    - name: Run test suite
-      run: composer run-script test
+      - name: Install dependencies with composer
+        run: composer update
+
+      - name: Run tests with phpunit
+        run: composer run-script test --coverage-clover=coverage.xml
