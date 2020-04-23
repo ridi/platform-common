@@ -18,13 +18,11 @@ jobs:
       - name: Install PHP with extensions
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
-          coverage: pcov
           extensions: dom, json, libxml, mbstring, soap, xml, xmlwriter, intl
           ini-values: assert.exception=1, zend.assertions=1
 
       - name: Determine composer cache directory on Linux
-        run: echo "::set-env name=COMPOSER_CACHE_DIR::$(./tools/composer config cache-dir)"
+        run: echo "::set-env name=COMPOSER_CACHE_DIR::$(composer config cache-dir)"
 
       - name: Cache dependencies installed with composer
         uses: actions/cache@v1
