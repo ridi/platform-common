@@ -197,7 +197,12 @@ class DateUtilsTest extends TestCase
         $now = DateUtils::createNowExceptMicroseconds();
         $cases = [];
         foreach ($execution_time_tables as $excution_time_table) {
-            $cases[] = [$excution_time_table, $time_tables, $excution_time_table < $now];
+            $cases[] = [
+                $excution_time_table,
+                $time_tables,
+                // 처음 실행예정 시각보다 마지막 실행 시각이 이후여야하기 때문에 두번째 조건 설정
+                $excution_time_table < $now && $time_tables[0] < $excution_time_table
+            ];
         }
 
         return $cases;

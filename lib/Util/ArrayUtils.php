@@ -34,7 +34,7 @@ class ArrayUtils
                         $diff_array[$key] = $sub_diff_array;
                     }
                 }
-            } elseif ($array2[$key] != $value) {
+            } elseif (!isset($array2[$key]) || $array2[$key] != $value) {
                 $diff_array[$key] = $value;
             }
         }
@@ -190,7 +190,7 @@ class ArrayUtils
 
         sort($values);
         foreach ($values as $index => $value) {
-            $previous_value = $values[$index - 1];
+            $previous_value = $values[$index - 1] ?? null;
 
             if (!in_array(($value - 1), $values)) {
                 if (count($sequential_values) > 0) {

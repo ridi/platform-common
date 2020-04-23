@@ -4,8 +4,8 @@ namespace Ridibooks\Platform\Common\Util;
 
 class PagingUtil
 {
-    private $default_list_per_page = 10;
-    private $default_line_per_page = 10;
+    private const DEFAULT_LIST_PER_PAGE = 10;
+    private const DEFAULT_LINE_PER_PAGE = 10;
 
     public $list_per_page;
     public $line_per_page;
@@ -25,15 +25,16 @@ class PagingUtil
 
     /**
      * paging bean 생성자
+     *
      * @param int $total
      * @param int $cur_page
-     * @param int $listPerPage
-     * @param int $linePerPage
+     * @param int $list_per_page
+     * @param int $line_per_page
      */
-    public function __construct($total, $cur_page, $listPerPage = null, $linePerPage = null)
+    public function __construct($total, $cur_page, $list_per_page = null, $line_per_page = null)
     {
-        $this->list_per_page = $listPerPage ? $listPerPage : $this->default_list_per_page;
-        $this->line_per_page = $linePerPage ? $linePerPage : $this->default_line_per_page;
+        $this->list_per_page = $list_per_page ? $list_per_page : self::DEFAULT_LIST_PER_PAGE;
+        $this->line_per_page = $line_per_page ? $line_per_page : self::DEFAULT_LINE_PER_PAGE;
         $this->total = $total;
         $this->cpage = $cur_page;
         $this->paging();

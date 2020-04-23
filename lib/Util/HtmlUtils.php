@@ -191,7 +191,7 @@ class HtmlUtils
 
     private static function extractTagAttributes($string)
     {
-        $html_attributes = array();
+        $html_attributes = [];
         preg_match_all("/([^=\s]+)\s*=\s*[\"']*((?:.(?![\"']*\s+(?:\S+)=|[>\"']))+.)[\"']*/is", htmlspecialchars_decode(stripslashes($string)), $matches, PREG_SET_ORDER);
         foreach ($matches as $match) {
             $attr = $match[1];
@@ -205,16 +205,19 @@ class HtmlUtils
     private static function filterAllowableTagAttributes($tag_name, $html_attributes)
     {
         // 문자열비교시 대소문자를 가리기때문에, 소문자로 해당값 입력
-        $allowable_attributes = array(
-            'a' => array('href', 'target'),
-            'font' => array('color'),
-            'img' => array('src'),
-            'video' => array('src')
-        );
+        $allowable_attributes = [
+            'a' => ['href', 'target'],
+            'font' => ['color'],
+            'img' => ['src'],
+            'video' => ['src']
+        ];
 
-        $filtered_html_attributes = array();
+        $filtered_html_attributes = [];
         foreach ($html_attributes as $attr => $value) {
-            if (!in_array(strtolower($attr), (array)$allowable_attributes[strtolower($tag_name)])) {
+            if (
+                !isset($allowable_attributes[strtolower($tag_name)])
+                || !in_array(strtolower($attr), (array)$allowable_attributes[strtolower($tag_name)])
+            ) {
                 continue;
             }
 
@@ -226,7 +229,7 @@ class HtmlUtils
 
     private static function implodeTagAttributes($html_attributes)
     {
-        $attr_values = array();
+        $attr_values = [];
         foreach ($html_attributes as $attr => $value) {
             $attr_values[] = $attr . '="' . $value . '"';
         }
