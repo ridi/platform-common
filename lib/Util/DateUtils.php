@@ -95,7 +95,7 @@ class DateUtils
      */
     public static function getFirstdayOfYearmonth($year_month)
     {
-        return $first_date = date_create($year_month . '-01');
+        return date_create($year_month . '-01');
     }
 
     /**
@@ -111,15 +111,12 @@ class DateUtils
         return $last_date->modify('last day of');
     }
 
-    public static function isToday(\DateTime $last_executed_datetime): bool
+    public static function isToday(\DateTime $datetime): bool
     {
-        $last_date = $last_executed_datetime->format('Y/m/d');
+        $last_date = $datetime->format('Y/m/d');
         $today_date = date('Y/m/d');
-        if ($last_date === $today_date) {
-            return true;
-        }
 
-        return false;
+        return $last_date === $today_date;
     }
 
     /**
