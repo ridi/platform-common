@@ -37,6 +37,6 @@
     "sentry/sentry-laravel": "Needed to use Lumen with Sentry"
   },
   "scripts": {
-    "test": "vendor/bin/phpunit"
+    "test": "phpdbg -qrr vendor/bin/phpunit --coverage-text --debug"
   }
 }
