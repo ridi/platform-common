@@ -1,6 +1,6 @@
 # platform-common
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ridibooks/platform-common/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ridibooks/platform-common/?branch=master)
+[![codecov](https://codecov.io/gh/ridi/books-frontend/branch/master/graph/badge.svg)](https://codecov.io/gh/ridi/platform-common)
 [![Latest Stable Version](https://poser.pugx.org/ridibooks/platform-common/version)](https://packagist.org/packages/ridibooks/platform-common)
 [![License](https://poser.pugx.org/ridibooks/platform-common/license)](https://packagist.org/packages/ridibooks/platform-common)
 
