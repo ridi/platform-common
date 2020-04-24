@@ -5,7 +5,7 @@ namespace Ridibooks\Platform\Common;
 
 use Aws\Exception\AwsException;
 use Aws\Sqs\SqsClient;
-use Ridibooks\Platform\Common\Dto\AwsConfigDto;
+use Ridibooks\Platform\Common\AWS\Dto\AwsConfigDto;
 use Ridibooks\Platform\Common\Exception\MsgException;
 
 /**
