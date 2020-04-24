@@ -3,6 +3,8 @@
 namespace Ridibooks\Platform\Common\Email\Service;
 
 use Mailgun\Exception\HttpClientException;
+use Mailgun\HttpClient\HttpClientConfigurator;
+use Mailgun\Hydrator\Hydrator;
 use Mailgun\Mailgun;
 use Mailgun\Model\EmailValidation\ValidateResponse;
 use Mailgun\Model\Message\SendResponse;
@@ -10,8 +12,11 @@ use Ridibooks\Platform\Common\Email\Constant\EmailContentTypeConst;
 
 class MailgunHelper
 {
-    /** @var Mailgun */
-    private $mailgun;
+    /** @var HttpClientConfigurator */
+    private $configurator;
+    /** @var Hydrator */
+    private $hydrator;
+
     /** @var string */
     private $send_domain;
     /** @var bool */
@@ -20,31 +25,52 @@ class MailgunHelper
     /** @var self */
     private static $instance;
 
-    public static function getInstance(
-        ?string $api_key = null,
-        ?string $send_domain = null,
-        bool $is_testmode = false
-    ): self {
+    public static function getInstance(): self
+    {
         if (self::$instance === null) {
-            if (empty($api_key) || empty($send_domain)) {
-                throw new \InvalidArgumentException('Not set api_key. send_domain. require them');
-            }
-            self::$instance = new self($api_key, $send_domain, $is_testmode);
+            self::$instance = new self();
         }
 
         return self::$instance;
     }
 
-    private function __construct(string $api_key, string $send_domain, bool $is_testmode)
+    private function __construct()
     {
-        $this->mailgun = Mailgun::create($api_key);
-        $this->send_domain = $send_domain;
-        $this->is_testmode = $is_testmode;
+        $this->configurator = new HttpClientConfigurator();
     }
 
-    public function setTestMode(bool $is_testmode): self
+    public function setApiKey(string $api_key): self
     {
+        $this->configurator->setApiKey($api_key);
+
+        return $this;
+    }
+
+    public function setSendDomain(string $send_domain): self
+    {
+        $this->send_domain = $send_domain;
+
+        return $this;
+    }
+
+    public function setTestMode(bool $is_testmode, ?string $test_url = ''): self
+    {
+        if ($is_testmode && empty($test_url)) {
+            throw new \InvalidArgumentException('Invalid test_url');
+        }
+
         $this->is_testmode = $is_testmode;
+        $this->configurator->setDebug($this->is_testmode);
+        if ($is_testmode) {
+            $this->configurator->setEndpoint($test_url);
+        }
+
+        return $this;
+    }
+
+    public function setHydrator(Hydrator $hydrator): self
+    {
+        $this->hydrator = $hydrator;
 
         return $this;
     }
@@ -71,6 +97,8 @@ class MailgunHelper
         array $bcc = [],
         array $attachments = []
     ): bool {
+        $this->assert();
+
         $parameters = $this->prepareParameters($from, $to, $subject, $content, $content_type, $cc, $bcc);
 
         $formatted_attachments = [];
@@ -83,8 +111,9 @@ class MailgunHelper
         }
 
         try {
+            $mailgun = new Mailgun($this->configurator, $this->hydrator);
             /** @var SendResponse $result */
-            $result = $this->mailgun->messages()->send($this->send_domain, $parameters);
+            $result = $mailgun->messages()->send($this->send_domain, $parameters);
 
             return !empty($result->getId());
         } catch (HttpClientException $e) {
@@ -135,7 +164,7 @@ class MailgunHelper
         }
 
         if ($this->is_testmode) {
-            $parameters['o:testmode'] = 'true';
+            $parameters['o:testmode'] = 'yes';
         }
 
         return $parameters;
@@ -143,9 +172,12 @@ class MailgunHelper
 
     public function isVaildEmail(string $email): bool
     {
+        $this->assert();
+
         try {
+            $mailgun = new Mailgun($this->configurator, $this->hydrator);
             /** @var ValidateResponse $result */
-            $result = $this->mailgun->emailValidation()->validate($email);
+            $result = $mailgun->emailValidation()->validate($email);
 
             return $result->isValid();
         } catch (\Exception $e) {
@@ -159,5 +191,12 @@ class MailgunHelper
             'filePath' => $attachment,
             'filename' => $name,
         ];
+    }
+
+    private function assert(): void
+    {
+        if (empty($this->send_domain)) {
+            throw new \InvalidArgumentException('Not set send_domain. require them');
+        }
     }
 }
