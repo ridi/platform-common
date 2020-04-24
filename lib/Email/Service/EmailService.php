@@ -15,6 +15,17 @@ abstract class EmailService extends EmailBaseSender
     /** @var string */
     protected $body_footer = '';
 
+    /** @var bool */
+    private $is_devmode;
+    /** @var string */
+    private $dev_mail_receiver;
+
+    public function __construct(bool $is_devmode = false, string $dev_mail_receiver = '')
+    {
+        $this->is_devmode = $is_devmode;
+        $this->dev_mail_receiver = $dev_mail_receiver;
+    }
+
     public function setBodyHeader(string $body_header = ''): void
     {
         $this->body_header = $body_header;
@@ -70,11 +81,11 @@ abstract class EmailService extends EmailBaseSender
         parent::setBcc($bcc);
     }
 
-    public function sendMail(bool $is_testmode = false): bool
+    public function sendMail(): bool
     {
         $this->initBody();
 
-        if (\Config::$UNDER_DEV) {
+        if ($this->is_devmode) {
             $this->devEmailWrapper();
         }
 
@@ -83,18 +94,19 @@ abstract class EmailService extends EmailBaseSender
 
     public function devEmailWrapper(): void
     {
-        if (empty(\Config::$DEV_MAIL_RECEIVER)) {
-            throw new MsgException('Config::$DEV_MAIL_RECEIVER 에 값이 없습니다');
+        if (empty($this->dev_mail_receiver)) {
+            throw new MsgException('dev_mail_receiver 에 값이 없습니다');
         }
+
         $cc = $this->getCc();
         if (!empty($cc)) {
-            $this->setCc([\Config::$DEV_MAIL_RECEIVER]);
+            $this->setCc([$this->dev_mail_receiver]);
         }
         $bcc = $this->getBcc();
         if (!empty($bcc)) {
-            $this->setBcc([\Config::$DEV_MAIL_RECEIVER]);
+            $this->setBcc([$this->dev_mail_receiver]);
         }
-        $this->setTo([\Config::$DEV_MAIL_RECEIVER]);
+        $this->setTo([$this->dev_mail_receiver]);
         $this->setSubject('[개발테스트]' . $this->getSubject());
     }
 

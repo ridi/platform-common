@@ -4,125 +4,89 @@ namespace Ridibooks\Platform\Common\Email\Service;
 
 use Mailgun\Exception\HttpClientException;
 use Mailgun\Mailgun;
+use Mailgun\Model\EmailValidation\ValidateResponse;
+use Mailgun\Model\Message\SendResponse;
 use Ridibooks\Platform\Common\Email\Constant\EmailContentTypeConst;
-use Ridibooks\Platform\Common\Security\Encryption;
 
-/**
- * 환경변수 의존성 존재함
- * \Config::$MAILGUN_API_KEY
- * \Config::$MAILGUN_SEND_DOMAIN
- * \Config::$MAILGUN_PUBLIC_ID
- * \Config::$MAILGUN_PUBLIC_KEY
- * \Config::$MAILGUN_EMAIL_VALIDATE_API_URL
- * \Config::$MAILGUN_SECRET_KEY_OPT_OUT
- */
 class MailgunHelper
 {
-    private const RESPONSE_HTTP_OK = 200;
     /** @var Mailgun */
     private $mailgun;
+    /** @var string */
+    private $send_domain;
+    /** @var bool */
+    private $is_testmode;
 
-    public function __construct(string $api_key)
-    {
-        $this->mailgun = new Mailgun($api_key);
+    /** @var self */
+    private static $instance;
+
+    public static function getInstance(
+        ?string $api_key = null,
+        ?string $send_domain = null,
+        bool $is_testmode = false
+    ): self {
+        if (self::$instance === null) {
+            if (empty($api_key) || empty($send_domain)) {
+                throw new \InvalidArgumentException('Not set api_key. send_domain. require them');
+            }
+            self::$instance = new self($api_key, $send_domain, $is_testmode);
+        }
+
+        return self::$instance;
     }
 
-    public function getBounces(int $skip = 0, int $limit = 1)
+    private function __construct(string $api_key, string $send_domain, bool $is_testmode)
     {
-        $result = $this->mailgun->get(\Config::$MAILGUN_SEND_DOMAIN . "/bounces", ['skip' => $skip, 'limit' => $limit]);
+        $this->mailgun = Mailgun::create($api_key);
+        $this->send_domain = $send_domain;
+        $this->is_testmode = $is_testmode;
+    }
 
-        return $result->http_response_body;
+    public function setTestMode(bool $is_testmode): self
+    {
+        $this->is_testmode = $is_testmode;
+
+        return $this;
     }
 
     /**
-     * @param string        $from
-     * @param string[]      $to
-     * @param string        $subject
-     * @param string        $content
+     * @param string   $from
+     * @param string[] $to
+     * @param string   $subject
+     * @param string   $content
      * @param string[] $cc
      * @param string[] $bcc
-     * @param string        $content_type
-     * @param array         $attachments
-     * @param bool          $is_testmode
+     * @param string   $content_type
+     * @param array    $attachments [filename => filepath]
      *
-     * @return \stdClass
-     * @throws \Mailgun\Messages\Exceptions\MissingRequiredMIMEParameters
+     * @return bool
      */
     public function send(
         string $from,
         array $to,
         string $subject,
         string $content,
+        string $content_type = EmailContentTypeConst::TEXT_HTML,
         array $cc = [],
         array $bcc = [],
-        string $content_type = EmailContentTypeConst::TEXT_HTML,
-        array $attachments = [],
-        bool $is_testmode = false
-    ) {
-        $message = self::prepareCommonParameters(
-            $from,
-            $to,
-            $subject,
-            $content,
-            $content_type,
-            $cc,
-            $bcc,
-            $is_testmode
-        );
-        $message['content-type'] = $content_type;
+        array $attachments = []
+    ): bool {
+        $parameters = $this->prepareParameters($from, $to, $subject, $content, $content_type, $cc, $bcc);
 
         $formatted_attachments = [];
         foreach ($attachments as $name => $path) {
-            $formatted_attachments[] = self::generateMailgunAttachmentFormat($name, $path);
+            $formatted_attachments[] = $this->generateMailgunAttachmentFormat($name, $path);
         }
 
-        $files = [];
         if (!empty($formatted_attachments)) {
-            $files['attachment'] = $formatted_attachments;
+            $parameters['attachment'] = $formatted_attachments;
         }
-
-        return $this->mailgun->sendMessage(\Config::$MAILGUN_SEND_DOMAIN, $message, $files);
-    }
-
-    /**
-     * @param string        $from
-     * @param string[]      $to
-     * @param string        $subject
-     * @param string        $content
-     * @param string        $content_type
-     * @param string[] $cc
-     * @param string[] $bcc
-     * @param bool          $is_testmode
-     *
-     * @return bool
-     */
-    public static function sendUsingV3(
-        string $from,
-        array $to,
-        string $subject,
-        string $content,
-        string $content_type = EmailContentTypeConst::TEXT_HTML,
-        array $cc = [],
-        array $bcc = [],
-        bool $is_testmode = false
-    ) {
-        $mg = Mailgun::create(\Config::$MAILGUN_API_KEY);
-
-        $parameters = self::prepareCommonParameters(
-            $from,
-            $to,
-            $subject,
-            $content,
-            $content_type,
-            $cc,
-            $bcc,
-            $is_testmode
-        );
 
         try {
-            $mg->messages()->send(\Config::$MAILGUN_SEND_DOMAIN, $parameters);
+            /** @var SendResponse $result */
+            $result = $this->mailgun->messages()->send($this->send_domain, $parameters);
 
-            return true;
+            return !empty($result->getId());
         } catch (HttpClientException $e) {
             trigger_error($e->getMessage());
 
@@ -131,32 +95,29 @@ class MailgunHelper
     }
 
     /**
-     * @param string        $from
-     * @param string[]      $to
-     * @param string        $subject
-     * @param string        $content
+     * @param string   $from
+     * @param string[] $to
+     * @param string   $subject
+     * @param string   $content
      * @param string[] $cc
      * @param string[] $bcc
-     * @param string        $content_type
-     * @param bool          $is_testmode
+     * @param string   $content_type
      *
      * @return array
      */
-    private static function prepareCommonParameters(
+    private function prepareParameters(
         string $from,
         array $to,
         string $subject,
         string $content,
         string $content_type = EmailContentTypeConst::TEXT_HTML,
         array $cc = [],
-        array $bcc = [],
-        bool $is_testmode = false
+        array $bcc = []
     ): array {
         $parameters = [
             'from' => $from,
             'to' => implode(',', $to),
             'subject' => $subject,
-            'recipient-variables' => self::createRecipientVariables($to),
         ];
 
         if ($content_type === EmailContentTypeConst::TEXT_HTML) {
@@ -173,99 +134,30 @@ class MailgunHelper
             $parameters['bcc'] = $bcc;
         }
 
-        if ($is_testmode) {
+        if ($this->is_testmode) {
             $parameters['o:testmode'] = 'true';
         }
 
         return $parameters;
     }
 
-    /**
-     * @param \stdClass $results
-     *
-     * @return bool
-     */
-    public static function isSuccess($results): bool
+    public function isVaildEmail(string $email): bool
     {
-        if ($results->http_response_code != self::RESPONSE_HTTP_OK) {
-            trigger_error('[EMAIL][Mailgun] Error : ' . $results->http_response_code);
+        try {
+            /** @var ValidateResponse $result */
+            $result = $this->mailgun->emailValidation()->validate($email);
 
+            return $result->isValid();
+        } catch (\Exception $e) {
             return false;
         }
-
-        return true;
     }
 
-    /**
-     * @param string $email
-     *
-     * @return bool
-     */
-    public static function isVaildEmail($email)
-    {
-        $url = \Config::$MAILGUN_EMAIL_VALIDATE_API_URL;
-        $querystring = 'address=' . urlencode($email);
-
-        $user_id = \Config::$MAILGUN_PUBLIC_ID;
-        $user_password = \Config::$MAILGUN_PUBLIC_KEY;
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "{$url}?{$querystring}");
-        curl_setopt($ch, CURLOPT_USERPWD, "{$user_id}:{$user_password}");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-        $json_result = curl_exec($ch);
-        curl_close($ch);
-
-        $result = json_decode($json_result, true);
-
-        return $result['is_valid'];
-    }
-
-    /**
-     * @param string[] $recipients
-     *
-     * @return string|false
-     */
-    private static function createRecipientVariables(array $recipients)
-    {
-        if (!is_array($recipients)) {
-            $recipients = [$recipients];
-        }
-        $recipient_vars = [];
-        foreach ($recipients as $recipient) {
-            $recipient_vars[$recipient] = [
-                'optout_link' => self::getEmailOptoutLinkByEmail($recipient),
-            ];
-        }
-
-        return json_encode($recipient_vars);
-    }
-
-    private static function getEmailOptoutLinkByEmail(string $email): string
-    {
-        $domain = \Config::$MAILGUN_SEND_DOMAIN;
-        $token = self::encryptedEmail($email);
-
-        return "https://$domain/account/marketing-agreement/email?token=$token";
-    }
-
-    /**
-     * @param string $email
-     *
-     * @return string|bool
-     */
-    private static function encryptedEmail(string $email)
-    {
-        return Encryption::encryptAESBase64($email, \Config::$MAILGUN_SECRET_KEY_OPT_OUT);
-    }
-
-    private static function generateMailgunAttachmentFormat(string $name, string $attachment): array
+    private function generateMailgunAttachmentFormat(string $name, string $attachment): array
     {
         return [
             'filePath' => $attachment,
-            'remoteName' => $name,
+            'filename' => $name,
         ];
     }
 }
