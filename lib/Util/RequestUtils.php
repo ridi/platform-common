@@ -50,8 +50,8 @@ class RequestUtils
     {
         $values = [];
         if (isset($request_params[$key])) {
-            if (StringUtils::isEmpty($request_params[$key]) || empty($request_params[$key])) {
-                return $values;
+            if ($values === [] || $values === null || $values === '') {
+                return [];
             }
 
             $values = $request_params[$key];
