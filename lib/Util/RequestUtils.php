@@ -50,7 +50,10 @@ class RequestUtils
     {
         $values = [];
         if (isset($request_params[$key])) {
-            $values = $request_params[$key];
+            if (StringUtils::isEmpty($request_params[$key]) || empty($request_params[$key])) {
+                return $values;
+            }
+
             if (is_string($values) && !StringUtils::isEmpty($values)) {
                 // , 구분 일 경우
                 $values = str_replace(['"', "'", ' '], '', $values);
