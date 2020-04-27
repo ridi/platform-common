@@ -54,6 +54,7 @@ class RequestUtils
                 return $values;
             }
 
+            $values = $request_params[$key];
             if (is_string($values) && !StringUtils::isEmpty($values)) {
                 // , 구분 일 경우
                 $values = str_replace(['"', "'", ' '], '', $values);
