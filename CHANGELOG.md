@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove `\Config` usage in `Email` namespace
 - Change `EmailService` usage 
 
+## [1.0.4] - 2020-04-27
+### Changed
+- Changed using Request to `Illuminate\Http\Request` in `RequestUtils`
+- Changed using Response to `Illuminate\Http\Response` in `CsvResponse`
+
 ## [1.0.3] - 2020-04-24
 ### Added
 - Add `AWSHelper` having common functions for AWS

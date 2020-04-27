@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\Util;
 
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class RequestUtils
 {
