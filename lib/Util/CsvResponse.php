@@ -2,7 +2,7 @@
 
 namespace Ridibooks\Platform\Common\Util;
 
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
 class CsvResponse extends Response
 {
