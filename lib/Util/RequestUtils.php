@@ -50,7 +50,9 @@ class RequestUtils
     {
         $values = [];
         if (isset($request_params[$key])) {
-            if ($values === [] || $values === null || $values === '') {
+            if ($request_params[$key] === []
+                || $request_params[$key] === null
+                || $request_params[$key] === '') {
                 return [];
             }
 
