@@ -29,11 +29,6 @@ class ElapsedTime
         $this->init(time());
     }
 
-    public function __destruct()
-    {
-        $this->endTotalElapsed();
-    }
-
     private function init(int $now): void
     {
         $this->group_start_time = $now;
