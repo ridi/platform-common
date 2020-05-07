@@ -5,7 +5,7 @@ namespace Ridibooks\Platform\Common\Tests\Helper;
 
 use Ridibooks\Platform\Common\PingService\AbstractPingUtils;
 
-class PingTest extends AbstractPingUtils
+class ConcretePingUtils extends AbstractPingUtils
 {
     protected function getBaseUrl(): string
     {
