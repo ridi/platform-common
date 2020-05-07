@@ -50,6 +50,12 @@ class RequestUtils
     {
         $values = [];
         if (isset($request_params[$key])) {
+            if ($request_params[$key] === []
+                || $request_params[$key] === null
+                || $request_params[$key] === '') {
+                return [];
+            }
+
             $values = $request_params[$key];
             if (is_string($values) && !StringUtils::isEmpty($values)) {
                 // , 구분 일 경우

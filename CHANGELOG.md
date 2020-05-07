@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Remove `\Config` reference in `PingService`
 
+## [1.0.8] - 2020-04-28
+### Fixed
+- Fixed null|string type error when variable $values is empty string or null 
+even though it is set from `getValuesFromContent` in `RequestUtils`
+- Fixed condition checking empty array or empty string 
+not to use StringUtils from `getValuesFromContent` in `RequestUtils`
+- Fixed error using default values from `getValuesFromContent` in `RequestUtils`
+
 ## [1.0.4] - 2020-04-27
 ### Changed
 - Changed using Request to `Illuminate\Http\Request` in `RequestUtils`
