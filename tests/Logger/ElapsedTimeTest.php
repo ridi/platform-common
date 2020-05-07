@@ -62,7 +62,7 @@ class ElapsedTimeTest extends TestCase
                 },
                 function (TestHandler $test_handler) {
                     $records = $test_handler->getRecords();
-                    $this->assertCount(1, $records);
+                    $this->assertCount(2, $records);
                 }
             ],
         ];
