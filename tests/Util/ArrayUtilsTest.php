@@ -19,17 +19,17 @@ class ArrayUtilsTest extends TestCase
     public function providerArrayDiffRecursively(): array
     {
         return [
-            [
+            'case 1. 1차원 배열' => [
                 ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4],
                 ['a' => 0, 'b' => 2, 'c' => 3, 'e' => 4],
                 ['a' => 1, 'd' => 4],
             ],
-            [
+            'case 2. 2차원 배열' => [
                 ['test' => ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4] ],
                 ['test' => ['a' => 0, 'b' => 2, 'c' => 3, 'e' => 4], 'test2' => [] ],
                 ['test' => ['a' => 1, 'd' => 4] ],
             ],
-            [
+            'case 3. 3차원 배열' => [
                 ['test' => ['a' => [ 'f' => 1 ], 'b' => 2, 'c' => 3, 'd' => 4] ],
                 ['test' => ['a' => [ 'f' => 0 ], 'b' => 2, 'c' => 3, 'e' => 4] ],
                 ['test' => ['a' => [ 'f' => 1 ], 'd' => 4] ],
@@ -57,21 +57,21 @@ class ArrayUtilsTest extends TestCase
     public function providerJoinDicts(): array
     {
         return [
-            [ // case1
+            'case 1. 일반 join' => [
                 [ ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4] ],
                 [ ['a' => 1, 'e' => 2, 'f' => 3, 'g' => 4] ],
                 0,
                 0,
                 [ ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 2, 'f' => 3, 'g' => 4] ],
             ],
-            [ // case2
+            'case 2. key 중복 테스트' => [
                 [ ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4] ],
                 [ ['a' => 1, 'b' => 9, 'f' => 3, 'g' => 4] ],
                 0,
                 0,
                 [ ['a' => 1, 'b' => 9, 'c' => 3, 'd' => 4, 'f' => 3, 'g' => 4] ],
             ],
-            [ // case3
+            'case 3. key 순서 다를때 테스트' => [
                 [ ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4] ],
                 [ ['g' => 1, 'f' => 9, 'b' => 3, 'a' => 4] ],
                 0,
@@ -93,7 +93,7 @@ class ArrayUtilsTest extends TestCase
     public function providerConvertLinksToSets(): array
     {
         return [
-            [ // case1
+            'case 1' => [
                 [1,2,4,4,5],
                 [4,4,3,1,6],
                 [
@@ -101,7 +101,7 @@ class ArrayUtilsTest extends TestCase
                     [5,6],
                 ],
             ],
-            [ // case2
+            'case 2' => [
                 [1,2,3,4,5,6],
                 [6,5,4,3,2,1],
                 [
@@ -145,12 +145,12 @@ class ArrayUtilsTest extends TestCase
     public function providerShortenSequential(): array
     {
         return [
-            [ // case1
+            'case 1. 오름차순' => [
                 [1,2,3,5,6,8],
                 '~',
                 ['1~3', '5~6', '8'],
             ],
-            [ // case2
+            'case 2. 내림차순' => [
                 [8,6,5,3,2,1],
                 '-',
                 ['1-3', '5-6', '8'],
