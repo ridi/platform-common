@@ -42,11 +42,11 @@ class ValidationUtilsTest extends TestCase
     public function providerCheckNumberFieldForSuccess(): array
     {
         return [
-            ['1'],
-            ['111'],
-            ['111111'],
-            ['11111111111'],
-            ['111.1111'],
+            'case 1. 일반' => ['1'],
+            'case 2. 일반' => ['111'],
+            'case 3. 일반' => ['111111'],
+            'case 4. 일반' => ['11111111111'],
+            'case 5. 소수점' => ['111.1111'],
         ];
     }
 
@@ -62,8 +62,8 @@ class ValidationUtilsTest extends TestCase
     public function providerCheckNumberFieldForFail(): array
     {
         return [
-            ['11,111'],
-            ['1,111,111'],
+            'case 1. 콤마' => ['11,111'],
+            'case 2. 콤마' => ['1,111,111'],
         ];
     }
 
@@ -80,12 +80,12 @@ class ValidationUtilsTest extends TestCase
     public function providerCheckMinLengthForSuccess(): array
     {
         return [
-            [111, 1],
-            ['111', 1],
-            [111222333444, 10],
-            ['111222333444', 10],
-            ['한글', 1],
-            ['한글테스트', 4],
+            'case 1-1. int형' => [111, 1],
+            'case 1-2. string형' => ['111', 1],
+            'case 2-1. int형' => [111222333444, 10],
+            'case 2-2. string형' => ['111222333444', 10],
+            'case 3. 한글' => ['한글', 1],
+            'case 4. 한글' => ['한글테스트', 4],
         ];
     }
 
@@ -101,12 +101,12 @@ class ValidationUtilsTest extends TestCase
     public function providerCheckMinLengthForFail(): array
     {
         return [
-            [111, 5],
-            ['111', 5],
-            [111222333444, 20],
-            ['111222333444', 20],
-            ['한글', 5],
-            ['한글테스트', 10],
+            'case 1-1. int형' => [111, 5],
+            'case 1-2. string형' => ['111', 5],
+            'case 2-1. int형' => [111222333444, 20],
+            'case 2-2. string형' => ['111222333444', 20],
+            'case 3. 한글' => ['한글', 5],
+            'case 4. 한글' => ['한글테스트', 10],
         ];
     }
 
@@ -123,12 +123,12 @@ class ValidationUtilsTest extends TestCase
     public function providerCheckLengthForSuccess(): array
     {
         return [
-            [111, 3],
-            ['111', 3],
-            [111222333444, 12],
-            ['111222333444', 12],
-            ['한글', 2],
-            ['한글테스트', 5],
+            'case 1-1. int형' => [111, 3],
+            'case 1-2. string형' => ['111', 3],
+            'case 2-1. int형' => [111222333444, 12],
+            'case 2-2. string형' => ['111222333444', 12],
+            'case 3. 한글' => ['한글', 2],
+            'case 4. 한글' => ['한글테스트', 5],
         ];
     }
 
@@ -144,12 +144,12 @@ class ValidationUtilsTest extends TestCase
     public function providerCheckLengthForFail(): array
     {
         return [
-            [111, 5],
-            ['111', 5],
-            [111222333444, 20],
-            ['111222333444', 20],
-            ['한글', 5],
-            ['한글테스트', 10],
+            'case 1-1. int형' => [111, 5],
+            'case 1-2. string형' => ['111', 5],
+            'case 2-1. int형' => [111222333444, 20],
+            'case 2-2. string형' => ['111222333444', 20],
+            'case 3. 한글' => ['한글', 5],
+            'case 4. 한글' => ['한글테스트', 10],
         ];
     }
 
@@ -166,9 +166,9 @@ class ValidationUtilsTest extends TestCase
     public function providerCheckDatetimeFormatForSuccess(): array
     {
         return [
-            ['2020-01-01 11:11:11', 'Y-m-d H:i:s'],
-            ['2020-01-01 11:11', 'Y-m-d H:i'],
-            ['2020-01-01', 'Y-m-d'],
+            'case 1. 년월일시분초' => ['2020-01-01 11:11:11', 'Y-m-d H:i:s'],
+            'case 2. 년월일시분' => ['2020-01-01 11:11', 'Y-m-d H:i'],
+            'case 3. 년월일' => ['2020-01-01', 'Y-m-d'],
         ];
     }
 
@@ -184,9 +184,9 @@ class ValidationUtilsTest extends TestCase
     public function providerCheckDatetimeFormatForFail(): array
     {
         return [
-            ['2020-01-01 11:11:11', 'Y-m-d H:i'],
-            ['2020-01-01 11:11', 'Y-m-d'],
-            ['2020-01-01', 'Y-m-d H:i'],
+            'case 1. 년월일시분초 vs 년월일시분' => ['2020-01-01 11:11:11', 'Y-m-d H:i'],
+            'case 2. 년월일시분 vs 년월일' => ['2020-01-01 11:11', 'Y-m-d'],
+            'case 3. 년월일 vs 년월일시' => ['2020-01-01', 'Y-m-d H:i'],
         ];
     }
 
