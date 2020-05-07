@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Remove `\Config` reference in `PingService`
 
+## [1.0.9] - 2020-05-07
+### Fixed
+- Fix nullable check in `ArrayUtils::getArrayDiffRecursively`
+
 ## [1.0.8] - 2020-04-28
 ### Fixed
 - Fixed null|string type error when variable $values is empty string or null 
