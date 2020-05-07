@@ -30,7 +30,7 @@ class TestHydrator implements Hydrator
         return $object;
     }
 
-    private function generateSampleData(string $class, $body): array
+    private function generateSampleData(string $class, string $body): array
     {
         switch ($class) {
             case SendResponse::class:
