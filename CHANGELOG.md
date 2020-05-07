@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Changed
+- Update `mailgun/mailgun-php` package
+- Remove `\Config` usage in `Email` namespace
+- Change `EmailService` usage 
 - Remove `\Config` reference in `PingService`
 
 ## [1.0.9] - 2020-05-07

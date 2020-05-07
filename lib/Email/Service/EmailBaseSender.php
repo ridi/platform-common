@@ -199,49 +199,38 @@ class EmailBaseSender implements \JsonSerializable
         return $this->attachments;
     }
 
-    /**
-     * @param bool $is_testmode 테스트 모드일 경우 실제로 전송되지 않음
-     *
-     * @return bool
-     */
-    public function sendMail(bool $is_testmode = false): bool
-    {
-        return $this->sendWithMailgun($is_testmode);
-    }
-
-    private function sendWithMailgun(bool $is_testmode = false): bool
+    public function sendMail(): bool
     {
         if (!$this->hasEnoughParameters()) {
             return false;
         }
 
         try {
-            $helper = new MailgunHelper(\Config::$MAILGUN_API_KEY);
-            $results = $helper->send(
+            $helper = MailgunHelper::getInstance();
+
+            return $helper->send(
                 $this->from,
                 $this->to,
                 $this->subject,
                 $this->body,
+                $this->content_type,
                 $this->cc,
                 $this->bcc,
-                $this->content_type,
-                $this->attachments,
-                $is_testmode
+                $this->attachments
             );
         } catch (\Exception $e) {
             // 대부분 일시적인 통신에러이기 때문에 지속발생시 로깅한다.
-            if (AdaptableCache::isOverThresholdWithInc(
-                self::ERROR_LOGGING_KEY,
-                self::ERROR_LOGGING_THRESHOLD,
-                self::ERROR_LOGGING_TTL
-            )
+            if (
+                AdaptableCache::isOverThresholdWithInc(
+                    self::ERROR_LOGGING_KEY,
+                    self::ERROR_LOGGING_THRESHOLD,
+                    self::ERROR_LOGGING_TTL
+                )
             ) {
                 SentryHelper::triggerSentryException($e);
             }
 
             return false;
         }
-
-        return MailgunHelper::isSuccess($results);
     }
 }

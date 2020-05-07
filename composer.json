@@ -7,15 +7,17 @@
     "ridibooks/platform-gnfdb": "^0.1.12",
     "aws/aws-sdk-php": "^3.79",
     "guzzlehttp/guzzle": "^6.3",
-    "php-http/guzzle6-adapter": "^1.1",
+    "php-http/guzzle6-adapter": "^2.0",
     "monolog/monolog": "^2.0",
     "sentry/sentry": "^2.0",
     "ext-json": "*",
-    "mailgun/mailgun-php": "^2.8.1",
+    "mailgun/mailgun-php": "^3.0.0",
     "symfony/http-foundation": "^2.8.50|^3.4.26|^4.3|^5.0.7",
     "firebase/php-jwt": "^4.0|^5.0",
     "predis/predis": "^1.1",
-    "illuminate/http": "^6.0|^7.0"
+    "illuminate/http": "^6.0|^7.0",
+    "http-interop/http-factory-guzzle": "^1.0",
+    "symfony/http-client": "^5.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.0",
