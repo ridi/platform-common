@@ -25,10 +25,10 @@ class ElapsedTime
     /** @var int[] */
     private $elapsed_times;
 
-    public function __construct(string $main_title)
+    public function __construct(string $main_title, ?Logger $logger = null)
     {
         $this->main_title = $main_title;
-        $this->logger = MonologHelper::createForCron('elapsed_time');
+        $this->logger = $logger ?? MonologHelper::createForCron('elapsed_time');
         $this->logger->info("{$main_title} INIT");
         $this->init(time());
     }
