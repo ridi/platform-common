@@ -20,6 +20,7 @@
     "symfony/http-client": "^5.0"
   },
   "require-dev": {
+    "firebase/php-jwt": "^4.0",
     "phpunit/phpunit": "^8.0",
     "diablomedia/phpunit-pretty-printer": "^4.0"
   },

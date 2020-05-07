@@ -29,7 +29,13 @@ class Authenticate
     ): void {
         $jwt_auth_dto = JwtAuthDto::import($iss, $aud, $key_type, $key, $not_valid_before, $not_valid_after);
 
-        if (!is_array(self::$auth_dtos[$iss][$aud][$key_type])) {
+        if (!isset(self::$auth_dtos[$iss])) {
+            self::$auth_dtos[$iss] = [];
+        }
+        if (!isset(self::$auth_dtos[$iss][$aud])) {
+            self::$auth_dtos[$iss][$aud] = [];
+        }
+        if (!isset(self::$auth_dtos[$iss][$aud][$key_type])) {
             self::$auth_dtos[$iss][$aud][$key_type] = [];
         }
 
@@ -42,7 +48,7 @@ class Authenticate
             return $next($request);
         }
 
-        $authorization = $request->headers->get('Authorization');
+        $authorization = $request->headers->get('Authorization', '');
         $has_bearer_authorization = strpos($authorization, 'Bearer ') === 0;
         if (empty($authorization) || !$has_bearer_authorization) {
             $this->abort(Response::HTTP_UNAUTHORIZED, 'invalid authorization header');
@@ -63,14 +69,13 @@ class Authenticate
         $payload_aud = str_replace(['-', '_'], '', $aud);
 
         /** @var JwtAuthDto[] $auth_dtos */
-        $auth_dtos = self::$auth_dtos[$payload_iss][$payload_aud]['public'];
-        if (empty($auth_dtos)) {
+        if (empty(self::$auth_dtos[$payload_iss][$payload_aud]['public'])) {
             $this->abort(Response::HTTP_UNAUTHORIZED, 'invalid authorization public keys');
         }
 
         $is_valid = false;
         $now = new \DateTime();
-        foreach ($auth_dtos as $auth_dto) {
+        foreach (self::$auth_dtos[$payload_iss][$payload_aud]['public'] as $auth_dto) {
             if ($auth_dto->not_valid_before !== null && $auth_dto->not_valid_before > $now) {
                 continue;
             }
