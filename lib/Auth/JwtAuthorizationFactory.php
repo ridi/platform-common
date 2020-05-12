@@ -81,12 +81,6 @@ class JwtAuthorizationFactory
     ): void {
         $jwt_auth_dto = JwtAuthDto::import($iss, $aud, $key_type, $key, $not_valid_before, $not_valid_after);
 
-        if (!isset(self::$auth_dtos[$iss])) {
-            self::$auth_dtos[$iss] = [];
-        }
-        if (!isset(self::$auth_dtos[$iss][$aud])) {
-            self::$auth_dtos[$iss][$aud] = [];
-        }
         if (!isset(self::$auth_dtos[$iss][$aud][$key_type])) {
             self::$auth_dtos[$iss][$aud][$key_type] = [];
         }
