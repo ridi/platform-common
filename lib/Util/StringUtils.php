@@ -19,12 +19,14 @@ class StringUtils
 
     public static function removeTag($string)
     {
-        $string = str_replace("<", "&lt;", $string);
-        $string = str_replace(">", "&gt;", $string);
-        $string = str_replace(" ", "&nbsp;", $string);
-        $string = str_replace('"', "&quot;", $string);
+        $replace_map = [
+            "<" => "&lt;",
+            ">" => "&gt;",
+            " " => "&nbsp;",
+            '"' => "&quot;",
+        ];
 
-        return $string;
+        return str_replace(array_keys($replace_map), array_values($replace_map), $string);
     }
 
     /**
@@ -288,8 +290,7 @@ class StringUtils
 
         // 구분자 혼동방지를 위한 replace
         foreach ($pieces as &$str) {
-            $str = str_replace($glue_in_chunk, '', $str);
-            $str = str_replace($glue_between_chunks, '', $str);
+            $str = str_replace([$glue_in_chunk, $glue_between_chunks], '', $str);
         }
 
         $rows = array_chunk($pieces, $chunk_size);
