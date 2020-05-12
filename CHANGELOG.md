@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove `\Config` usage in `Email` namespace
 - Change `EmailService` usage 
 - Remove `\Config` reference in `PingService`
+- Fix subgroup elapsed time write
+  - Change variable names
 
 ## [1.0.9] - 2020-05-07
 ### Fixed
