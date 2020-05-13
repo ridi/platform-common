@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.10] - 2020-05-13
+### Add
+- Add function `getAwsDefaultConfigDto` in `AwsHelper`
+### Changed
+- Update function `getAwsConfigDto` using cached credential
+
 ## [1.0.9] - 2020-05-07
 ### Changed
 - Remove `\Config` reference in `PingService`
