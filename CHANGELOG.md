@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.11] - 2020-05-19
+### Add
+- Add `RedisHelper` to help configuration and logical minimizing for Redis 
+- Add function `getRedisClientConfigs` in `RedisHelper`
+- Add Dto `RedisConfigDto` having hosts and options to configure client
+### Changed
+- Update `RedisCache` that client can be defined with several hosts and options
+
 ## [1.0.10] - 2020-05-13
 ### Add
 - Add function `getAwsDefaultConfigDto` in `AwsHelper`

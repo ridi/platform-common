@@ -7,19 +7,14 @@ use Predis\Client;
 
 class RedisCache
 {
+    public const REDIS_CONNECTION_TIME_OUT = 2;
     /** @var Client|null */
     protected $client;
 
-    public function __construct(string $host, int $port = 6379, float $timeout = 5)
+    public function __construct(array $parameters, array $options)
     {
         try {
-            $config = [
-                'scheme' => 'tcp',
-                'host' => $host,
-                'port' => $port,
-                'timeout' => $timeout,
-            ];
-            $this->client = new Client($config);
+            $this->client = new Client($parameters, $options);
         } catch (\Exception $e) {
             $this->client = null;
             error_log($e->getMessage());
@@ -66,5 +61,16 @@ class RedisCache
         } catch (\Exception $e) {
             error_log($e->getMessage());
         }
+    }
+
+    public static function makeClientParam(string $alias, string $host, int $port = 6379, int $timeout = self::REDIS_CONNECTION_TIME_OUT): array
+    {
+        return [
+            'scheme' => 'tcp',
+            'host' => $host,
+            'port' => $port,
+            'timeout' => $timeout,
+            'alias' => $alias,
+        ];
     }
 }
