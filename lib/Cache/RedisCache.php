@@ -21,13 +21,22 @@ class RedisCache
         }
     }
 
+    protected function tryToConnect(): void
+    {
+        try {
+            if (!$this->client->isConnected()) {
+                $this->client->connect();
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
     public function get(string $key): ?string
     {
         try {
             if ($this->client !== null) {
-                if (!$this->client->isConnected()) {
-                    $this->client->connect();
-                }
+                $this->tryToConnect();
 
                 return $this->client->get($key);
             }
@@ -38,6 +47,28 @@ class RedisCache
         return null;
     }
 
+    public function getBulk(array $keys): array
+    {
+        try {
+            if ($this->client !== null) {
+                $this->tryToConnect();
+
+                $values = $this->client->mget($keys);
+
+                $result = [];
+                foreach ($values as $key => $value) {
+                    $result[$keys[$key]] = is_null($value) ? null : json_decode($value, true);
+                }
+
+                return array_filter($result);
+            }
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+        }
+
+        return [];
+    }
+
     public function setJson(string $key, array $value, int $ttl): void
     {
         $this->set($key, json_encode($value), $ttl);
@@ -45,19 +76,28 @@ class RedisCache
 
     public function set(string $key, string $value, int $ttl): void
     {
+        $result = 0;
         try {
             if ($this->client !== null) {
-                if (!$this->client->isConnected()) {
-                    $this->client->connect();
-                }
+                $this->tryToConnect();
 
                 // setnx()은 호출 시점에서 해당하는 key-value가 존재하지 않는 경우에만 set이 성공한다.
                 // set 성공 시 return 1, 실패 시 return 0
                 $result = $this->client->setnx($key, $value);
-                if ($result === 1) {
-                    $this->client->expire($key, $ttl);
-                }
             }
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+        }
+
+        if ($result === 1) {
+            $this->expire($key, $ttl);
+        }
+    }
+
+    public function expire(string $key, int $ttl): void
+    {
+        try {
+            $this->client->expire($key, $ttl);
         } catch (\Exception $e) {
             error_log($e->getMessage());
         }
