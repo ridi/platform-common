@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.12] - 2020-06-04
+### Add
+- Add function `getBulk` to read cache massively from Redis Client in `RedisCache`
+- Add function `tryToConnect` which re-use in functions
+
 ## [1.0.11] - 2020-05-19
 ### Add
 - Add `RedisHelper` to help configuration and logical minimizing for Redis 
