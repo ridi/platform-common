@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.13] - 2020-06-10
+### Add
+- Add constants related on the specified expire time mode and flag to set the key
+    - the specified expire time mode : 
+        - `EX` -- Set the specified expire time, in seconds.
+        - `PX` -- Set the specified expire time, in milliseconds.
+    - flag to set the key
+        - `NX` -- Only set t`he key if it does not already exist.
+        - `XX` -- Only set the key if it already exist.
+- Add the specified expire time mode and flag to set the key as param to function `set` in `RedisCache`
+
 ## [1.0.12] - 2020-06-04
 ### Add
 - Add function `getBulk` to read cache massively from Redis Client in `RedisCache`

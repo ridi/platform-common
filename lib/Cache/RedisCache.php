@@ -8,7 +8,14 @@ use Predis\Client;
 class RedisCache
 {
     public const REDIS_CONNECTION_TIME_OUT = 2;
-    /** @var Client|null */
+
+    public const EXPIRE_SECOND = 'EX';
+    public const EXPIRE_MILLISECOND = 'PX';
+
+    public const FLAG_KEY_NOT_EXIST = 'NX';
+    public const FLAG_KEY_ONLY_EXIST = 'XX';
+
+        /** @var Client|null */
     protected $client;
 
     public function __construct(array $parameters, array $options)
@@ -69,28 +76,21 @@ class RedisCache
         return [];
     }
 
-    public function setJson(string $key, array $value, int $ttl): void
+    public function setJson(string $key, array $value, int $ttl, string $expire_time_mode = self::EXPIRE_SECOND, string $flag = self::FLAG_KEY_NOT_EXIST): void
     {
-        $this->set($key, json_encode($value), $ttl);
+        $this->set($key, json_encode($value), $ttl, $expire_time_mode, $flag);
     }
 
-    public function set(string $key, string $value, int $ttl): void
+    public function set(string $key, string $value, int $ttl, string $expire_time_mode = self::EXPIRE_SECOND, string $flag = self::FLAG_KEY_NOT_EXIST): void
     {
-        $result = 0;
         try {
             if ($this->client !== null) {
                 $this->tryToConnect();
 
-                // setnx()은 호출 시점에서 해당하는 key-value가 존재하지 않는 경우에만 set이 성공한다.
-                // set 성공 시 return 1, 실패 시 return 0
-                $result = $this->client->setnx($key, $value);
+                $this->client->set($key, $value, $expire_time_mode, $ttl, $flag);
             }
         } catch (\Exception $e) {
             error_log($e->getMessage());
-        }
-
-        if ($result === 1) {
-            $this->expire($key, $ttl);
         }
     }
 
