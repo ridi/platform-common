@@ -15,7 +15,7 @@ class RedisCache
     public const FLAG_KEY_NOT_EXIST = 'NX';
     public const FLAG_KEY_ONLY_EXIST = 'XX';
 
-        /** @var Client|null */
+    /** @var Client|null */
     protected $client;
 
     public function __construct(array $parameters, array $options)
