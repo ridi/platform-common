@@ -156,4 +156,18 @@ class S3Service extends AbstractAwsService
             return false;
         }
     }
+
+    public function doesFileExist(string $src): bool
+    {
+        if (substr($src, -1, 1) == '/') {
+            return false;
+        }
+
+        return $this->doesObjectExist($src);
+    }
+
+    public function doesFolderExist(string $src): bool
+    {
+        return $this->doesObjectExist(rtrim($src, '/') . '/');
+    }
 }
