@@ -16,7 +16,7 @@ class ArrayUtils
 
         // value 비교
         if (!is_array($array1)) {
-            if ($array1 != $array2) {
+            if ($array1 !== $array2) {
                 return $array1;
             } else {
                 return [];
@@ -34,7 +34,7 @@ class ArrayUtils
                         $diff_array[$key] = $sub_diff_array;
                     }
                 }
-            } elseif (!array_key_exists($key, $array2) || $array2[$key] != $value) {
+            } elseif (!array_key_exists($key, $array2) || $array2[$key] !== $value) {
                 $diff_array[$key] = $value;
             }
         }

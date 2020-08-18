@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.14] - 2020-08-18
+### Fixed
+- Fix to strict comparison from `getArrayDiffRecursively` in `ArrayUtils`
+
 ## [1.0.13] - 2020-06-10
 ### Add
 - Add constants related on the specified expire time mode and flag to set the key
