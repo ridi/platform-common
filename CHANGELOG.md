@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.15] - 2020-08-19
+### Added
+- Add conditions to check object and compare between null and empty string from `getArrayDiffRecursively` in `ArrayUtils`
+- Add condition to check whether value is string to trim from `isEmpty` in `StringUtils`
+
 ## [1.0.14] - 2020-08-18
 ### Fixed
 - Fix to strict comparison from `getArrayDiffRecursively` in `ArrayUtils`
