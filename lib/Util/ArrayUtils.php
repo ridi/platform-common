@@ -32,8 +32,17 @@ class ArrayUtils
                 if (!is_array($array2[$key])) {
                     $diff_array[$key] = $value;
                 } else {
-                    $sub_diff_array = ArrayUtils::getArrayDiffRecursively($value, $array2[$key]);
-                    if (count($sub_diff_array)) {
+                    $sub_diff_array = self::getArrayDiffRecursively($value, $array2[$key]);
+                    if (count($sub_diff_array) > 0) {
+                        $diff_array[$key] = $sub_diff_array;
+                    }
+                }
+            } elseif (is_object($value)) {
+                if (!is_object($array2[$key])) {
+                    $diff_array[$key] = $value;
+                } else {
+                    $sub_diff_array = self::getArrayDiffRecursively((array)$value, (array)$array2[$key]);
+                    if (count($sub_diff_array) > 0) {
                         $diff_array[$key] = $sub_diff_array;
                     }
                 }
