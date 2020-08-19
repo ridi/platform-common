@@ -17,10 +17,13 @@ class ArrayUtils
         // value 비교
         if (!is_array($array1)) {
             if ($array1 !== $array2) {
-                return $array1;
-            } else {
-                return [];
+                $is_both_null = StringUtils::isEmpty($array1) && StringUtils::isEmpty($array2);
+                if (!$is_both_null) {
+                    return $array1;
+                }
             }
+
+            return [];
         }
 
         // array 비교
@@ -34,7 +37,15 @@ class ArrayUtils
                         $diff_array[$key] = $sub_diff_array;
                     }
                 }
-            } elseif (!array_key_exists($key, $array2) || $array2[$key] !== $value) {
+            } elseif (array_key_exists($key, $array2)) {
+                if ($value !== $array2[$key]) {
+                    // support to compare between null and empty string
+                    $is_both_null = StringUtils::isEmpty($value) && StringUtils::isEmpty($array2[$key]);
+                    if (!$is_both_null) {
+                        $diff_array[$key] = $value;
+                    }
+                }
+            } else {
                 $diff_array[$key] = $value;
             }
         }

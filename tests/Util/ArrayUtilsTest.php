@@ -35,8 +35,8 @@ class ArrayUtilsTest extends TestCase
                 ['test' => ['a' => [ 'f' => 1 ], 'd' => 4] ],
             ],
             'case 4. type check' => [
-                ['a' => 1, 'b' => false, 'c' => true, 'd' => '1', 'e' => null, 'f' => 0.0, 'g' => (object)[] ],
-                ['a' => 1, 'b' => false, 'c' => true, 'd' => '1', 'e' => null, 'f' => 0.0, 'g' => (object)[] ],
+                ['a' => 1, 'b' => false, 'c' => true, 'd' => '1', 'e' => null, 'f' => 0.0, 'g' => (object)[], 'h' => null ],
+                ['a' => 1, 'b' => false, 'c' => true, 'd' => '1', 'e' => null, 'f' => 0.0, 'g' => (object)[], 'h' => '' ],
                 [],
             ],
         ];
