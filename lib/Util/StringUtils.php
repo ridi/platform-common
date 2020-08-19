@@ -37,7 +37,7 @@ class StringUtils
      */
     public static function isEmpty($string)
     {
-        if (is_null($string) || trim($string) === '') {
+        if (is_null($string) || (is_string($string) && trim($string) === '')) {
             return true;
         } else {
             return false;
