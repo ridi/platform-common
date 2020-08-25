@@ -13,7 +13,7 @@ class StringUtilsTest extends TestCase
         $this->assertEquals($expected, StringUtils::isEmpty($str, $is_strict));
     }
 
-    public function provider_remain_only_words(): array
+    public function provider_string_is_empty(): array
     {
         return [
             'Case. 0 is empty on non-strict' => [0, true],
