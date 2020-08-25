@@ -33,11 +33,20 @@ class StringUtils
      * 해당 문자열이 비어있는가 체크.
      * null과 비어있는 문자(' ')를 체크 하기 위해 사용
      * @param $string
+     * @param bool $is_strict
      * @return bool
      */
-    public static function isEmpty($string)
+    public static function isEmpty($string, bool $is_strict = false)
     {
-        if (is_null($string) || (is_string($string) && trim($string) === '')) {
+        if ($is_strict) {
+            if (is_string($string)) {
+                return strlen($string) === 0;
+            } elseif (is_int($string)) {
+                return false;
+            }
+        }
+
+        if (is_null($string) || trim($string) === '') {
             return true;
         } else {
             return false;
