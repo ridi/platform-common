@@ -39,6 +39,11 @@ class ArrayUtilsTest extends TestCase
                 ['a' => 1, 'b' => false, 'c' => true, 'd' => '1', 'e' => null, 'f' => 0.0, 'g' => (object)[], 'h' => '' ],
                 [],
             ],
+            'case 5. type check on strict' => [
+                ['a' => 0, 'b' => 0, 'c' => null],
+                ['a' => null, 'b' => '', 'c' => ''],
+                ['a' => 0, 'b' => 0],
+            ],
         ];
     }
 

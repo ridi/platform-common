@@ -17,7 +17,7 @@ class ArrayUtils
         // value 비교
         if (!is_array($array1)) {
             if ($array1 !== $array2) {
-                $is_both_null = StringUtils::isEmpty($array1) && StringUtils::isEmpty($array2);
+                $is_both_null = StringUtils::isEmpty($array1, true) && StringUtils::isEmpty($array2, true);
                 if (!$is_both_null) {
                     return $array1;
                 }
@@ -49,7 +49,7 @@ class ArrayUtils
             } elseif (array_key_exists($key, $array2)) {
                 if ($value !== $array2[$key]) {
                     // support to compare between null and empty string
-                    $is_both_null = StringUtils::isEmpty($value) && StringUtils::isEmpty($array2[$key]);
+                    $is_both_null = StringUtils::isEmpty($value, true) && StringUtils::isEmpty($array2[$key], true);
                     if (!$is_both_null) {
                         $diff_array[$key] = $value;
                     }
