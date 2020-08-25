@@ -8,6 +8,10 @@ use Ridibooks\Platform\Common\Util\StringUtils;
 
 class StringUtilsTest extends TestCase
 {
+    /**
+     * @test
+     * @dataProvider provider_remain_only_words
+     */
     public function validate_string_is_empty($str, $expected, $is_strict = false)
     {
         $this->assertEquals($expected, StringUtils::isEmpty($str, $is_strict));
