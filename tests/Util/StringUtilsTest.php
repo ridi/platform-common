@@ -20,7 +20,7 @@ class StringUtilsTest extends TestCase
     public function provider_string_is_empty(): array
     {
         return [
-            'Case. 0 is empty on non-strict' => [0, true],
+            'Case. 0 is empty on non-strict' => [0, false],
             'Case. 0 is NOT empty on strict' => [0, false, true],
             'Case. \'\' is empty on non-strict' => ['', true],
             'Case. \'\' is empty on strict' => ['', true, true],
