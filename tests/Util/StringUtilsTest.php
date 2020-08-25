@@ -10,7 +10,7 @@ class StringUtilsTest extends TestCase
 {
     /**
      * @test
-     * @dataProvider provider_remain_only_words
+     * @dataProvider provider_string_is_empty
      */
     public function validate_string_is_empty($str, $expected, $is_strict = false)
     {
