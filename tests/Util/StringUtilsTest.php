@@ -8,6 +8,23 @@ use Ridibooks\Platform\Common\Util\StringUtils;
 
 class StringUtilsTest extends TestCase
 {
+    public function validate_string_is_empty($str, $expected, $is_strict = false)
+    {
+        $this->assertEquals($expected, StringUtils::isEmpty($str, $is_strict));
+    }
+
+    public function provider_remain_only_words(): array
+    {
+        return [
+            'Case. 0 is empty on non-strict' => [0, true],
+            'Case. 0 is NOT empty on strict' => [0, false, true],
+            'Case. \'\' is empty on non-strict' => ['', true],
+            'Case. \'\' is empty on strict' => ['', true, true],
+            'Case. null is empty on non-strict' => [null, true],
+            'Case. null is empty on strict' => [null, true, true],
+        ];
+    }
+
     /**
      * @test
      * @dataProvider provider_remain_only_words
