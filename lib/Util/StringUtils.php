@@ -43,6 +43,8 @@ class StringUtils
                 return strlen($string) === 0;
             } elseif (is_int($string)) {
                 return false;
+            } elseif (is_array($string)) {
+                return empty($string);
             }
         }
 

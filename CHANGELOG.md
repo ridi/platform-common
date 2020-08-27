@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.17] - 2020-08-27
+### Added
+- Add check condition when value is array from `isEmpty` in `StringUtils`
+
 ## [1.0.16] - 2020-08-25
 ### Added
 - Add Flag to check whether value is string strictly from `isEmpty` in `StringUtils`
