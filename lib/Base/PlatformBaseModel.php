@@ -132,6 +132,33 @@ abstract class PlatformBaseModel
     }
 
     /**
+     * @return static
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public static function createBinlogWrite()
+    {
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::BINLOG_WRITE));
+    }
+
+    /**
+     * @return static
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public static function createBinlogRead()
+    {
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::BINLOG_READ));
+    }
+
+    /**
+     * @return static
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public static function createBinlogSlave()
+    {
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::BINLOG_SLAVE));
+    }
+
+    /**
      * @param callable $callable
      *
      * @return bool

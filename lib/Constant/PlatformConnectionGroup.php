@@ -20,6 +20,10 @@ abstract class PlatformConnectionGroup
     const CP_STATISTICS_READ = 'cp_statistics_read';
     const CP_STATISTICS_SLAVE = 'cp_statistics_slave';
 
+    const BINLOG_WRITE = 'binlog_write';
+    const BINLOG_READ = 'binlog_read';
+    const BINLOG_SLAVE = 'binlog_slave';
+
     const COMMON_MODULE_READ_MASTER = 'common_module_read_master';
     const COMMON_MODULE_READ = 'common_module_read';
 }
