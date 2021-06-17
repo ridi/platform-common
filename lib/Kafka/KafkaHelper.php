@@ -6,6 +6,7 @@ namespace Ridibooks\Platform\Common\Kafka;
 use Exception;
 use RdKafka\Conf;
 use RdKafka\Producer;
+use Ridibooks\Platform\Common\Kafka\Dto\KafkaMessageDto;
 
 class KafkaHelper
 {
@@ -36,18 +37,21 @@ class KafkaHelper
     }
 
     /**
-     * @param string $topic_name
-     * @param array $messages
+     * @param KafkaMessageDto $message_dto
      * @throws Exception
      */
-    public function produce(string $topic_name, array $messages): void
+    public function produce(KafkaMessageDto $message_dto): void
     {
-        $topic = $this->producer->newTopic($topic_name);
+        $topic = $this->producer->newTopic($message_dto->topic_name);
 
-        foreach ($messages as $message) {
-            $topic->produce(0, 0, json_encode($message));
-            $this->producer->poll(0);
-        }
+        $topic->producev(
+            RD_KAFKA_PARTITION_UA,
+            0,
+            $message_dto->value,
+            $message_dto->key,
+            $message_dto->headers
+        );
+        $this->producer->poll(0);
 
         $result = $this->producer->flush(self::KAFKA_TIMEOUT);
         if ($result !== RD_KAFKA_RESP_ERR_NO_ERROR) {
