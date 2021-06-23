@@ -13,7 +13,7 @@ class KafkaHelper
     private static $instance = null;
     private $producer;
 
-    private const KAFKA_TIMEOUT = 1000;
+    private const MAX_FLUSH_COUNT = 5;
 
     public static function getConnection(string $kafka_bootstrap_servers): self
     {
@@ -28,10 +28,15 @@ class KafkaHelper
     private function __construct(string $kafka_bootstrap_servers)
     {
         $conf = new Conf();
-        $conf->set('log_level', (string)LOG_DEBUG);
-        $conf->set('debug', 'all');
         $conf->set('bootstrap.servers', $kafka_bootstrap_servers);
-        $conf->set('enable.idempotence', 'true');
+        $conf->setDrMsgCb(function ($kafka, $message) {
+            if ($message->err) {
+                throw new Exception($message->errstr());
+            }
+        });
+        $conf->setErrorCb(function ($kafka, $err, $reason) {
+            throw new Exception("Kafka error: " . rd_kafka_err2str($err) . " (reason: $reason)");
+        });
 
         $this->producer = new Producer($conf);
     }
@@ -53,9 +58,13 @@ class KafkaHelper
         );
         $this->producer->poll(0);
 
-        $result = $this->producer->flush(self::KAFKA_TIMEOUT);
-        if ($result !== RD_KAFKA_RESP_ERR_NO_ERROR) {
-            throw new Exception(\rd_kafka_err2str($result));
+        for ($flush_count = 1; $flush_count <= self::MAX_FLUSH_COUNT; $flush_count++) {
+            $result = $this->producer->flush(1000 * $flush_count);
+            if (RD_KAFKA_RESP_ERR_NO_ERROR === $result) {
+                return;
+            }
         }
+
+        throw new Exception('Message failed to send.');
     }
 }

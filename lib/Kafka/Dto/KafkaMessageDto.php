@@ -21,7 +21,8 @@ class KafkaMessageDto
      * @param string[]|null $headers
      * @return self
      */
-    public static function import(string $topic_name, ?string $value, ?string $key, ?array $headers): self {
+    public static function import(string $topic_name, ?string $value, ?string $key, ?array $headers): self
+    {
         $dto = new self();
         $dto->topic_name = $topic_name;
         $dto->value = $value;
