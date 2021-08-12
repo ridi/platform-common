@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\AWS;
 
+use Aws\CommandPool;
 use Aws\Exception\AwsException;
+use Aws\ResultInterface;
 use Aws\S3\S3Client;
 use Aws\S3\S3UriParser;
 use Aws\S3\Transfer;
+use GuzzleHttp\Promise\PromiseInterface;
 use Ridibooks\Platform\Common\Exception\MsgException;
 use Ridibooks\Platform\Common\Util\FileUtils;
 
@@ -92,6 +95,46 @@ class S3Service extends AbstractAwsService
             ];
 
             return $this->client->headObject($params);
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        }
+    }
+
+    /**
+     * @param string $paths
+     *
+     * @return array [ResultInterface[], AwsException[]]
+     * @throws MsgException
+     */
+    public function headObjects(array $paths, int $concurrency = 10): array
+    {
+        try {
+            $commands = [];
+            foreach ($paths as $path) {
+                $uri = $this->parseUri($path);
+                $commands[] = $this->client->getCommand('HeadObject', [
+                    'Bucket' => $uri['bucket'],
+                    'Key' => $uri['key'],
+                ]);
+            }
+
+            $results = [];
+            $errors = [];
+            $pool = new CommandPool($this->client, $commands, [
+                'concurrency' => $concurrency,
+                'fulfilled' => function (ResultInterface $result, $iterKey, PromiseInterface $promise) use (&$results) {
+                    $results[] = $result;
+                },
+                'rejected' => function (AwsException $reason, $iterKey, PromiseInterface $promise) use (&$errors) {
+                    $errors[] = $reason;
+                },
+            ]);
+            $promise = $pool->promise();
+            $promise->wait();
+
+            return [$results, $errors];
         } catch (AwsException $se) {
             throw new MsgException($se->getMessage());
         } catch (\Exception $e) {
