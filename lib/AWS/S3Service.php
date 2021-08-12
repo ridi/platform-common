@@ -103,7 +103,7 @@ class S3Service extends AbstractAwsService
     }
 
     /**
-     * @param string $paths
+     * @param string[] $paths
      *
      * @return array [ResultInterface[], AwsException[]]
      * @throws MsgException
