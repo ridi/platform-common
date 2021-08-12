@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [1.0.24] - 2021-08-12
+### Added
+- Add headObjects in `S3Service`
+
+## [Unreleased]
 ## [1.0.18] - 2020-09-25
 ### Added
 - Add BINLOG_XXX in `PlatformConnectionGroup`
