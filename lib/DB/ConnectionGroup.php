@@ -2,6 +2,9 @@
 
 namespace Ridibooks\Platform\Common\DB;
 
+/**
+ * @deprecated
+ */
 abstract class ConnectionGroup
 {
     const WRITE = 'write';                      // [bom@141] write
