@@ -4,6 +4,9 @@ namespace Ridibooks\Platform\Common\Base;
 use Ridibooks\Platform\Common\Constant\PlatformConnectionGroup;
 use Ridibooks\Platform\Common\DB\GnfConnectionProvider;
 
+/**
+ * @deprecated
+ */
 abstract class CommonModuleBaseService
 {
     /** @var \Gnf\db\base */
