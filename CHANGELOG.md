@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [1.0.26] - 2021-10-14
+### Added
+- Add copyObject, copyObjects in `S3Service`
+
 ## [1.0.25] - 2021-10-12
 ### Changed
 - Add deprecated comments in 'PlatformConnectionGroup', 'ConnectionGroup'

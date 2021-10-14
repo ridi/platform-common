@@ -199,4 +199,73 @@ class S3Service extends AbstractAwsService
             return false;
         }
     }
+
+    /**
+     * @return \Aws\Result
+     * @throws MsgException
+     */
+    public function copyObject(string $src, string $dest)
+    {
+        try {
+            $src_uri = $this->parseUri($src);
+            $dest_uri = $this->parseUri($dest);
+            $params = [
+                'Bucket' => $dest_uri['bucket'],
+                'Key' => $dest_uri['key'],
+                'CopySource' => $src_uri['bucket'] . '/' . $src_uri['key'],
+            ];
+
+            return $this->client->copyObject($params);
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        }
+    }
+
+    /**
+     * @param array $copy_dicts [src, dest], ...
+     * @param int   $concurrency
+     *
+     * @return array[]
+     * @throws MsgException
+     */
+    public function copyObjects(array $copy_dicts, int $concurrency = 10): array
+    {
+        try {
+            $commands = [];
+            foreach ($copy_dicts as $copy_dict) {
+                $src = $copy_dict['src'];
+                $dest = $copy_dict['dest'];
+                $src_uri = $this->parseUri($src);
+                $dest_uri = $this->parseUri($dest);
+
+                $commands[] = $this->client->getCommand('copyObject', [
+                    'Bucket' => $dest_uri['bucket'],
+                    'Key' => $dest_uri['key'],
+                    'CopySource' => $src_uri['bucket'] . '/' . $src_uri['key'],
+                ]);
+            }
+
+            $results = [];
+            $errors = [];
+            $pool = new CommandPool($this->client, $commands, [
+                'concurrency' => $concurrency,
+                'fulfilled' => function (ResultInterface $result, $iterKey, PromiseInterface $promise) use (&$results) {
+                    $results[] = $result;
+                },
+                'rejected' => function (AwsException $reason, $iterKey, PromiseInterface $promise) use (&$errors) {
+                    $errors[] = $reason;
+                },
+            ]);
+            $promise = $pool->promise();
+            $promise->wait();
+
+            return [$results, $errors];
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        }
+    }
 }
