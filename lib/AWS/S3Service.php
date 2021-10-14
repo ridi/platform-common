@@ -224,19 +224,27 @@ class S3Service extends AbstractAwsService
     }
 
     /**
-     * @param array $copy_dicts [src, dest], ...
+     *
+     * @param string[] $src_locations
+     * @param string[] $dest_locations
      * @param int   $concurrency
      *
      * @return array[]
      * @throws MsgException
      */
-    public function copyObjects(array $copy_dicts, int $concurrency = 10): array
+    public function copyObjects(array $src_locations, array $dest_locations, int $concurrency = 10): array
     {
+        $src_count = count($src_locations);
+        $dest_count = count($dest_locations);
+
+        if ($src_count !== $dest_count) {
+            throw new MsgException("different count between src_locations and dest_locations");
+        }
         try {
             $commands = [];
-            foreach ($copy_dicts as $copy_dict) {
-                $src = $copy_dict['src'];
-                $dest = $copy_dict['dest'];
+            for ($i = 0; $i < $src_count; ++$i) {
+                $src = $src_locations[$i];
+                $dest = $dest_locations[$i];
                 $src_uri = $this->parseUri($src);
                 $dest_uri = $this->parseUri($dest);
 
