@@ -200,27 +200,29 @@ class S3Service extends AbstractAwsService
         }
     }
 
-    /**
-     * @return \Aws\Result
-     * @throws MsgException
-     */
-    public function copyObject(string $src, string $dest)
+    public function copyObject(string $src, string $dest): bool
     {
         try {
             $src_uri = $this->parseUri($src);
             $dest_uri = $this->parseUri($dest);
+
+            if ($src_uri['bucket'] === $dest_uri['bucket'] && $src_uri['key'] === $dest_uri['key']) {
+                return true;
+            }
             $params = [
                 'Bucket' => $dest_uri['bucket'],
                 'Key' => $dest_uri['key'],
                 'CopySource' => $src_uri['bucket'] . '/' . $src_uri['key'],
             ];
 
-            return $this->client->copyObject($params);
+            $this->client->copyObject($params);
         } catch (AwsException $se) {
             throw new MsgException($se->getMessage());
         } catch (\Exception $e) {
             throw new MsgException($e->getMessage());
         }
+
+        return true;
     }
 
     /**
@@ -248,6 +250,10 @@ class S3Service extends AbstractAwsService
                 $src_uri = $this->parseUri($src);
                 $dest_uri = $this->parseUri($dest);
 
+                if ($src_uri['bucket'] === $dest_uri['bucket'] && $src_uri['key'] === $dest_uri['key']) {
+                    continue;
+                }
+
                 $commands[] = $this->client->getCommand('copyObject', [
                     'Bucket' => $dest_uri['bucket'],
                     'Key' => $dest_uri['key'],
@@ -257,6 +263,10 @@ class S3Service extends AbstractAwsService
 
             $results = [];
             $errors = [];
+            if (empty($commands)) {
+                return [$results, $errors];
+            }
+
             $pool = new CommandPool($this->client, $commands, [
                 'concurrency' => $concurrency,
                 'fulfilled' => function (ResultInterface $result, $iterKey, PromiseInterface $promise) use (&$results) {

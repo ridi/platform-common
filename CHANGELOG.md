@@ -5,10 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [1.0.28] - 2021-10-14
+### Changed
+- Skip same locations from copyObject(s) in `S3Service`
+- Change return type from copyObject in `S3Service`
+
 ## [1.0.27] - 2021-10-14
 ### Changed
 - Change parameters from copyObjects in `S3Service`
-- 
+ 
 ## [1.0.26] - 2021-10-14
 ### Added
 - Add copyObject, copyObjects in `S3Service`
