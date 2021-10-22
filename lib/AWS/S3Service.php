@@ -103,6 +103,7 @@ class S3Service extends AbstractAwsService
     }
 
     /**
+     * @depecated
      * @param string[] $paths
      *
      * @return array [ResultInterface[], AwsException[]]
@@ -135,6 +136,47 @@ class S3Service extends AbstractAwsService
             $promise->wait();
 
             return [$results, $errors];
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        }
+    }
+
+    /**
+     * @param string[] $paths
+     *
+     * @return \Aws\Result[]
+     * @throws MsgException
+     */
+    public function headObjectBatch(array $paths, int $concurrency = 10): array
+    {
+        try {
+            $commands = [];
+            foreach ($paths as $path) {
+                $uri = $this->parseUri($path);
+                $commands[] = $this->client->getCommand('HeadObject', [
+                    'Bucket' => $uri['bucket'],
+                    'Key' => $uri['key'],
+                ]);
+            }
+
+            $results = [];
+            if (empty($commands)) {
+                return $results;
+            }
+
+            $results = CommandPool::batch($this->client, $commands, [
+                'concurrency' => $concurrency
+            ]);
+
+            foreach($results as $result) {
+                if ($result instanceof AwsException) {
+                    throw new MsgException($result->getMessage());
+                }
+            }
+
+            return $results;
         } catch (AwsException $se) {
             throw new MsgException($se->getMessage());
         } catch (\Exception $e) {
@@ -226,12 +268,11 @@ class S3Service extends AbstractAwsService
     }
 
     /**
-     *
+     * @depecated
      * @param string[] $src_locations
      * @param string[] $dest_locations
-     * @param int   $concurrency
      *
-     * @return array[]
+     * @return array [ResultInterface[], AwsException[]]
      * @throws MsgException
      */
     public function copyObjects(array $src_locations, array $dest_locations, int $concurrency = 10): array
@@ -287,6 +328,63 @@ class S3Service extends AbstractAwsService
         }
     }
 
+    /**
+     * @param string[] $src_locations
+     * @param string[] $dest_locations
+     *
+     * @return \AWS\Result[]
+     * @throws MsgException
+     */
+    public function copyObjectBatch(array $src_locations, array $dest_locations, int $concurrency = 10): array
+    {
+        $src_count = count($src_locations);
+        $dest_count = count($dest_locations);
+
+        if ($src_count !== $dest_count) {
+            throw new MsgException("different count between src_locations and dest_locations");
+        }
+        try {
+            $commands = [];
+            for ($i = 0; $i < $src_count; ++$i) {
+                $src = $src_locations[$i];
+                $dest = $dest_locations[$i];
+                $src_uri = $this->parseUri($src);
+                $dest_uri = $this->parseUri($dest);
+
+                if ($src_uri['bucket'] === $dest_uri['bucket'] && $src_uri['key'] === $dest_uri['key']) {
+                    continue;
+                }
+
+                $commands[] = $this->client->getCommand('CopyObject', [
+                    'Bucket' => $dest_uri['bucket'],
+                    'Key' => $dest_uri['key'],
+                    'CopySource' => $src_uri['bucket'] . '/' . $src_uri['key'],
+                ]);
+            }
+
+            $results = [];
+            if (empty($commands)) {
+                return $results;
+            }
+
+            $results = CommandPool::batch($this->client, $commands, [
+                'concurrency' => $concurrency
+            ]);
+
+            foreach($results as $result) {
+                if ($result instanceof AwsException) {
+                    throw new MsgException($result->getMessage());
+                }
+            }
+
+            return $results;
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        }
+    }
+
     public function saveAsObject(string $s3_src_path, string $local_dest_path): \Aws\Result
     {
         try {
@@ -305,6 +403,14 @@ class S3Service extends AbstractAwsService
         }
     }
 
+    /**
+     * @depecated
+     * @param string[] $s3_src_paths
+     * @param string[] $local_dest_paths
+     *
+     * @return array [ResultInterface[], AwsException[]]
+     * @throws MsgException
+     */
     public function saveAsObjects(array $s3_src_paths, array $local_dest_paths, int $concurrency = 10): array
     {
         $src_count = count($s3_src_paths);
@@ -345,6 +451,57 @@ class S3Service extends AbstractAwsService
             $promise->wait();
 
             return [$results, $errors];
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        }
+    }
+
+    /**
+     * @param string[] $s3_src_paths
+     * @param string[] $local_dest_paths
+     *
+     * @return \AWS\Result[]
+     * @throws MsgException
+     */
+    public function saveAsObjectBatch(array $s3_src_paths, array $local_dest_paths, int $concurrency = 10): array
+    {
+        $src_count = count($s3_src_paths);
+        $dest_count = count($local_dest_paths);
+
+        if ($src_count !== $dest_count) {
+            throw new MsgException("different count between s3_src_paths and local_dest_paths");
+        }
+        try {
+            $commands = [];
+            for ($i = 0; $i < $src_count; ++$i) {
+                $src_uri = $this->parseUri($s3_src_paths[$i]);
+                $local_dest_path = $local_dest_paths[$i];
+
+                $commands[] = $this->client->getCommand('GetObject', [
+                    'Bucket' => $src_uri['bucket'],
+                    'Key' => $src_uri['key'],
+                    'SaveAs' => $local_dest_path
+                ]);
+            }
+
+            $results = [];
+            if (empty($commands)) {
+                return $results;
+            }
+
+            $results = CommandPool::batch($this->client, $commands, [
+                'concurrency' => $concurrency
+            ]);
+
+            foreach($results as $result) {
+                if ($result instanceof AwsException) {
+                    throw new MsgException($result->getMessage());
+                }
+            }
+
+            return $results;
         } catch (AwsException $se) {
             throw new MsgException($se->getMessage());
         } catch (\Exception $e) {
