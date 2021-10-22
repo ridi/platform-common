@@ -254,10 +254,75 @@ class S3Service extends AbstractAwsService
                     continue;
                 }
 
-                $commands[] = $this->client->getCommand('copyObject', [
+                $commands[] = $this->client->getCommand('CopyObject', [
                     'Bucket' => $dest_uri['bucket'],
                     'Key' => $dest_uri['key'],
                     'CopySource' => $src_uri['bucket'] . '/' . $src_uri['key'],
+                ]);
+            }
+
+            $results = [];
+            $errors = [];
+            if (empty($commands)) {
+                return [$results, $errors];
+            }
+
+            $pool = new CommandPool($this->client, $commands, [
+                'concurrency' => $concurrency,
+                'fulfilled' => function (ResultInterface $result, $iterKey, PromiseInterface $promise) use (&$results) {
+                    $results[] = $result;
+                },
+                'rejected' => function (AwsException $reason, $iterKey, PromiseInterface $promise) use (&$errors) {
+                    $errors[] = $reason;
+                },
+            ]);
+            $promise = $pool->promise();
+            $promise->wait();
+
+            return [$results, $errors];
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        }
+    }
+
+    public function saveAsObject(string $s3_src_path, string $local_dest_path): \Aws\Result
+    {
+        try {
+            $uri = $this->parseUri($s3_src_path);
+            $params = [
+                'Bucket' => $uri['bucket'],
+                'Key' => $uri['key'],
+                'SaveAs' => $local_dest_path
+            ];
+
+            return $this->client->getObject($params);
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        }
+    }
+
+    public function saveAsObjects(array $s3_src_paths, array $local_dest_paths, int $concurrency = 10): array
+    {
+        $src_count = count($s3_src_paths);
+        $dest_count = count($local_dest_paths);
+
+        if ($src_count !== $dest_count) {
+            throw new MsgException("different count between s3_src_paths and local_dest_paths");
+        }
+        try {
+            $commands = [];
+            for ($i = 0; $i < $src_count; ++$i) {
+                $src_uri = $this->parseUri($s3_src_paths[$i]);
+                $local_dest_path = $local_dest_paths[$i];
+
+                $commands[] = $this->client->getCommand('GetObject', [
+                    'Bucket' => $src_uri['bucket'],
+                    'Key' => $src_uri['key'],
+                    'SaveAs' => $local_dest_path
                 ]);
             }
 
