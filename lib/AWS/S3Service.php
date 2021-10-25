@@ -5,7 +5,10 @@ namespace Ridibooks\Platform\Common\AWS;
 
 use Aws\CommandPool;
 use Aws\Exception\AwsException;
+use Aws\Exception\MultipartUploadException;
 use Aws\ResultInterface;
+use Aws\S3\MultipartUploader;
+use Aws\S3\ObjectUploader;
 use Aws\S3\S3Client;
 use Aws\S3\S3UriParser;
 use Aws\S3\Transfer;
@@ -507,5 +510,43 @@ class S3Service extends AbstractAwsService
         } catch (\Exception $e) {
             throw new MsgException($e->getMessage());
         }
+    }
+
+    /**
+     * https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/s3-multipart-upload.html
+     * @param string $local_dest_path
+     * @param string $s3_src_path
+     *
+     * @return \Aws\Result
+     * @throws MsgException
+     */
+    public function uploadObject(string $local_dest_path, string $s3_src_path): \Aws\Result
+    {
+        $source_stream = false;
+        try {
+            $uri = $this->parseUri($s3_src_path);
+            $source_stream = fopen($local_dest_path, 'rb');
+            $uploader = new ObjectUploader($this->client, $uri['bucket'], $uri['key'], $source_stream);
+            do {
+                try {
+                    $result = $uploader->upload();
+                } catch (MultipartUploadException $e) {
+                    rewind($source_stream);
+                    $uploader = new MultipartUploader($this->client, $source_stream, [
+                        'state' => $e->getState(),
+                    ]);
+                }
+            } while (!isset($result));
+        } catch (AwsException $se) {
+            throw new MsgException($se->getMessage());
+        } catch (\Exception $e) {
+            throw new MsgException($e->getMessage());
+        } finally {
+            if ($source_stream !== false) {
+                fclose($source_stream);
+            }
+        }
+
+        return $result;
     }
 }
