@@ -159,6 +159,15 @@ abstract class PlatformBaseModel
     }
 
     /**
+     * @return static
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public static function createAccountRead()
+    {
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::ACCOUNT_READ));
+    }
+
+    /**
      * @param callable $callable
      *
      * @return bool

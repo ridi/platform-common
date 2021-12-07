@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [1.0.33] - 2021-12-07
+### Added
+- Add `createAccountRead` in `PlatformBaseModel`
+
 ## [1.0.32] - 2021-12-07
 ### Added
 - Add `ACCOUNT_READ` in `PlatformConnectionGroup`
