@@ -25,6 +25,7 @@ abstract class PlatformConnectionGroup
     const CP_STATISTICS_SLAVE = 'cp_statistics_slave';
 
     const ACCOUNT_READ = 'account_read';
+    const LOG_READ = 'log_read';
 
     /** @depecated */
     const BINLOG_WRITE = 'binlog_write';
