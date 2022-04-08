@@ -35,15 +35,9 @@ class MailgunHelper
     }
 
     /**
-     * @param string        $from
-     * @param string[]      $to
-     * @param string        $subject
-     * @param string        $content
+     * @param string[] $to
      * @param string[] $cc
      * @param string[] $bcc
-     * @param string        $content_type
-     * @param array         $attachments
-     * @param bool          $is_testmode
      *
      * @return \stdClass
      * @throws \Mailgun\Messages\Exceptions\MissingRequiredMIMEParameters
@@ -57,7 +51,8 @@ class MailgunHelper
         array $bcc = [],
         string $content_type = EmailContentTypeConst::TEXT_HTML,
         array $attachments = [],
-        bool $is_testmode = false
+        bool $is_testmode = false,
+        bool $user_recipient_variables = true
     ) {
         $message = self::prepareCommonParameters(
             $from,
@@ -67,7 +62,8 @@ class MailgunHelper
             $content_type,
             $cc,
             $bcc,
-            $is_testmode
+            $is_testmode,
+            $user_recipient_variables
         );
         $message['content-type'] = $content_type;
 
@@ -85,16 +81,7 @@ class MailgunHelper
     }
 
     /**
-     * @param string        $from
-     * @param string[]      $to
-     * @param string        $subject
-     * @param string        $content
-     * @param string        $content_type
-     * @param string[] $cc
-     * @param string[] $bcc
-     * @param bool          $is_testmode
-     *
-     * @return bool
+     * @depecated
      */
     public static function sendUsingV3(
         string $from,
@@ -104,7 +91,8 @@ class MailgunHelper
         string $content_type = EmailContentTypeConst::TEXT_HTML,
         array $cc = [],
         array $bcc = [],
-        bool $is_testmode = false
+        bool $is_testmode = false,
+        bool $user_recipient_variables = true
     ) {
         $mg = Mailgun::create(\Config::$MAILGUN_API_KEY);
 
@@ -116,7 +104,8 @@ class MailgunHelper
             $content_type,
             $cc,
             $bcc,
-            $is_testmode
+            $is_testmode,
+            $user_recipient_variables
         );
 
         try {
@@ -131,16 +120,9 @@ class MailgunHelper
     }
 
     /**
-     * @param string        $from
      * @param string[]      $to
-     * @param string        $subject
-     * @param string        $content
      * @param string[] $cc
      * @param string[] $bcc
-     * @param string        $content_type
-     * @param bool          $is_testmode
-     *
-     * @return array
      */
     private static function prepareCommonParameters(
         string $from,
@@ -150,14 +132,18 @@ class MailgunHelper
         string $content_type = EmailContentTypeConst::TEXT_HTML,
         array $cc = [],
         array $bcc = [],
-        bool $is_testmode = false
+        bool $is_testmode = false,
+        bool $user_recipient_variables = true
     ): array {
         $parameters = [
             'from' => $from,
             'to' => implode(',', $to),
             'subject' => $subject,
-            'recipient-variables' => self::createRecipientVariables($to),
         ];
+
+        if ($user_recipient_variables) {
+            $parameters['recipient-variables'] = self::createRecipientVariables($to);
+        }
 
         if ($content_type === EmailContentTypeConst::TEXT_HTML) {
             $parameters['html'] = $content;
@@ -252,8 +238,6 @@ class MailgunHelper
     }
 
     /**
-     * @param string $email
-     *
      * @return string|bool
      */
     private static function encryptedEmail(string $email)

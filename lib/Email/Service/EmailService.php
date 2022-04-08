@@ -70,7 +70,7 @@ abstract class EmailService extends EmailBaseSender
         parent::setBcc($bcc);
     }
 
-    public function sendMail(bool $is_testmode = false): bool
+    public function sendMail(bool $is_testmode = false, bool $user_recipient_variables = true): bool
     {
         $this->initBody();
 
@@ -78,7 +78,7 @@ abstract class EmailService extends EmailBaseSender
             $this->devEmailWrapper();
         }
 
-        return parent::sendMail();
+        return parent::sendMail($is_testmode, $user_recipient_variables);
     }
 
     public function devEmailWrapper(): void
