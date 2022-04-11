@@ -52,7 +52,7 @@ class MailgunHelper
         string $content_type = EmailContentTypeConst::TEXT_HTML,
         array $attachments = [],
         bool $is_testmode = false,
-        bool $user_recipient_variables = true
+        bool $use_recipient_variables = true
     ) {
         $message = self::prepareCommonParameters(
             $from,
@@ -63,7 +63,7 @@ class MailgunHelper
             $cc,
             $bcc,
             $is_testmode,
-            $user_recipient_variables
+            $use_recipient_variables
         );
         $message['content-type'] = $content_type;
 
@@ -92,7 +92,7 @@ class MailgunHelper
         array $cc = [],
         array $bcc = [],
         bool $is_testmode = false,
-        bool $user_recipient_variables = true
+        bool $use_recipient_variables = true
     ) {
         $mg = Mailgun::create(\Config::$MAILGUN_API_KEY);
 
@@ -105,7 +105,7 @@ class MailgunHelper
             $cc,
             $bcc,
             $is_testmode,
-            $user_recipient_variables
+            $use_recipient_variables
         );
 
         try {
@@ -133,7 +133,7 @@ class MailgunHelper
         array $cc = [],
         array $bcc = [],
         bool $is_testmode = false,
-        bool $user_recipient_variables = true
+        bool $use_recipient_variables = true
     ): array {
         $parameters = [
             'from' => $from,
@@ -141,7 +141,7 @@ class MailgunHelper
             'subject' => $subject,
         ];
 
-        if ($user_recipient_variables) {
+        if ($use_recipient_variables) {
             $parameters['recipient-variables'] = self::createRecipientVariables($to);
         }
 

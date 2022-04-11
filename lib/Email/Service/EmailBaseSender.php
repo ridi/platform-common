@@ -204,12 +204,12 @@ class EmailBaseSender implements \JsonSerializable
      *
      * @return bool
      */
-    public function sendMail(bool $is_testmode = false, bool $user_recipient_variables = true): bool
+    public function sendMail(bool $is_testmode = false, bool $use_recipient_variables = true): bool
     {
-        return $this->sendWithMailgun($is_testmode, $user_recipient_variables);
+        return $this->sendWithMailgun($is_testmode, $use_recipient_variables);
     }
 
-    private function sendWithMailgun(bool $is_testmode = false, bool $user_recipient_variables = true): bool
+    private function sendWithMailgun(bool $is_testmode = false, bool $use_recipient_variables = true): bool
     {
         if (!$this->hasEnoughParameters()) {
             return false;
@@ -227,7 +227,7 @@ class EmailBaseSender implements \JsonSerializable
                 $this->content_type,
                 $this->attachments,
                 $is_testmode,
-                $user_recipient_variables
+                $use_recipient_variables
             );
         } catch (\Exception $e) {
             // 대부분 일시적인 통신에러이기 때문에 지속발생시 로깅한다.
