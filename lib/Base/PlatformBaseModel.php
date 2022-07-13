@@ -171,6 +171,15 @@ abstract class PlatformBaseModel
      * @return static
      * @throws \Doctrine\DBAL\DBALException
      */
+    public static function createLog()
+    {
+        return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::LOG));
+    }
+
+    /**
+     * @return static
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public static function createLogRead()
     {
         return self::create(GnfConnectionProvider::getConnection(PlatformConnectionGroup::LOG_READ));

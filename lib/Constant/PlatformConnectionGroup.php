@@ -25,6 +25,7 @@ abstract class PlatformConnectionGroup
     const CP_STATISTICS_SLAVE = 'cp_statistics_slave';
 
     const ACCOUNT_READ = 'account_read';
+    const LOG = 'log';
     const LOG_READ = 'log_read';
 
     /** @depecated */
