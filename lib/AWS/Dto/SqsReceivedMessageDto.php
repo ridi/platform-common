@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\AWS\Dto;
@@ -16,7 +17,7 @@ class SqsReceivedMessageDto
 
     public static function importFromReceivedItem(array $item): self
     {
-        $dto = new self;
+        $dto = new self();
         $dto->attributes = $item['Attributes'];
         $dto->receipt_handle = $item['ReceiptHandle'];
         $dto->message_attributes = $item['MessageAttributes'];

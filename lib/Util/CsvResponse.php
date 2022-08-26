@@ -6,7 +6,7 @@ use Illuminate\Http\Response;
 
 class CsvResponse extends Response
 {
-    const UTF8_BOM = "\xEF\xBB\xBF";
+    public const UTF8_BOM = "\xEF\xBB\xBF";
     private $format_large_number_as_string;
 
     public function __construct(

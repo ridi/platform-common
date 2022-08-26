@@ -1,15 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\Sentry;
 
 use Ridibooks\Platform\Common\Sentry\Clients\SentryClient;
+use function Sentry\captureException;
+use function Sentry\captureMessage;
 use Sentry\ClientInterface;
 use Sentry\SentrySdk;
 use Sentry\Severity;
 use Sentry\State\Scope;
-use function Sentry\captureException;
-use function Sentry\captureMessage;
 use function Sentry\withScope;
 
 class SentryHelper

@@ -1,4 +1,5 @@
 <?php
+
 namespace Ridibooks\Platform\Common\Util;
 
 use Monolog\Handler\RotatingFileHandler;
@@ -9,8 +10,8 @@ use Sentry\SentrySdk;
 
 class MonologHelper
 {
-    const LOG_FILE_BASE_PATH = '/var/log/ridi/';
-    const LOG_FILE_NAME_EXTENSION = '.log';
+    public const LOG_FILE_BASE_PATH = '/var/log/ridi/';
+    public const LOG_FILE_NAME_EXTENSION = '.log';
 
     /**
      * @param string $name

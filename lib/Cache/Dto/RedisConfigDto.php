@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\Cache\Dto;
@@ -12,7 +13,7 @@ class RedisConfigDto
 
     public static function import(array $hosts, array $options): self
     {
-        $dto = new self;
+        $dto = new self();
         $dto->hosts = $hosts;
         $dto->options = $options;
 

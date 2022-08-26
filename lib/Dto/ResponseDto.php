@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\Dto;
@@ -21,7 +22,7 @@ class ResponseDto
 
     public static function importFromResponse(ResponseInterface $response): self
     {
-        $dto = new self;
+        $dto = new self();
 
         $dto->response = $response;
         $dto->status_code = $response->getStatusCode();

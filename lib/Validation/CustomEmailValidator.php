@@ -1,14 +1,15 @@
 <?php
+
 namespace Ridibooks\Platform\Common\Validation;
 
 use Ridibooks\Platform\Common\Util\ValidationUtils;
 
 class CustomEmailValidator
 {
-    const DEFAULT_REGEXP = '/^[^@]{1,64}@[^@]{1,255}$/';
-    const USERNAME_REGEXP = '/^(([A-Za-z0-9!#$%&\'\*\+\/=\?\^_`{|}~-][A-Za-z0-9!#$%&\'\*\+\/=?^_`{|}~\.-]{0,63}))$/';
-    const DOMAIN_REGEXP = '/^(([A-Za-z0-9]+\.)|([A-Za-z0-9]+[A-Za-z0-9\-]+[A-Za-z0-9]\.)){1,}([A-Za-z]{1,})$/';
-    const GMAIL_DOMAIN = 'gmail.com';
+    public const DEFAULT_REGEXP = '/^[^@]{1,64}@[^@]{1,255}$/';
+    public const USERNAME_REGEXP = '/^(([A-Za-z0-9!#$%&\'\*\+\/=\?\^_`{|}~-][A-Za-z0-9!#$%&\'\*\+\/=?^_`{|}~\.-]{0,63}))$/';
+    public const DOMAIN_REGEXP = '/^(([A-Za-z0-9]+\.)|([A-Za-z0-9]+[A-Za-z0-9\-]+[A-Za-z0-9]\.)){1,}([A-Za-z]{1,})$/';
+    public const GMAIL_DOMAIN = 'gmail.com';
 
     /**
      * 출처: http://www.linuxjournal.com/article/9585

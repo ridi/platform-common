@@ -1,4 +1,5 @@
 <?php
+
 namespace Ridibooks\Platform\Common\File;
 
 /**

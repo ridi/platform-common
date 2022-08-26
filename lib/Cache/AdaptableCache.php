@@ -1,4 +1,5 @@
 <?php
+
 namespace Ridibooks\Platform\Common\Cache;
 
 use Doctrine\Common\Cache\ApcuCache;

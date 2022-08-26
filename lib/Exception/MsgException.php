@@ -1,4 +1,5 @@
 <?php
+
 namespace Ridibooks\Platform\Common\Exception;
 
 use Ridibooks\Platform\Common\Sentry\SentryHelper;

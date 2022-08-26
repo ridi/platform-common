@@ -44,12 +44,12 @@ class PagingUtil
     {
         $this->cpage = $this->cpage < 1 ? 1 : $this->cpage;
 
-        $this->total_page = ceil((double)$this->total / (double)$this->line_per_page);
+        $this->total_page = ceil((float)$this->total / (float)$this->line_per_page);
         $this->total_page = $this->total_page < 1 ? 1 : $this->total_page;
         $this->cpage = $this->cpage > $this->total_page ? $this->total_page : $this->cpage;
 
-        $this->num_page_group = (int)ceil((double)$this->cpage / $this->list_per_page);
-        $this->last_page_group = (int)ceil((double)$this->total_page / $this->list_per_page);
+        $this->num_page_group = (int)ceil((float)$this->cpage / $this->list_per_page);
+        $this->last_page_group = (int)ceil((float)$this->total_page / $this->list_per_page);
 
         $this->start_page = ($this->num_page_group - 1) * $this->list_per_page + 1;
         $this->start_page = $this->start_page < 1 ? 1 : $this->start_page;

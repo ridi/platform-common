@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\AWS\Dto;
@@ -22,7 +23,7 @@ class AwsConfigDto
         string $region = 'ap-northeast-2',
         string $version = 'latest'
     ): self {
-        $dto = new self;
+        $dto = new self();
         $dto->key = $key;
         $dto->secret = $secret;
         $dto->credentials = [
@@ -41,7 +42,7 @@ class AwsConfigDto
         string $region = 'ap-northeast-2',
         string $version = 'latest'
     ): self {
-        $dto = new self;
+        $dto = new self();
         $dto->credentials = $credentials;
         $dto->region = $region;
         $dto->version = $version;

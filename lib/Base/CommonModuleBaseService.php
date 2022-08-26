@@ -1,4 +1,5 @@
 <?php
+
 namespace Ridibooks\Platform\Common\Base;
 
 use Ridibooks\Platform\Common\Constant\PlatformConnectionGroup;

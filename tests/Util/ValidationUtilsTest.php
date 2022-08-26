@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\Tests\Util;
@@ -13,8 +14,8 @@ class ValidationUtilsTest extends TestCase
 
     public function testMatch(): void
     {
-        $this->assertTrue(ValidationUtils::match('/\d{4}-\d{2}-\d{2}/','2020-01-01'));
-        $this->assertFalse(ValidationUtils::match('/\d{4}-\d{2}-\d{2}/','20200101'));
+        $this->assertTrue(ValidationUtils::match('/\d{4}-\d{2}-\d{2}/', '2020-01-01'));
+        $this->assertFalse(ValidationUtils::match('/\d{4}-\d{2}-\d{2}/', '20200101'));
     }
 
     public function testCheckNullFieldForFail(): void

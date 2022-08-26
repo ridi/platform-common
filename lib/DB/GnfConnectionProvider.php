@@ -2,11 +2,11 @@
 
 namespace Ridibooks\Platform\Common\DB;
 
+use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
 use Gnf\db\base;
 use Gnf\db\PDO;
-use Doctrine\DBAL\Configuration;
-use Doctrine\DBAL\DriverManager;
 use Ridibooks\Platform\Common\Cache\AdaptableCache;
 
 class GnfConnectionProvider

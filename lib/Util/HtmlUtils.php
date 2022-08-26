@@ -52,7 +52,7 @@ class HtmlUtils
     {
         $html = self::filterNonAllowableTags($html, $allowable_tags);
 
-        $stack = array();
+        $stack = [];
         preg_replace_callback(
             '/\<(\/?)([a-z]\w*)([^\>]*)\>/i',
             function ($args) use (&$stack) {
@@ -76,7 +76,7 @@ class HtmlUtils
                     if (strlen($attr) > 0 && $attr[strlen($attr) - 1] == '/') {
                         return;
                     }
-                    array_push($stack, array($tag, $full_tag));
+                    array_push($stack, [$tag, $full_tag]);
                 } else {
                     if (count($stack)) {
                         $last_tags = array_pop($stack);

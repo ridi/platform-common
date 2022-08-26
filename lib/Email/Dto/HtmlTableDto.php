@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\Email\Dto;
@@ -14,7 +15,7 @@ class HtmlTableDto
 
     public static function importFromDicts(array $dicts): self
     {
-        $dto = new self;
+        $dto = new self();
         $dto->title = '';
         $dto->dicts = $dicts;
 
@@ -23,7 +24,7 @@ class HtmlTableDto
 
     public static function importFromTitleAndDicts(string $title, $dicts = []): self
     {
-        $dto = new self;
+        $dto = new self();
         $dto->title = $title;
         $dto->dicts = $dicts;
 

@@ -4,8 +4,8 @@ namespace Ridibooks\Platform\Common\Util;
 
 use Doctrine\DBAL\Exception\DriverException;
 use Gnf\db\base;
-use Ridibooks\Platform\Common\DB\GnfConnectionProvider;
 use Ridibooks\Platform\Common\Constant\PlatformConnectionGroup;
+use Ridibooks\Platform\Common\DB\GnfConnectionProvider;
 
 class DbUtils
 {

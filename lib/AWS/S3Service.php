@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\AWS;
@@ -173,7 +174,7 @@ class S3Service extends AbstractAwsService
                 'concurrency' => $concurrency
             ]);
 
-            foreach($results as $result) {
+            foreach ($results as $result) {
                 if ($result instanceof AwsException) {
                     throw new MsgException($result->getMessage());
                 }
@@ -374,7 +375,7 @@ class S3Service extends AbstractAwsService
                 'concurrency' => $concurrency
             ]);
 
-            foreach($results as $result) {
+            foreach ($results as $result) {
                 if ($result instanceof AwsException) {
                     throw new MsgException($result->getMessage());
                 }
@@ -498,7 +499,7 @@ class S3Service extends AbstractAwsService
                 'concurrency' => $concurrency
             ]);
 
-            foreach($results as $result) {
+            foreach ($results as $result) {
                 if ($result instanceof AwsException) {
                     throw new MsgException($result->getMessage());
                 }

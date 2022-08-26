@@ -9,8 +9,8 @@ class StringUtils
     FROM tb_book
     WHERE hex(title) LIKE concat('%C2A0%')
     */
-    const UNICODE_NON_BREAKING_SPACE = "\xc2\xa0";
-    const UNICODE_ZERO_WIDTH_SPACE = "\xe2\x80\x8b";
+    public const UNICODE_NON_BREAKING_SPACE = "\xc2\xa0";
+    public const UNICODE_ZERO_WIDTH_SPACE = "\xe2\x80\x8b";
 
     public static function removeSpecificCharaters($string)
     {

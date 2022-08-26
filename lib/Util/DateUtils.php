@@ -4,14 +4,14 @@ namespace Ridibooks\Platform\Common\Util;
 
 class DateUtils
 {
-    const YEAR = 'Y';
-    const MONTH = 'm';
-    const DAY = 'd';
-    const HOUR = 'H';
-    const MINUTE = 'i';
-    const SECOND = 's';
+    public const YEAR = 'Y';
+    public const MONTH = 'm';
+    public const DAY = 'd';
+    public const HOUR = 'H';
+    public const MINUTE = 'i';
+    public const SECOND = 's';
 
-    const TIME_TO_KR_NAME_MAP = [
+    public const TIME_TO_KR_NAME_MAP = [
         self::YEAR => '년',
         self::MONTH => '월',
         self::DAY => '일',
@@ -19,13 +19,13 @@ class DateUtils
         self::MINUTE => '분',
         self::SECOND => '초',
     ];
-    
-    const DEFAULT_DATETIME_FORMAT = 'Y-m-d H:i:s';
-    const DEFAULT_DATETIME_WITHOUT_FORMAT = 'YmdHis';
 
-    const DEFAULT_EMPTY_DATETIME = '0000-00-00 00:00:00';
-    const DEFAULT_INFINITY_DATETIME = '9999-12-31 23:59:59';
-    const DAYS_KR_SET = ['월', '화', '수', '목', '금', '토', '일'];
+    public const DEFAULT_DATETIME_FORMAT = 'Y-m-d H:i:s';
+    public const DEFAULT_DATETIME_WITHOUT_FORMAT = 'YmdHis';
+
+    public const DEFAULT_EMPTY_DATETIME = '0000-00-00 00:00:00';
+    public const DEFAULT_INFINITY_DATETIME = '9999-12-31 23:59:59';
+    public const DAYS_KR_SET = ['월', '화', '수', '목', '금', '토', '일'];
 
     public static function getNow(): string
     {

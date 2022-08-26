@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ridibooks\Platform\Common\AWS\Dto;
@@ -18,7 +19,7 @@ class SqsQueueAttributeDto
 
     public static function import(string $queue_url, array $dict): self
     {
-        $dto = new self;
+        $dto = new self();
         $dto->queue_url = $queue_url;
         $dto->visibility_timeout = $dict['VisibilityTimeout'];
         $dto->delay_seconds = $dict['DelaySeconds'];
